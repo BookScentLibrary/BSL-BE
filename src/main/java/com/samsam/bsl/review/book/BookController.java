@@ -1,4 +1,4 @@
-package com.samsam.bsl.book;
+package com.samsam.bsl.review.book;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +11,6 @@ public class BookController {
 	@GetMapping("/")
 	public String testApi() {
 		System.out.println("[testAPI]");
-		return "ÀÌ°ÍÀº ½ºÇÁ¸µºÎÆ®¿¡¼­ º¸³»´Â ¸Ş¼¼ÁöÀÔ´Ï´Ù ^_^";
+		return "ì‚´ë ¤ì¡°ìš” ê°œë°œì—ì„œ ë‚  êº¼ë‚´ì¡°ìš” ì½¤í“¨íƒ€ì— ê°€ì³¤ì–´ìš”!";
 	}
 }

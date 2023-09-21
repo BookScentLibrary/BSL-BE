@@ -1,4 +1,4 @@
-package com.samsam.bsl.config;
+package com.samsam.bsl.review.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +37,7 @@ public class SecurityConfig {
 	
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:3000"); // local ев╫╨ф╝ ╫ц
+        corsConfiguration.addAllowedOrigin("http://localhost:3000"); // local О©╫в╫О©╫ф╝ О©╫О©╫
         corsConfiguration.addAllowedOrigin("http://121.173.199.79:3000");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");

@@ -1,4 +1,4 @@
-package com.samsam.bsl.config;
+package com.samsam.bsl.review.config;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

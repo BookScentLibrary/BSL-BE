@@ -1,4 +1,4 @@
-package com.samsam.bsl.config;
+package com.samsam.bsl.review.config;
 
 
 import org.springframework.context.annotation.Bean;
