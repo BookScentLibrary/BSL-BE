@@ -11,6 +11,6 @@ public class BookController {
 	@GetMapping("/")
 	public String testApi() {
 		System.out.println("[testAPI]");
-		return "ÀÌ°ÍÀº ½ºÇÁ¸µºÎÆ®¿¡¼­ º¸³»´Â ¸Ş¼¼ÁöÀÔ´Ï´Ù ^_^";
+		return "ìŠ¤í”„ë§ì—ì„œ ë³´ë‚´ëŠ” ë©”ì„¸ì§€ì…ë‹ˆë‹¤. ^_^";
 	}
 }
