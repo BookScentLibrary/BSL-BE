@@ -1,4 +1,4 @@
-package com.samsam.bsl.review.book;
+package com.samsam.bsl.book;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
