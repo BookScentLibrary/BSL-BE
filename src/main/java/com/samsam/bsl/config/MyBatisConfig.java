@@ -13,6 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @MapperScan(value = "com.samsam.bsl", sqlSessionFactoryRef = "SqlSessionFactory")
 public class MyBatisConfig {
+<<<<<<< HEAD
   
 	@Bean
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws Exception {
@@ -27,4 +28,6 @@ public class MyBatisConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
+=======
+>>>>>>> fb31ee4e9cf87ba3a8d07d75857a89d4e5f5fb07
 }
