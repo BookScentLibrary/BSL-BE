@@ -35,8 +35,24 @@ public class UserDTO {
 		this.permission = 0;
 	}
 	
-//	private static UserDTO toUserDTO(UserEntity userEntity) {
-//		UserDTO userDTO = new UserDTO(userEntity.getUsername(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getNickname(), userEntity.getPhone(), userEntity.getGender(), userEntity.getUserBirth(), userEntity.getUserAge());
-//		return userDTO;
-//	}
+	// UserEntity를 UserDTO로 변환하는 메서드
+	public static UserDTO toUserDTO(UserEntity userEntity) {
+		UserDTO userDTO = new UserDTO(userEntity.getUsername(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getNickname(), userEntity.getPhone(), userEntity.getGender(), userEntity.getUserBirth().toString(), userEntity.getUserAge());
+		return userDTO;
+	}
+	
+//    // UserEntity를 UserDTO로 변환하는 메서드
+//    public static UserDTO toUserDTO(UserEntity userEntity) {
+//        UserDTO userDTO = new UserDTO(
+//            userEntity.getUsername(),
+//            userEntity.getPassword(),
+//            userEntity.getEmail(),
+//            userEntity.getNickname(),
+//            userEntity.getPhone(),
+//            userEntity.getGender(),
+//            userEntity.getUserBirth().toString(),
+//            userEntity.getUserAge()
+//        );
+//        return userDTO;
+//    }
 }
