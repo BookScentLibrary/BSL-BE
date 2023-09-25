@@ -1,4 +1,4 @@
-package com.samsam.bsl.review.dto;
+package com.samsam.bsl.review.model;
 
 
 

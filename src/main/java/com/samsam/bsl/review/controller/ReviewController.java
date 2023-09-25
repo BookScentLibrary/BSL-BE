@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.samsam.bsl.review.dto.PostReviewDTO;
+import com.samsam.bsl.review.model.PostReviewDTO;
 import com.samsam.bsl.review.service.ReviewService;
 
 public class ReviewController {
