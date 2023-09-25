@@ -19,11 +19,11 @@ public class BooksDTO {
 	private String area;
 	private String format;
 	private String className;
-	private int  bookStatus;
-	private int  rentCnt;
+	private int bookStatus;
+	private int rentCnt;
 	private String isbn;
 	private String description;
-	
+
 	@Builder
 	public BooksDTO(int bookNo, String bookImageURL, String bookname, String authors, String publisher,
 			String publicationYear, String callNum, String area, String format, String className, int bookStatus,
