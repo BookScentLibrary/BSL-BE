@@ -9,12 +9,12 @@ import com.samsam.bsl.user.dto.UserDTO;
 @Component
 public class UserDAO {
 	
-	private final SqlSession sqlSession;
-	
-    @Autowired
-    public UserDAO(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
+//	private final SqlSession sqlSession;
+//	
+//    @Autowired
+//    public UserDAO(SqlSession sqlSession) {
+//        this.sqlSession = sqlSession;
+//    }
 
 	// 데이터 확인
 //	public boolean isAdminMember(String a_m_id) {
