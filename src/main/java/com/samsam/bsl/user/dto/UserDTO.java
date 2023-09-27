@@ -5,8 +5,10 @@ import java.util.UUID;
 import com.samsam.bsl.user.entity.UserEntity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class UserDTO {
 	private String userId; //userUUID
 	private String username;//사용자ID
@@ -16,12 +18,12 @@ public class UserDTO {
 	private String phone;//연락처 010-0000-0000
 	private String gender;//성별 여/남
 	private String userBirth;//생년월일 (yyyyMMdd, 예: 20000101)
-	private int userAge;//나이 12
+	private String userAge;//나이 12
 	private int permission;//권한 0 : 일반 유저/1 : 사서/ 2 : 관리자
-	
+
 	//생성자
 	public UserDTO(String username, String password, String email, String nickname, String phone,
-			String gender, String userBirth, int userAge) {
+			String gender, String userBirth, String userAge) {
 		super();
 		this.userId = UUID.randomUUID().toString().replaceAll("-","");
 		this.username = username;
@@ -34,13 +36,13 @@ public class UserDTO {
 		this.userAge = userAge;
 		this.permission = 0;
 	}
-	
+
 	// UserEntity를 UserDTO로 변환하는 메서드
 	public static UserDTO toUserDTO(UserEntity userEntity) {
 		UserDTO userDTO = new UserDTO(userEntity.getUsername(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getNickname(), userEntity.getPhone(), userEntity.getGender(), userEntity.getUserBirth().toString(), userEntity.getUserAge());
 		return userDTO;
 	}
-	
+
 //    // UserEntity를 UserDTO로 변환하는 메서드
 //    public static UserDTO toUserDTO(UserEntity userEntity) {
 //        UserDTO userDTO = new UserDTO(

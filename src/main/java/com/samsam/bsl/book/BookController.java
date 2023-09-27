@@ -11,8 +11,6 @@ public class BookController {
 	
 	@GetMapping("/")
 	public @ResponseBody BookDTO testApi() {
-		System.out.println("[testAPI]");
-
 		BookDTO dto = new BookDTO();
 		dto.setBookNo(00000001);
 		dto.setBookImageURL("https://image.aladin.co.kr/product/19359/16/cover/s972635417_1.jpg");

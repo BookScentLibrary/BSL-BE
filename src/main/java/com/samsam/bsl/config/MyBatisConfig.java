@@ -14,7 +14,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 //@MapperScan(value = "com.samsam.bsl", sqlSessionFactoryRef = "SqlSessionFactory")
 public class MyBatisConfig {
 
-  
 	@Bean
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();

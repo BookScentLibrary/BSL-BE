@@ -41,7 +41,7 @@ public class UserEntity {
     private LocalDateTime userBirth; // 수정: LocalDateTime로 변경
 
     @Column(nullable = false)
-    private int userAge; //나이 12
+    private String userAge; //나이 12
 
     @Column(nullable = false)
     private int permission; //권한 0 : 일반 유저/1 : 사서/ 2 : 관리자

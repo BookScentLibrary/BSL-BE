@@ -2,14 +2,11 @@ package com.samsam.bsl.user.controller;
 
 import java.util.HashMap;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.samsam.bsl.user.dto.UserDTO;
 import com.samsam.bsl.user.service.UserService;
@@ -21,12 +18,22 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	//회원가입 요청
+
 	@PostMapping("/signup")
-	public String signup(UserDTO user) {
-		System.out.println("[UserController] signup()");
-		return "회원가입 테스트";
+	public String signup(@RequestBody UserDTO user) {
+		System.out.println("SIGNUP USERNAME : "+user.getUsername());
+		System.out.println("SIGNUP NICKNAME : "+user.getNickname());
+		System.out.println("SIGNUP EMAIL : "+user.getEmail());
+		return "OK";
 	}
+
+	//회원가입 요청
+//	@PostMapping("/signup")
+//	public String signup(UserDTO user) {
+//		System.out.println("[UserController] signup()");
+//		return "회원가입 테스트";
+//	}
+
 //	public ResponseEntity<HashMap<String, String>> signup(
 //								@RequestParam(value = "username") String username,
 //								@RequestParam(value = "password") String password,
