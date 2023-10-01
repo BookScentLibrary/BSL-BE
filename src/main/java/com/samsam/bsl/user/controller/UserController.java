@@ -1,15 +1,15 @@
 package com.samsam.bsl.user.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.samsam.bsl.user.dto.ResponseDTO;
-import com.samsam.bsl.user.dto.UserDTO;
-import com.samsam.bsl.user.entity.UserEntity;
+import com.samsam.bsl.user.dto.SignInDTO;
+import com.samsam.bsl.user.dto.SignUpDTO;
+import com.samsam.bsl.user.dto.SignInResponseDTO;
 import com.samsam.bsl.user.service.UserService;
 import com.samsam.bsl.user.validator.UserInfoValidator;
 
@@ -20,53 +20,68 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 public class UserController {
 	
-	private final UserService userService;
-	private final UserInfoValidator userInfoValidator;
-
-	@PostMapping("/signup")
-	public Map<String, Object> signup(@RequestBody UserDTO user, Errors errors) {
-	    Map<String, Object> response = new HashMap<>();
-	    
-	    Map<String, String> message = userInfoValidator.getValidMessage(user, errors);
-	    System.out.println(message);
-	    
-	    String messageValue = message.get("message");
-	    if (messageValue != null && messageValue.equals("회원가입 성공")) {
-	        response.put("success", true);
-	        response.put("message", "회원가입 성공");
-	        response.put("data", userService.signup(user));
-	    } else {
-	        response.put("fail", false);
-	        response.put("message", "회원가입 실패");
-	        response.put("errors", message); // 필드별 오류 메시지를 errors 키에 넣어서 전달
-	    }
-	    return response;
+	@Autowired UserService userService;
+	@Autowired UserInfoValidator userInfoValidator;
+	
+	//회원가입 요청
+	@PostMapping("/signUp")  
+	public ResponseDTO<?> signUp(@RequestBody SignUpDTO signUpDTO) {
+		System.out.println("[UserController] signup()");
+		ResponseDTO<?> result = userService.signUp(signUpDTO);
+		return result;
 	}
-
+	
 	// 아이디 중복 검사
 	@PostMapping("/idCheck")
-	public ResponseDTO idDueCheck(@RequestBody UserDTO user) {
-		String message = userInfoValidator.idDueCheck(user) ;
+	public ResponseDTO<?> idDueCheck(@RequestBody SignUpDTO signUpDTO) {
+		String message = userInfoValidator.idDueCheck(signUpDTO) ;
 		System.out.println(message);
 		if (message == "이미 사용중인 아이디입니다.") {
-			return new ResponseDTO(false, message);
-		} return new ResponseDTO(true, message);
+			return ResponseDTO.setFailed(message);
+		} return ResponseDTO.setSuccess(message, null);
 		
 	}
 	
 	// 닉네임 중복 검사
 	@PostMapping("/nickCheck")
-	public ResponseDTO nickDueCheck(@RequestBody UserDTO user) {
-		String message = userInfoValidator.nickDueCheck(user) ;
+	public ResponseDTO<?> nickDueCheck(@RequestBody SignUpDTO signUpDTO) {
+		String message = userInfoValidator.nickDueCheck(signUpDTO) ;
 		System.out.println(message);
 		if (message == "이미 사용중인 닉네임입니다.") {
-			return new ResponseDTO(false, message);
-		} return new ResponseDTO(true, message);
+			return ResponseDTO.setFailed(message);
+		} return ResponseDTO.setSuccess(message, null);
 		
 	}
+	//로그인 요청
+	@PostMapping("/signIn")
+	public ResponseDTO<SignInResponseDTO> signIn(@RequestBody SignInDTO SignInDTO){
+		ResponseDTO<SignInResponseDTO> result = userService.signIn(SignInDTO);
+		return result;
+	}
+
+//	@PostMapping("/signUp")
+//	public Map<String, Object> signUp(@RequestBody UserDTO user, Errors errors) {
+//	    Map<String, Object> response = new HashMap<>();
+//	    
+//	    Map<String, String> message = userInfoValidator.getValidMessage(user, errors);
+//	    System.out.println(message);
+//	    
+//	    String messageValue = message.get("message");
+//	    if (messageValue != null && messageValue.equals("회원가입 성공")) {
+//	        response.put("success", true);
+//	        response.put("message", "회원가입 성공");
+//	        response.put("data", userService.signup(user));
+//	    } else {
+//	        response.put("fail", false);
+//	        response.put("message", "회원가입 실패");
+//	        response.put("errors", message); // 필드별 오류 메시지를 errors 키에 넣어서 전달
+//	    }
+//	    return response;
+//	}
+
 	
-//	@PostMapping("/signup")
-//	public String signup(@RequestBody UserDTO user, Errors errors) {
+//	@PostMapping("/signUp")
+//	public String signUp(@RequestBody SignUpDTO user, Errors errors) {
 //		System.out.println("SIGNUP USERNAME : "+user.getUsername());
 //		System.out.println("SIGNUP NICKNAME : "+user.getNickname());
 //		System.out.println("SIGNUP EMAIL : "+user.getEmail());
@@ -76,12 +91,6 @@ public class UserController {
 //		return "OK";
 //	}
 	
-	//회원가입 요청
-//	@PostMapping("/signup")  
-//	public String signup(UserDTO user) {
-//		System.out.println("[UserController] signup()");
-//		return "회원가입 테스트";
-//	}
 
 //	public ResponseEntity<HashMap<String, String>> signup(
 //								@RequestParam(value = "username") String username,

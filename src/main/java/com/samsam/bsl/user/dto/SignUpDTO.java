@@ -1,22 +1,31 @@
 package com.samsam.bsl.user.dto;
 
-import com.samsam.bsl.user.entity.UserEntity;
+import javax.validation.constraints.NotBlank;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-public class UserDTO {
+@AllArgsConstructor
+public class SignUpDTO {
+	@NotBlank
 	private String username;//사용자ID
+	@NotBlank
 	private String password;//비밀번호
+	@NotBlank
+	private String passwordAgain;//비밀번호 확인
+	@NotBlank
 	private String email;//이메일
+	@NotBlank
 	private String nickname;//닉네임
-	private String phone;//연락처 010-0000-0000
-	private String gender;//성별 여/남
-	private String userBirth;//생년월일 (yyyyMMdd, 예: 20000101)
+	@NotBlank
+	private String phone;//연락처
+	@NotBlank
+	private String gender;//성별
+	@NotBlank
+	private String userBirth;//생년월일
 
 
 

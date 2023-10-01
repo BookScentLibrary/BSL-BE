@@ -1,25 +1,20 @@
 package com.samsam.bsl.user.dto;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-public class ResponseDTO {
+@Data
+@AllArgsConstructor(staticName="set")
+public class ResponseDTO<D> {
     private boolean result;
-    private String errormessage;
-    private String username;
-    private String nickName;
+    private String message;
+    private D data;
     
-    public ResponseDTO(boolean result) {
-        this.result = result;
+    public static <D> ResponseDTO<D> setSuccess(String message, D data){
+    	return ResponseDTO.set(true, message, data);
     }
-
-    public ResponseDTO(boolean result, String message) {
-        this.result = result;
-        this.errormessage = message;
-    }
-
-    public ResponseDTO(String username, String userNickName) {
-        this.username = username;
-        this.nickName = userNickName;
+    
+    public static <D> ResponseDTO<D> setFailed(String message){
+    	return ResponseDTO.set(false, message, null);
     }
 }

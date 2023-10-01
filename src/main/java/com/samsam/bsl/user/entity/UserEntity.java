@@ -10,12 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.samsam.bsl.user.dto.SignUpDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class UserEntity {
 
@@ -50,18 +56,32 @@ public class UserEntity {
     private int permission; //권한 0 : 일반 유저/1 : 사서/ 2 : 관리자
 	
 	//생성자
-	public UserEntity(String username, String password, String email, String nickname, String phone,
-			String gender, String userBirth) {
+//	public UserEntity(String username, String password, String email, String nickname, String phone,
+//			String gender, String userBirth) {
+//		super();
+//		this.userId = UUID.randomUUID().toString().replaceAll("-","");
+//		this.username = username;
+//		this.password = password;
+//		this.email = email;
+//		this.nickname = nickname;
+//		this.phone = phone;
+//		this.gender = gender;
+//		this.userBirth = LocalDate.parse(userBirth);
+//		this.userAge = calculateAge(userBirth);
+//		this.permission = 0;
+//	}
+    //생성자
+	public UserEntity(SignUpDTO dto) {
 		super();
 		this.userId = UUID.randomUUID().toString().replaceAll("-","");
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.nickname = nickname;
-		this.phone = phone;
-		this.gender = gender;
-		this.userBirth = LocalDate.parse(userBirth);
-		this.userAge = calculateAge(userBirth);
+		this.username = dto.getUsername();
+		this.password = dto.getPassword();
+		this.email = dto.getEmail();
+		this.nickname = dto.getNickname();
+		this.phone = dto.getPhone();
+		this.gender = dto.getGender();
+		this.userBirth = LocalDate.parse(dto.getUserBirth());
+		this.userAge = calculateAge(dto.getUserBirth());
 		this.permission = 0;
 	}
 	//나이계산
