@@ -1,4 +1,4 @@
-package com.samsam.bsl.book;
+package com.samsam.bsl.book.dto;
 
 import lombok.Getter;
 import lombok.Setter;
