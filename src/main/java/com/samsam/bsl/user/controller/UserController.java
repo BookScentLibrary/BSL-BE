@@ -1,38 +1,96 @@
 package com.samsam.bsl.user.controller;
 
-import java.util.HashMap;
-
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.samsam.bsl.user.dto.UserDTO;
+import com.samsam.bsl.user.dto.ResponseDTO;
+import com.samsam.bsl.user.dto.SignInDTO;
+import com.samsam.bsl.user.dto.SignUpDTO;
+import com.samsam.bsl.user.dto.SignInResponseDTO;
 import com.samsam.bsl.user.service.UserService;
+import com.samsam.bsl.user.validator.UserInfoValidator;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 	
-	@Autowired
-	UserService userService;
-
-
-	@PostMapping("/signup")
-	public String signup(@RequestBody UserDTO user) {
-		System.out.println("SIGNUP USERNAME : "+user.getUsername());
-		System.out.println("SIGNUP NICKNAME : "+user.getNickname());
-		System.out.println("SIGNUP EMAIL : "+user.getEmail());
-		return "OK";
+	@Autowired UserService userService;
+	@Autowired UserInfoValidator userInfoValidator;
+	
+	//회원가입 요청
+	@PostMapping("/signUp")  
+	public ResponseDTO<?> signUp(@RequestBody SignUpDTO signUpDTO) {
+		System.out.println("[UserController] signup()");
+		ResponseDTO<?> result = userService.signUp(signUpDTO);
+		return result;
+	}
+	
+	// 아이디 중복 검사
+	@PostMapping("/idCheck")
+	public ResponseDTO<?> idDueCheck(@RequestBody SignUpDTO signUpDTO) {
+		String message = userInfoValidator.idDueCheck(signUpDTO) ;
+		System.out.println(message);
+		if (message == "이미 사용중인 아이디입니다.") {
+			return ResponseDTO.setFailed(message);
+		} return ResponseDTO.setSuccess(message, null);
+		
+	}
+	
+	// 닉네임 중복 검사
+	@PostMapping("/nickCheck")
+	public ResponseDTO<?> nickDueCheck(@RequestBody SignUpDTO signUpDTO) {
+		String message = userInfoValidator.nickDueCheck(signUpDTO) ;
+		System.out.println(message);
+		if (message == "이미 사용중인 닉네임입니다.") {
+			return ResponseDTO.setFailed(message);
+		} return ResponseDTO.setSuccess(message, null);
+		
+	}
+	//로그인 요청
+	@PostMapping("/signIn")
+	public ResponseDTO<SignInResponseDTO> signIn(@RequestBody SignInDTO SignInDTO){
+		ResponseDTO<SignInResponseDTO> result = userService.signIn(SignInDTO);
+		return result;
 	}
 
-	//회원가입 요청
-//	@PostMapping("/signup")
-//	public String signup(UserDTO user) {
-//		System.out.println("[UserController] signup()");
-//		return "회원가입 테스트";
+//	@PostMapping("/signUp")
+//	public Map<String, Object> signUp(@RequestBody UserDTO user, Errors errors) {
+//	    Map<String, Object> response = new HashMap<>();
+//	    
+//	    Map<String, String> message = userInfoValidator.getValidMessage(user, errors);
+//	    System.out.println(message);
+//	    
+//	    String messageValue = message.get("message");
+//	    if (messageValue != null && messageValue.equals("회원가입 성공")) {
+//	        response.put("success", true);
+//	        response.put("message", "회원가입 성공");
+//	        response.put("data", userService.signup(user));
+//	    } else {
+//	        response.put("fail", false);
+//	        response.put("message", "회원가입 실패");
+//	        response.put("errors", message); // 필드별 오류 메시지를 errors 키에 넣어서 전달
+//	    }
+//	    return response;
 //	}
+
+	
+//	@PostMapping("/signUp")
+//	public String signUp(@RequestBody SignUpDTO user, Errors errors) {
+//		System.out.println("SIGNUP USERNAME : "+user.getUsername());
+//		System.out.println("SIGNUP NICKNAME : "+user.getNickname());
+//		System.out.println("SIGNUP EMAIL : "+user.getEmail());
+//		userService.signup(user);
+//      String message = userInfoValidator.getValidMessage(user, errors);
+//      System.out.println(message);
+//		return "OK";
+//	}
+	
 
 //	public ResponseEntity<HashMap<String, String>> signup(
 //								@RequestParam(value = "username") String username,

@@ -1,18 +1,27 @@
 package com.samsam.bsl.user.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import com.samsam.bsl.user.dto.UserDTO;
+import com.samsam.bsl.user.dto.SignUpDTO;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class UserEntity {
 
@@ -22,7 +31,7 @@ public class UserEntity {
     @Column(length = 40, unique = true, nullable = false)
     private String username;//사용자ID
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 80, nullable = false)
     private String password;//비밀번호
 
     @Column(length = 20, nullable = false)
@@ -38,29 +47,57 @@ public class UserEntity {
     private String gender;//성별 여/남
 
     @Column(nullable = false)
-    private LocalDateTime userBirth; // 수정: LocalDateTime로 변경
+    private LocalDate userBirth; // 수정: LocalDateTime로 변경
 
     @Column(nullable = false)
-    private String userAge; //나이 12
+    private int userAge; //나이 12
 
     @Column(nullable = false)
     private int permission; //권한 0 : 일반 유저/1 : 사서/ 2 : 관리자
-    
-    //UserDTO를 UserEntity로 변환하기
-	public static UserEntity toSaveEntity(UserDTO userDTO) {
-		UserEntity userEntity = new UserEntity();
-		userEntity.setUserId(userDTO.getUserId());
-		userEntity.setUsername(userDTO.getUsername());
-		userEntity.setPassword(userDTO.getPassword());
-		userEntity.setEmail(userDTO.getEmail());
-		userEntity.setNickname(userDTO.getNickname());
-		userEntity.setPhone(userDTO.getPhone());
-		userEntity.setGender(userDTO.getGender());
-		userEntity.setUserBirth(LocalDateTime.parse(userDTO.getUserBirth(), DateTimeFormatter.ofPattern("yyyyMMdd")));
-		userEntity.setUserAge(userDTO.getUserAge());
-		userEntity.setPermission(userDTO.getPermission());
-		return userEntity;
+	
+	//생성자
+//	public UserEntity(String username, String password, String email, String nickname, String phone,
+//			String gender, String userBirth) {
+//		super();
+//		this.userId = UUID.randomUUID().toString().replaceAll("-","");
+//		this.username = username;
+//		this.password = password;
+//		this.email = email;
+//		this.nickname = nickname;
+//		this.phone = phone;
+//		this.gender = gender;
+//		this.userBirth = LocalDate.parse(userBirth);
+//		this.userAge = calculateAge(userBirth);
+//		this.permission = 0;
+//	}
+    //생성자
+	public UserEntity(SignUpDTO dto) {
+		super();
+		this.userId = UUID.randomUUID().toString().replaceAll("-","");
+		this.username = dto.getUsername();
+		this.password = dto.getPassword();
+		this.email = dto.getEmail();
+		this.nickname = dto.getNickname();
+		this.phone = dto.getPhone();
+		this.gender = dto.getGender();
+		this.userBirth = LocalDate.parse(dto.getUserBirth());
+		this.userAge = calculateAge(dto.getUserBirth());
+		this.permission = 0;
 	}
+	//나이계산
+	public int calculateAge(String userBirth) {
+	    // 현재 날짜
+	    LocalDate currentDate = LocalDate.now();
+
+	    // 하이픈 제거 후 생년월일을 LocalDate로 변환
+	    LocalDate birthDateObj = LocalDate.parse(userBirth.replace("-", ""), DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+	    // 나이 계산
+	    Period period = Period.between(birthDateObj, currentDate);
+
+	    return period.getYears();
+    }
+	
 	//생성자로 UserDTO를 UserEntity로 변환하기
 //    public UserEntity(UserDTO userDTO) {
 //        this.userId = userDTO.getUserId();
@@ -74,4 +111,20 @@ public class UserEntity {
 //        this.userAge = userDTO.getUserAge();
 //        this.permission = userDTO.getPermission();
 //    }
+	
+    //UserDTO를 UserEntity로 변환하기
+	/*public static UserEntity toSaveEntity(UserDTO userDTO) {
+		UserEntity userEntity = new UserEntity();
+		userEntity.setUserId(userDTO.getUserId());
+		userEntity.setUsername(userDTO.getUsername());
+		userEntity.setPassword(userDTO.getPassword());
+		userEntity.setEmail(userDTO.getEmail());
+		userEntity.setNickname(userDTO.getNickname());
+		userEntity.setPhone(userDTO.getPhone());
+		userEntity.setGender(userDTO.getGender());
+		userEntity.setUserBirth(LocalDateTime.parse(userDTO.getUserBirth(), DateTimeFormatter.ofPattern("yyyyMMdd")));
+		userEntity.setUserAge(Integer.parseInt(userDTO.getUserAge()));
+		userEntity.setPermission(userDTO.getPermission());
+		return userEntity;
+	}*/
 }
