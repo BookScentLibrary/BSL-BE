@@ -1,0 +1,9 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >-->
+<!--<mapper namespace="org.kh.member.model.vo.member_mapper">-->
+<!--  <insert id="insertMember"-->
+<!--          parameterType="org.kh.member.model.vo.MemberVO">-->
+<!--    insert into MEMBER (USER_NO, USER_ID, USER_PW, USER_NAME, USER_ADDR)-->
+<!--    values (SEQ_MEMBER.nextval, #{userId}, #{userPw}, #{userName}, #{userAddr})-->
+<!--  </insert>-->
+<!--</mapper>-->

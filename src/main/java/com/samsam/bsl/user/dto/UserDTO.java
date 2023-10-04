@@ -1,5 +1,14 @@
 package com.samsam.bsl.user.dto;
 
+import java.util.UUID;
+
+import com.samsam.bsl.user.entity.UserEntity;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class UserDTO {
 	private String userId; //userUUID
 	private String username;//사용자ID
@@ -9,14 +18,14 @@ public class UserDTO {
 	private String phone;//연락처 010-0000-0000
 	private String gender;//성별 여/남
 	private String userBirth;//생년월일 (yyyyMMdd, 예: 20000101)
-	private int userAge;//나이 12
+	private String userAge;//나이 12
 	private int permission;//권한 0 : 일반 유저/1 : 사서/ 2 : 관리자
-	
+
 	//생성자
-	public UserDTO(String userId, String username, String password, String email, String nickname, String phone,
-			String gender, String userBirth, int userAge, int permission) {
+	public UserDTO(String username, String password, String email, String nickname, String phone,
+			String gender, String userBirth, String userAge) {
 		super();
-		this.userId = userId;
+		this.userId = UUID.randomUUID().toString().replaceAll("-","");
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -27,87 +36,25 @@ public class UserDTO {
 		this.userAge = userAge;
 		this.permission = 0;
 	}
-	
-	//getter/setter
-	public String getUserId() {
-		return userId;
+
+	// UserEntity를 UserDTO로 변환하는 메서드
+	public static UserDTO toUserDTO(UserEntity userEntity) {
+		UserDTO userDTO = new UserDTO(userEntity.getUsername(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getNickname(), userEntity.getPhone(), userEntity.getGender(), userEntity.getUserBirth().toString(), userEntity.getUserAge());
+		return userDTO;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getUserBirth() {
-		return userBirth;
-	}
-
-	public void setUserBirth(String userBirth) {
-		this.userBirth = userBirth;
-	}
-
-	public int getUserAge() {
-		return userAge;
-	}
-
-	public void setUserAge(int userAge) {
-		this.userAge = userAge;
-	}
-
-	public int getPermission() {
-		return permission;
-	}
-
-	public void setPermission(int permission) {
-		this.permission = permission;
-	}
-	
-	
+//    // UserEntity를 UserDTO로 변환하는 메서드
+//    public static UserDTO toUserDTO(UserEntity userEntity) {
+//        UserDTO userDTO = new UserDTO(
+//            userEntity.getUsername(),
+//            userEntity.getPassword(),
+//            userEntity.getEmail(),
+//            userEntity.getNickname(),
+//            userEntity.getPhone(),
+//            userEntity.getGender(),
+//            userEntity.getUserBirth().toString(),
+//            userEntity.getUserAge()
+//        );
+//        return userDTO;
+//    }
 }
