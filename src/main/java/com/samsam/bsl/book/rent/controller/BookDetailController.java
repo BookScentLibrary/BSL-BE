@@ -1,12 +1,9 @@
-package com.samsam.bsl.book.controller;
+package com.samsam.bsl.book.rent.controller;
 
-import com.samsam.bsl.book.dto.BookDTO;
-import com.samsam.bsl.book.service.BookService;
+import com.samsam.bsl.book.rent.dto.BookDTO;
+import com.samsam.bsl.book.rent.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/book/detail")
@@ -33,6 +30,13 @@ public class BookDetailController {
         book.setIsbn("9791190090018");
         book.setDescription("책 상세정보");
 
+        return book;
+    }
+
+    @GetMapping("/detail")
+    public @ResponseBody BookDTO getBookDetail(@RequestParam int bookNo) {
+        System.out.println("[BookDetailController] getBook()");
+        BookDTO book = bookService.getBook(bookNo);
         return book;
     }
 }
