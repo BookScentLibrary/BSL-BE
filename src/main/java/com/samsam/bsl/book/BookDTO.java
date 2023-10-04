@@ -1,11 +1,8 @@
 package com.samsam.bsl.book;
 
-import org.springframework.stereotype.Repository;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@Repository
 @Getter
 @Setter
 public class BookDTO {
@@ -17,8 +14,8 @@ public class BookDTO {
 	  private String publicationYear;
 	  private String callNum;
 	  private String shelfarea;
-	  private String bookformat;
-	  private String classname;
+	  private String format;
+	  private String className;
 	  private int bookStatus;
 	  private int rentCnt;
 	  private String isbn;
