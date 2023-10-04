@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.samsam.bsl.book.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.samsam.bsl.book.BookDTO;
 
 
 @Repository
@@ -98,8 +98,8 @@ public class SearchDAO {
 	                    bookDTO.setPublisher(rs.getString("b_publisher"));
 	                    bookDTO.setPublicationYear(rs.getString("b_publish_year"));
 	                    bookDTO.setCallNum(rs.getString("b_call_number"));
-	                    bookDTO.setBookformat(rs.getString("b_format"));
-	                    bookDTO.setClassname(rs.getString("b_class_name"));
+	                    bookDTO.setFormat(rs.getString("b_format"));
+	                    bookDTO.setClassName(rs.getString("b_class_name"));
 	                    bookDTO.setBookStatus(rs.getInt("b_status"));
 	                    bookDTO.setRentCnt(rs.getInt("b_rent_cnt"));
 	                    bookDTO.setIsbn(rs.getString("b_isbn"));

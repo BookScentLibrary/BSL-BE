@@ -54,6 +54,7 @@ public class PostProgramController {
 			System.out.println("[PostProgramDAO] registerForm()");
 			
 			String nextPage ="post/program/register_post_ok";
+			return nextPage;
 		}
 
 	

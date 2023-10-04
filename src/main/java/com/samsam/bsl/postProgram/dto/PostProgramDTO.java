@@ -1,13 +1,11 @@
 package com.samsam.bsl.postProgram.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class PostProgramDTO {
 	private String userId;
 	private int pro_postId;

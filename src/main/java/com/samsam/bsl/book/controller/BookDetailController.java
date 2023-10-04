@@ -5,6 +5,7 @@ import com.samsam.bsl.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,7 +16,7 @@ public class BookDetailController {
     BookService bookService;
 
     @GetMapping("/")
-    public BookDTO getBook() {
+    public @ResponseBody BookDTO getBook() {
         BookDTO book = new BookDTO();
         book.setBookNo(00000001);
         book.setBookImageURL("https://image.aladin.co.kr/product/19359/16/cover/s972635417_1.jpg");
@@ -31,8 +32,6 @@ public class BookDetailController {
         book.setRentCnt(10);
         book.setIsbn("9791190090018");
         book.setDescription("책 상세정보");
-
-
 
         return book;
     }

@@ -11,6 +11,7 @@ public class PostProgramService {
 	private PostProgramDAO postProgramDAO;
 	public List<PostProgramDTO> listupPost() {
 		System.out.println("[PostProgramService] listupPost()");
-		return postProgramDAO.selectPrograms();
+//		return postProgramDAO.selectPrograms();
+		return null;
 	}
 }
