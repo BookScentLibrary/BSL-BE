@@ -11,8 +11,8 @@ public class BookController {
 	
 	@GetMapping("/")
 	public @ResponseBody BookDTO testApi() {
+		System.out.println("[testAPI]");
 		BookDTO dto = new BookDTO();
-
 		dto.setBookNo(00000001);
 		dto.setBookImageURL("https://image.aladin.co.kr/product/19359/16/cover/s972635417_1.jpg");
 		dto.setBookname("우리가 빛의 속도로 갈 수 없다면");
@@ -21,8 +21,7 @@ public class BookController {
 		dto.setPublicationYear("2019");
 		dto.setCallNum("813.7");
 		dto.setShelfarea("[논현]큰글자도서");
-		dto.setFormat("어떻게생겼나...");
-		dto.setClassName("문학 > 한국문학 > 소설");
+		dto.setClassname("문학 > 한국문학 > 소설");
 		dto.setBookStatus(0);
 		dto.setRentCnt(10);
 		dto.setIsbn("9791190090018");
