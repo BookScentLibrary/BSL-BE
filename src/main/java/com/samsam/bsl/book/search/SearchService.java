@@ -9,6 +9,15 @@ import com.samsam.bsl.book.BookDTO;
 
 @Service
 public class SearchService {
+	
+	
+//	 @Autowired
+//	    private SearchDAO searchDAO;
+//
+//	    public List<BookDTO> searchBookConfirm(String bookName) {
+//	        List<BookDTO> bookDTOs = searchDAO.selectBooksBySearch(bookName);
+//	        return bookDTOs;
+//	    }
 
 	    
 
