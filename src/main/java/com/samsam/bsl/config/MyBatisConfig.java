@@ -31,7 +31,7 @@ public class MyBatisConfig {
   public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws Exception {
     SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
     sessionFactoryBean.setDataSource(dataSource);
-    sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+    sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml"));
     //실제로 쿼리가 들어갈 xml 패키지 경로
 //    sessionFactoryBean.setTypeAliasesPackage("com.samsam.bsl.postProgram.dto");
     //DTO를 선언해 놓은 package 경로
