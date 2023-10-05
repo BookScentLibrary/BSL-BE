@@ -126,6 +126,7 @@ public class UserInfoValidator {
 			String email = dto.getEmail();
 			String nickname = dto.getNickname();
 			String phone = dto.getPhone();
+			String userBirth = dto.getUserBirth();
 			try {
 				// 아이디 중복 체크
 				if (checkUsernameDuplicate(username)) {
@@ -172,7 +173,12 @@ public class UserInfoValidator {
 		    // 연락처 검증
 		    if (!isValidField(phone, "^[0-9]{11}$")) {
 		      System.out.println("[UserInfoValidator]getPhone()시작 :");
-		      return ResponseDTO.setFailed("연락처는 숫자('-'빼고 01011112222)만 입력 가능합니다.");
+		      return ResponseDTO.setFailed("11자 숫자로('-'빼고) 연락처를 입력해주세요.");
+		    }
+		    // 생년월일 검증
+		    if (!isValidField(userBirth, "^(19|20)\\d\\d(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])$")) {
+		      System.out.println("[UserInfoValidator]getPhone()시작 :");
+		      return ResponseDTO.setFailed("8자 숫자로(yyyyMMdd) 생년월일을 입력해주세요.");
 		    }
 		      // 모든 검사를 통과한 경우 리턴 (빈 맵)
 		      return ResponseDTO.setSuccess("회원가입 성공", null);
