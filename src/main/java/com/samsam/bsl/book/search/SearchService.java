@@ -2,7 +2,7 @@ package com.samsam.bsl.book.search;
 
 import java.util.List;
 
-import com.samsam.bsl.book.dto.BookDTO;
+import com.samsam.bsl.book.rent.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

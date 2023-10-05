@@ -15,7 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 
 @Configuration
-//@MapperScan(value = "com.samsam.bsl", sqlSessionFactoryRef = "SqlSessionFactory")
+@MapperScan(value = "com.samsam.bsl", sqlSessionFactoryRef = "sqlSessionFactory")
 public class MyBatisConfig {
 
   @Bean
