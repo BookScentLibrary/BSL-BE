@@ -14,26 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/book")
 public class SearchController {
-	
-	
-//	 @Autowired
-//	    private SearchService searchService;
-//
-//	    @GetMapping("/book/search")
-//	    public ResponseEntity<List<BookDTO>> searchBooks(@RequestParam("bookName") String bookName) {
-//	        List<BookDTO> bookDTOs = searchService.searchBookConfirm(bookName);
-//	        if (bookDTOs != null && !bookDTOs.isEmpty()) {
-//	            return ResponseEntity.status(HttpStatus.OK).body(bookDTOs);
-//	        } else {
-//	            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-//	        }
-//	    }
-	
-	
-	
-	
-	
-	
+
+
 	
 	
 //	@GetMapping("/search")  // 리액트에서 보낼 때, 검색어를 url에 담아서 보냄 여기서 리퀘스트 파람써서 보내면 됨. 
@@ -42,13 +24,18 @@ public class SearchController {
 		@Autowired
 	    private SearchService searchService; // BookService 클래스에 대한 의존성 주입
 
-	    @GetMapping("/book/search") // 책 검색을 위한 엔드포인트
-	    public ResponseEntity<List<BookDTO>> searchBooks(BookDTO bookDTO) {
-	        List<BookDTO> bookDTOs = searchService.searchBookConfirm(bookDTO);
+	    @GetMapping("/search") // 책 검색을 위한 엔드포인트
+	    public ResponseEntity<Object> searchBooks(@RequestParam("searchValue") String searchValue, BookDTO bookDTO) {
+	       System.out.println("검색어:" +searchValue);
+	       
+
+	       
+	    	List<BookDTO> bookDTOs = searchService.searchBookConfirm(searchValue);
+	    	
 	        if (bookDTOs != null) {
 	            return ResponseEntity.status(HttpStatus.OK).body(bookDTOs);
 	        } else {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	        	return ResponseEntity.status(HttpStatus.OK).body("검색 결과 없음");
 	        }
 	    }
 
