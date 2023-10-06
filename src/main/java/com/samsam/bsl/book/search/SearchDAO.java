@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,24 +27,23 @@ public class SearchDAO {
 	    @Autowired
 	    private JdbcTemplate jdbcTemplate;
 
-	    public List<BookDTO> selectBooksBySearch(String searchValue) {
+	    public List<Book> selectBooksBySearch(String searchValue) {
 	        String sql = "SELECT * FROM books "
 	                + "WHERE bookname LIKE ? "
 	                + "ORDER BY bookNo DESC";
 	        
 	        //이 부분도 나중에 마이바티스 연결 때문에 바꿔야 된다고 한다. 
 	        
-	        List<BookDTO>bookDTOs =new ArrayList<>();
+	        List<Book>bookDTOs =new ArrayList<>();
 
 	        try {
 	             bookDTOs = jdbcTemplate.query
-	            		 (sql, new RowMapper<BookDTO>() {
+	            		 (sql, new RowMapper<Book>() {
 	                @Override
-	                public BookDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-	                    BookDTO bookDTO = new BookDTO();
+	                public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
+	                    Book bookDTO = new Book();
 
 	                    bookDTO.setBookNo(rs.getInt("b_bookNo"));
-	                    bookDTO.setBookImageURL(rs.getString("b_bookImageURL"));
 	                    bookDTO.setBookname(rs.getString("b_bookname"));
 	                    bookDTO.setAuthor(rs.getString("b_author"));
 	                    bookDTO.setPublisher(rs.getString("b_publisher"));

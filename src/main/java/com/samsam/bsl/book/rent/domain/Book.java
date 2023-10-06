@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
+@Setter
 @Entity
 @Builder
 @Table(name="books")
