@@ -26,6 +26,7 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+<<<<<<< HEAD
 
 //	@GetMapping("/reviewList")
 //	public ResponseEntity<List<ReviewDTO>> handleReviewListRequest(
@@ -52,6 +53,8 @@ public class ReviewController {
 //			}
 //		}
 //	}
+=======
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 	
 	@GetMapping("/reviewList")
 	public ResponseEntity<List<ReviewDTO>> handleReviewListRequest(
@@ -112,10 +115,13 @@ public class ReviewController {
 	}
 
 
+<<<<<<< HEAD
 //    @GetMapping("/reviewList")
 //    public List<ReviewDTO> getReviewListWithUserInfo() {
 //        return reviewService.getAllReviewsWithUserInfo();
 //    }//여기까지 모든리뷰와 nickname, bookname 가져오는데 필요한 메서드
+=======
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 
 	@GetMapping("/ReviewListPerPage")
 	public ResponseEntity<List<ReviewDTO>> getReviews(@RequestParam(defaultValue = "20") int perPage,
@@ -166,6 +172,7 @@ public class ReviewController {
 		return ResponseEntity.noContent().build();
 	}
 
+<<<<<<< HEAD
 	// 리뷰검색
 //	@GetMapping("/reviewList")
 //	public ResponseEntity<List<ReviewDTO>> search(@RequestParam(value = "keyword") String keyword,
@@ -178,5 +185,7 @@ public class ReviewController {
 //			return ResponseEntity.ok(reviewDTOList);
 //		}
 //	}
+=======
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 
 }

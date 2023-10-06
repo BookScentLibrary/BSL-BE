@@ -28,9 +28,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "post_review")
+<<<<<<< HEAD
 @Builder // Review에 @Builder 추가하니까 ReviewDTO builder()에서 에러 사라짐 대신 .nickname에 에러생김 아래에
       // nickname과 bookname필드추가하면 오류생김 근데 필드추가안하면 dto랑 서비스에서 에러가 안사라짐..시발
 //헐 ReviewDTO에서 .nickname(nickname).bookname(bookname)랑 ReviewService에서 .nickname(review.getNickname()).bookname(review.getBookname()) 삭제하니까잘됨
+=======
+@Builder
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 public class Review {
 
   @Column(nullable = false)

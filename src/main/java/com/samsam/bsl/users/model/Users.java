@@ -21,6 +21,7 @@ import lombok.Setter;
 public class Users {
 	
 	@Id
+<<<<<<< HEAD
 	@Column(nullable = false)
 	private String userId;
 	
@@ -49,5 +50,23 @@ public class Users {
 	private int userAge;
 	
 	@Column(nullable = false)
+=======
+	@Column(name = "userid")
+	private String userId;
+	
+	private String username;
+	private String password;
+	private String email;
+	private String nickname;
+	private String phone;
+	private String gender;
+	
+	@Column(name = "userbirth")
+	private LocalDateTime userBirth;
+	
+	@Column(name = "userage")
+	private int userAge;
+	
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 	private int permission;
 }

@@ -20,6 +20,7 @@ import lombok.Setter;
 public class Book {
 
 	@Id
+<<<<<<< HEAD
 	@Column(nullable = false)
 	private int bookNo;
 
@@ -60,6 +61,37 @@ public class Book {
 	private String isbn;
 	
 	@Column(nullable = false)
+=======
+	@Column(name = "bookno")
+	private int bookNo;
+
+	@Column(name = "bookimageurl")
+	private String bookImageURL;
+
+	private String bookname;
+	private String authors;
+	private String publisher;
+
+	@Column(name = "publicationyear")
+	private String publicationYear;
+
+	@Column(name = "callnum")
+	private String callNum;
+
+	private String area;
+	private String format;
+
+	@Column(name = "classname")
+	private String className;
+
+	@Column(name = "bookstatus")
+	private int bookStatus;
+
+	@Column(name = "rentcnt")
+	private int rentCnt;
+
+	private String isbn;
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 	private String description;
 
 }

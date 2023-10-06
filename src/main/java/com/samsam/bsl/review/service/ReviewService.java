@@ -28,6 +28,7 @@ public class ReviewService {
 	private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
 	private static final int PAGE_POST_COUNT = 4;
 
+<<<<<<< HEAD
 //	public List<Review> getAllReviews() {
 //		return reviewRepository.findAll(); // 데이터베이스에서 모든 리뷰 데이터를 가져옴
 //	}
@@ -41,6 +42,9 @@ public class ReviewService {
 //	    List<Review> reviews = reviewRepository.findAll();
 //	    return reviews.stream().map(this::convertToDTOWithUserInfo).collect(Collectors.toList());
 //	}
+=======
+
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f
 	
 	public List<ReviewDTO> getAllReviewsWithUserInfo() {
 	    List<Review> reviews = reviewRepository.getAllReviews(); 
