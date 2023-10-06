@@ -17,10 +17,10 @@ import lombok.Getter;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TimeEntity {
 	@CreatedDate
-	@Column(name = "createdat")
+	@Column(nullable = false)
 	private LocalDateTime createdAt;
 
 	@LastModifiedDate
-	@Column(name = "modifiedat")
+	@Column(nullable = false)
 	private LocalDateTime modifiedAt;
 }

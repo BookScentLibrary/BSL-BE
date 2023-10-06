@@ -22,35 +22,31 @@ import lombok.AllArgsConstructor;
 @Service
 public class ReviewService {
 
-	private final ReviewRepository reviewRepository;
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
 	private static final int PAGE_POST_COUNT = 4;
 
-	public ReviewService(ReviewRepository reviewRepository) {
-		this.reviewRepository = reviewRepository;
-	}
 
-	public List<Review> getAllReviews() {
-		return reviewRepository.findAll(); // 데이터베이스에서 모든 리뷰 데이터를 가져옴
-	}
-
+	
 	public List<ReviewDTO> getAllReviewsWithUserInfo() {
-		List<Review> reviews = reviewRepository.findAll();
-		return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
+	    List<Review> reviews = reviewRepository.getAllReviews(); 
+	    System.out.println("디버깅"+reviews.toString());
+	    return reviews.stream().map(this::convertEntityToDtoWithUserInfo).collect(Collectors.toList());
 	}
 
-	private ReviewDTO convertToDTO(Review review) {
-		ReviewDTO dto = new ReviewDTO();
-		dto.setRev_postId(review.getRev_postId());
-		dto.setPostTitle(review.getPostTitle());
-		dto.setContent(review.getContent());
-		dto.setCreatedAt(review.getCreatedAt());
-		dto.setIsbn(review.getIsbn());
-		dto.setBookScore(review.getBookScore());
-		dto.setNickname(review.getUser().getNickname()); // Users 엔터티에서 nickname 가져오기
-		dto.setBookname(review.getBook().getBookname()); // Books 엔터티에서 bookname 가져오기
-		return dto;
+	private ReviewDTO convertEntityToDtoWithUserInfo(Review review) {
+	    ReviewDTO dto = new ReviewDTO();
+	    dto.setRev_postId(review.getRev_postId());
+	    dto.setPostTitle(review.getPostTitle());
+	    dto.setContent(review.getContent());
+	    dto.setCreatedAt(review.getCreatedAt());
+	    dto.setIsbn(review.getIsbn());
+	    dto.setRate(review.getRate());
+	    dto.setNickname(review.getUser().getNickname()); // Users 엔터티에서 nickname 가져오기
+	    dto.setBookname(review.getBook().getBookname()); // Book 엔터티에서 bookname 가져오기
+	    return dto;
 	}
 
 	@Transactional
@@ -98,6 +94,38 @@ public class ReviewService {
 		reviewRepository.deleteById(rev_postId);
 	}
 
+	// 리뷰를 제목, 저자, 출판사로 검색할 수 있는 메서드 추가
+	@Transactional
+	public List<ReviewDTO> searchPosts(String keyword, String searchType) {
+		List<Review> reviews = new ArrayList<>();
+
+		if ("all".equals(searchType)) {
+			reviews = reviewRepository
+					.findByBook_booknameContainingOrPostTitleContainingOrBook_authorContainingOrBook_publisherContainingOrBook_callNumContainingOrBook_publicationYearContaining(
+							keyword, keyword, keyword, keyword, keyword, keyword);
+		} else if ("bookname".equals(searchType)) {
+			reviews = reviewRepository.findByBook_booknameContaining(keyword); // Book 엔티티의 bookname을 사용
+		} else if ("postTitle".equals(searchType)) {
+			reviews = reviewRepository.findByPostTitleContaining(keyword); // Book 엔티티의 bookname을 사용
+		} else if ("author".equals(searchType)) {
+			reviews = reviewRepository.findByBook_authorContaining(keyword);
+		} else if ("publisher".equals(searchType)) {
+			reviews = reviewRepository.findByBook_publisherContaining(keyword);
+		} else if ("callNum".equals(searchType)) {
+			reviews = reviewRepository.findByBook_callNumContaining(keyword);
+		} else if ("publicationYear".equals(searchType)) {
+			reviews = reviewRepository.findByBook_publicationYearContaining(keyword);
+		}
+
+		return reviews.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+	}
+
+	private ReviewDTO convertEntityToDto(Review review) {
+		return ReviewDTO.builder().userId(review.getUserId()).bookNo(review.getBookNo())
+				.rev_postId(review.getRev_postId()).postTitle(review.getPostTitle()).content(review.getContent())
+				.createdAt(review.getCreatedAt()).isbn(review.getIsbn()).rate(review.getRate()).build();
+	}
+
 	public Integer[] getPageList(Integer curPageNum) {
 		Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
 
@@ -121,13 +149,6 @@ public class ReviewService {
 		}
 
 		return pageList;
-	}
-
-	private ReviewDTO convertEntityToDto(Review review) {
-		return ReviewDTO.builder().userId(review.getUserId()).bookNo(review.getBookNo())
-				.rev_postId(review.getRev_postId()).postTitle(review.getPostTitle()).content(review.getContent())
-				.createdAt(review.getCreatedAt()).isbn(review.getIsbn()).bookScore(review.getBookScore())
-				.build();
 	}
 
 }

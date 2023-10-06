@@ -2,12 +2,16 @@ package com.samsam.bsl.review.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.samsam.bsl.book.model.Book;
 import com.samsam.bsl.users.model.Users;
@@ -27,47 +31,43 @@ import lombok.Setter;
 @Builder
 public class Review {
 
-	@Column(name = "userid")
-    private String userId;
+  @Column(nullable = false)
+  private String userId;
 
-    @Column(name = "bookno")
-    private int bookNo;
+  @Column(nullable = false)
+  private int bookNo;
 
-    @Id
-    @Column(name = "rev_postid")
-    private int rev_postId;
+  @Id
+  @Column(nullable = false)
+  private int rev_postId;
 
-    @Column(name = "posttitle")
-    private String postTitle;
+  @Column(nullable = false)
+  private String postTitle;
 
-    @Column(name = "content")
-    private String content;
+  @Column(nullable = false)
+  private String content;
 
-    @Column(name = "createdat")
-    private LocalDateTime createdAt;
+  @CreationTimestamp
+  @Column(nullable = false)
+  private LocalDateTime createdAt;
 
-    @Column(name = "modifiedat")
-    private LocalDateTime modifiedAt;
+  @CreationTimestamp
+  @Column(nullable = false)
+  private LocalDateTime modifiedAt;
 
-    @Column(name = "isbn")
-    private String isbn;
+  @Column(nullable = false)
+  private String isbn;
 
-    @Column(name = "bookscore")
-    private int bookScore;
+  @Column(nullable = false)
+  private int rate;
 
-    @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", insertable = false, updatable = false)
-    private Users user;
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinColumn(name = "userId", referencedColumnName = "userId", insertable = false, updatable = false, nullable = false)
+  private Users user;
 
-    @ManyToOne
-    @JoinColumn(name = "bookno", referencedColumnName = "bookno", insertable = false, updatable = false)
-    private Book book;
-    
-//    @Column(name = "nickname")
-//    private String nickname;
-//
-//    @Column(name = "bookname")
-//    private String bookname;
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinColumn(name = "bookNo", referencedColumnName = "bookNo", insertable = false, updatable = false, nullable = false)
+  private Book book;
 
 
 }
