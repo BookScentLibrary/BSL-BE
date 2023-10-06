@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reader {
+
     @Id
     @Column(name = "bookNo")
     private int bookNo;
@@ -70,4 +71,6 @@ public class Reader {
     @ColumnDefault("0")
     @Column(name = "f_senior", nullable = false)
     private int f_senior;
+
+
 }

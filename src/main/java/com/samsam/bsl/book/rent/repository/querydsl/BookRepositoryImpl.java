@@ -44,46 +44,46 @@ public class BookRepositoryImpl implements BookRepositoryQueryDsl {
                 .fetchOne();
     }
 
-    @Override
-    public Rate getRate(int bookNo) {
-        Rate result;
-        return result = queryFactory
-                .select(Projections.constructor(
-                        Rate.class,
-                        rate.bookNo,
-                        rate.point_1,
-                        rate.point_2,
-                        rate.point_3,
-                        rate.point_4,
-                        rate.point_5
-                ))
-                .from(rate)
-                .where(rate.bookNo.eq(bookNo))
-                .fetchOne();
-    }
-
-    @Override
-    public Reader getReader(int bookNo) {
-        Reader result;
-        return result = queryFactory
-                .select(Projections.constructor(
-                        Reader.class,
-                        reader.bookNo,
-                        reader.m_10,
-                        reader.f_10,
-                        reader.m_20,
-                        reader.f_20,
-                        reader.m_30,
-                        reader.f_30,
-                        reader.m_40,
-                        reader.f_40,
-                        reader.m_50,
-                        reader.f_50,
-                        reader.m_senior,
-                        reader.f_senior
-                ))
-                .from(reader)
-                .where(reader.bookNo.eq(bookNo))
-                .fetchOne();
-    }
+//    @Override
+//    public Rate getRate(int bookNo) {
+//        Rate result;
+//        return result = queryFactory
+//                .select(Projections.constructor(
+//                        Rate.class,
+//                        rate.bookNo,
+//                        rate.point_1,
+//                        rate.point_2,
+//                        rate.point_3,
+//                        rate.point_4,
+//                        rate.point_5
+//                ))
+//                .from(rate)
+//                .where(rate.bookNo.eq(bookNo))
+//                .fetchOne();
+//    }
+//
+//    @Override
+//    public Reader getReader(int bookNo) {
+//        Reader result;
+//        return result = queryFactory
+//                .select(Projections.constructor(
+//                        Reader.class,
+//                        reader.bookNo,
+//                        reader.m_10,
+//                        reader.f_10,
+//                        reader.m_20,
+//                        reader.f_20,
+//                        reader.m_30,
+//                        reader.f_30,
+//                        reader.m_40,
+//                        reader.f_40,
+//                        reader.m_50,
+//                        reader.f_50,
+//                        reader.m_senior,
+//                        reader.f_senior
+//                ))
+//                .from(reader)
+//                .where(reader.bookNo.eq(bookNo))
+//                .fetchOne();
+//    }
 }

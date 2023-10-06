@@ -16,11 +16,11 @@ public class BookService {
         return bookRepository.getBook(bookNo);
     }
 
-    public Rate getRate(int bookNo) {
-        return bookRepository.getRate(bookNo);
-    }
-
-    public Reader getReader(int bookNo) {
-        return bookRepository.getReader(bookNo);
-    }
+//    public Rate getRate(int bookNo) {
+//        return bookRepository.getRate(bookNo);
+//    }
+//
+//    public Reader getReader(int bookNo) {
+//        return bookRepository.getReader(bookNo);
+//    }
 }
