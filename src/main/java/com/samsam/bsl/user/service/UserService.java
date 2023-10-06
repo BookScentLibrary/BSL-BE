@@ -25,6 +25,7 @@ public class UserService {
 	@Autowired
 	TokenProvider tokenProvider;
 
+	//회원가입
 	public ResponseDTO<?> signUp(SignUpDTO dto) {
 		// 유효성 검사
 		if (userInfoValidator.getValidMessage(dto).isResult()) {
@@ -44,7 +45,7 @@ public class UserService {
 		// 성공시 success response반환
 		return ResponseDTO.setSuccess("회원가입 성공", null);
 	}
-
+	//로그인
 	public ResponseDTO<SignInResponseDTO> signIn(SignInDTO dto) {
 		String username = dto.getUsername();
 		String userPassword = dto.getPassword();

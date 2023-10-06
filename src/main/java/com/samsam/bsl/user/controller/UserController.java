@@ -27,6 +27,7 @@ public class UserController {
 	@PostMapping("/signUp")  
 	public ResponseDTO<?> signUp(@RequestBody SignUpDTO signUpDTO) {
 		System.out.println("[UserController] signup()");
+		//회원가입 정보 확인
 		System.out.println(signUpDTO.toString());
 		ResponseDTO<?> result = userService.signUp(signUpDTO);
 		return result;
