@@ -1,6 +1,6 @@
-package com.samsam.bsl.book.controller;
+package com.samsam.bsl.book.rent.controller;
 
-import com.samsam.bsl.book.dto.BookDTO;
+import com.samsam.bsl.book.rent.dto.BookDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

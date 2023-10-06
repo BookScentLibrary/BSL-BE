@@ -1,4 +1,4 @@
-package com.samsam.bsl.book.dto;
+package com.samsam.bsl.book.rent.dto;
 
 import lombok.Getter;
 import lombok.Setter;
