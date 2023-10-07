@@ -65,7 +65,7 @@ dependencies {
 }
 
 
-def querydslDir = "src/main/generated/querydsl"
+def querydslDir = "src/main/generated"
 
 querydsl {
   jpa = true
