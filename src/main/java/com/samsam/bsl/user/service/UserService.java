@@ -65,7 +65,7 @@ public class UserService {
 				return ResponseDTO.setFailed("아이디 못 찾음. 아이디 혹은 비밀번호가 일치하지 않습니다.");
 			}
 			//잘못된 비밀번호
-			if(passwordEncoder.matches(passwordEncoder.encode(userPassword), userEntity.getPassword())) {
+			if(!passwordEncoder.matches(userPassword, userEntity.getPassword())) {
 				System.out.println("[UserService] signIn() 입력한 비밀번호 : "+ passwordEncoder.encode(userPassword) );
 				System.out.println("[UserService] signIn() 가져온 비밀번호 : "+ userEntity.getPassword() );
 				System.out.println("[UserService] signIn() 비밀번호 다름.");
