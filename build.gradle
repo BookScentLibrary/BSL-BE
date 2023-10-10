@@ -45,7 +45,10 @@ dependencies {
 
   // querydsl
   implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-  annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+  annotationProcessor(
+    "javax.persistence:javax.persistence-api",
+    "javax.annotation:javax.annotation-api",
+    "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
 
   // lombok
   compileOnly 'org.projectlombok:lombok'

@@ -3,7 +3,6 @@ package com.samsam.bsl.book.rent.service;
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.domain.Rate;
 import com.samsam.bsl.book.rent.domain.Reader;
-import com.samsam.bsl.book.rent.dto.RentDTO;
 import com.samsam.bsl.book.rent.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
