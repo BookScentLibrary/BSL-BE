@@ -36,6 +36,6 @@ public class BookDetailController {
         System.out.println("getBookReader!!!");
         reader = bookService.getReader(bookNo);
         return reader;
-
     }
+
 }

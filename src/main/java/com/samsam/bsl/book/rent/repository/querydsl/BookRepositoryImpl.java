@@ -26,6 +26,7 @@ public class BookRepositoryImpl implements BookRepositoryQueryDsl {
                 .select(Projections.constructor(
                         Book.class,
                         book.bookNo,
+                        book.bookImageURL,
                         book.bookname,
                         book.author,
                         book.publisher,
@@ -37,7 +38,8 @@ public class BookRepositoryImpl implements BookRepositoryQueryDsl {
                         book.bookStatus,
                         book.rentCnt,
                         book.isbn,
-                        book.description
+                        book.description,
+                        book.regDate
                 ))
                 .from(book)
                 .where(book.bookNo.eq(bookNo))
@@ -51,6 +53,7 @@ public class BookRepositoryImpl implements BookRepositoryQueryDsl {
                 .select(Projections.constructor(
                         Rate.class,
                         rate.bookNo,
+                        book,
                         rate.point_1,
                         rate.point_2,
                         rate.point_3,
@@ -69,6 +72,7 @@ public class BookRepositoryImpl implements BookRepositoryQueryDsl {
                 .select(Projections.constructor(
                         Reader.class,
                         reader.bookNo,
+                        book,
                         reader.m_10,
                         reader.f_10,
                         reader.m_20,
@@ -86,4 +90,6 @@ public class BookRepositoryImpl implements BookRepositoryQueryDsl {
                 .where(reader.bookNo.eq(bookNo))
                 .fetchOne();
     }
+
+
 }

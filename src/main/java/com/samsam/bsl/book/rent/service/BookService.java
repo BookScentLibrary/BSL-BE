@@ -3,9 +3,12 @@ package com.samsam.bsl.book.rent.service;
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.domain.Rate;
 import com.samsam.bsl.book.rent.domain.Reader;
+import com.samsam.bsl.book.rent.dto.RentDTO;
 import com.samsam.bsl.book.rent.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookService {
@@ -22,5 +25,9 @@ public class BookService {
 
     public Reader getReader(int bookNo) {
         return bookRepository.getReader(bookNo);
+    }
+
+    public int rent(String userId, int BookNo) {
+        return 0;
     }
 }
