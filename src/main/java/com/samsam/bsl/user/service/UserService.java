@@ -26,11 +26,11 @@ public class UserService {
 	TokenProvider tokenProvider;
 
 	private final PasswordEncoder passwordEncoder;
-
-	public UserService(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-
+	
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+  
 	// 회원가입
 	public ResponseDTO<?> signUp(SignUpDTO dto) {
 		// 유효성 검사
@@ -61,7 +61,7 @@ public class UserService {
 		UserEntity userEntity = null;
 		try {
 			userEntity = userRepository.findByUsername(username);
-			System.out.println("[UserService] signIn() username : " + username);
+			System.out.println("[UserService] signIn() username : "+username);
 			// 아이디 못 찾을때
 			if (userEntity == null) {
 				System.out.println("[UserService] signIn() null 아이디 못 찾음.");

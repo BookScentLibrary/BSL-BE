@@ -1,7 +1,4 @@
-package com.samsam.bsl.book.rent.controller;
-
 import com.samsam.bsl.book.rent.domain.Book;
-import com.samsam.bsl.book.rent.dto.BookDTO;
 import com.samsam.bsl.book.rent.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
