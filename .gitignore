@@ -269,4 +269,6 @@ gradle-app.setting
 
 generated
 
+src/main/generated/*
+
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij,windows,gradle,macos
