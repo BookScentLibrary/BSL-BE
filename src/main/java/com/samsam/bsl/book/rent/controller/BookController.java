@@ -1,6 +1,28 @@
 package com.samsam.bsl.book.rent.controller;
 
+<<<<<<< HEAD:src/main/java/com/samsam/bsl/book/rent/controller/BookController.java
 import com.samsam.bsl.book.rent.dto.BookDTO;
+=======
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.samsam.bsl.book.service.BookService;
+
+@RestController
+@RequestMapping("/api")
+public class BookController {
+	
+	@Autowired
+    private BookService bookService;
+    
+}
+=======
+import com.samsam.bsl.book.dto.BookDTO;
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f:src/main/java/com/samsam/bsl/book/controller/BookController.java
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,4 +54,9 @@ public class BookController {
 
         return book;
     }
+<<<<<<< HEAD:src/main/java/com/samsam/bsl/book/rent/controller/BookController.java
 }
+=======
+}
+
+>>>>>>> efbbb2dc41d612ebcf02856ea351befab5cdbb3f:src/main/java/com/samsam/bsl/book/controller/BookController.java
