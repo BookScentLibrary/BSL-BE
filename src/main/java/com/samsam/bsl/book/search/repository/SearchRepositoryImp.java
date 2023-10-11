@@ -2,12 +2,16 @@ package com.samsam.bsl.book.search.repository;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsam.bsl.book.rent.domain.Book;
 
@@ -20,7 +24,18 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 
 	    public SearchRepositoryImp(JPAQueryFactory queryFactory) {
 	        this.queryFactory = queryFactory;
+	        
+	        
+	        
+	        
+	        
 	    }
+	    
+	    
+	    
+	    
+	    
+	    
 	
 	
 	@Override
@@ -40,9 +55,13 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Autowired
+	EntityManager em;
 
 	@Override
 	public Page<Book> findBybooknameContaining(String searchValue, Pageable pageable) {
+		System.out.println("repoimpl");
+
 		@SuppressWarnings("deprecation")
 		QueryResults<Book> results = queryFactory
 				.select(Projections.constructor(
@@ -62,11 +81,11 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
                         book.description
                 ))
                 .from(book)
-                .where(book.bookname.eq(searchValue))
+                .where(book.bookname.contains(searchValue))
                 .fetchResults();
 		List<Book> content = results.getResults();
 		Long total = results.getTotal();
-		
+		System.out.println("토탈"+total);
 						return new PageImpl<>(content, pageable, total);
 	}
 
