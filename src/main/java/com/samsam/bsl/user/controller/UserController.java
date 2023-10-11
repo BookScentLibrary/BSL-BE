@@ -58,7 +58,10 @@ public class UserController {
 	//로그인 요청
 	@PostMapping("/signIn")
 	public ResponseDTO<SignInResponseDTO> signIn(@RequestBody SignInDTO SignInDTO){
+		System.out.println("[UserController] signIn()");
+		System.out.println(SignInDTO.toString());
 		ResponseDTO<SignInResponseDTO> result = userService.signIn(SignInDTO);
+		System.out.println("서비스 끝났다."+result);
 		return result;
 	}
     
