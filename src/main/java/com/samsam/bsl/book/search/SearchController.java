@@ -20,11 +20,14 @@ public class SearchController {
     private SearchService searchService; // BookService 클래스에 대한 의존성 주입
 
     @GetMapping("/search") // 책 검색을 위한 엔드포인트
-    public ResponseEntity<Object> searchBooks(@RequestParam("searchValue") String searchValue,
+    public ResponseEntity<Object> searchBooks(
+	
+    										@RequestParam("searchValue") String searchValue,
+    										@RequestParam("searchType") int searchType,
     										@RequestParam("pageNumber") int pageNumber, 
     										@RequestParam("pageSize")int pageSize) {
        System.out.println("검색어,페이지 번호, 페이지 크기 :" +searchValue +pageNumber + pageSize);
-    	Page<Book> bookDTOs = searchService.searchBookConfirm(searchValue, pageNumber, pageSize);
+    	Page<Book> bookDTOs = searchService.searchBookConfirm(searchValue, searchType, pageNumber, pageSize);
     	
         if (searchValue != null) {
             return ResponseEntity.status(HttpStatus.OK).body(bookDTOs);
