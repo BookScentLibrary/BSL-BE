@@ -31,8 +31,6 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	UserInfoValidator userInfoValidator;
-	@Autowired
-	private UserRepository userRepository;
 
 	// 회원가입 요청
 	@PostMapping("/signUp")
@@ -75,22 +73,6 @@ public class UserController {
 		System.out.println(SignInDTO.toString());
 		ResponseDTO<SignInResponseDTO> result = userService.signIn(SignInDTO);
 		System.out.println("서비스 끝났다." + result);
-		return result;
-	}
-
-	// 유저 리스트
-	@GetMapping("/userList")
-	public List<UserEntity> getUserList() {
-		// 모든 사용자 목록을 반환합니다.
-		return userRepository.findAll();
-	}
-
-	// 유저 권한 승인 (0 일반유저 ->1 사서 )유저 권한 취소 (1 사서 -> 0 일반유저 ) 
-	@PostMapping("/setPermission")
-	public ResponseDTO<?> setPermission(@RequestBody Map<String, String> request) {
-		String userId = request.get("userId");
-	    Integer permission = Integer.parseInt(request.get("permission"));
-		ResponseDTO<?> result = userService.updateUserPermission(userId, permission);
 		return result;
 	}
 
