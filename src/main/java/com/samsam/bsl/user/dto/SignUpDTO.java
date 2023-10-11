@@ -1,5 +1,9 @@
 package com.samsam.bsl.user.dto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -26,27 +30,15 @@ public class SignUpDTO {
 	private String gender;//성별
 	@NotBlank
 	private String userBirth;//생년월일
-
-
-
-	// UserEntity를 UserDTO로 변환하는 메서드
-//	public static UserDTO toUserDTO(UserEntity userEntity) {
-//		UserDTO userDTO = new UserDTO(userEntity.getUsername(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getNickname(), userEntity.getPhone(), userEntity.getGender(), userEntity.getUserBirth().toString(), userEntity.getUserAge());
-//		return userDTO;
-//	}
-
-    // UserEntity를 UserDTO로 변환하는 메서드
-//    public static UserDTO toUserDTO(UserEntity userEntity) {
-//        UserDTO userDTO = new UserDTO(
-//            userEntity.getUsername(),
-//            userEntity.getPassword(),
-//            userEntity.getEmail(),
-//            userEntity.getNickname(),
-//            userEntity.getPhone(),
-//            userEntity.getGender(),
-//            userEntity.getUserBirth().toString(),
-//            userEntity.getUserAge()
-//        );
-//        return userDTO;
-//    }
+	
+	//String -> LocalDate타입으로 변환
+    public LocalDate getUserBirthAsLocalDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        try {
+            LocalDate date = LocalDate.parse(this.userBirth, formatter);
+            return date;
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
 }

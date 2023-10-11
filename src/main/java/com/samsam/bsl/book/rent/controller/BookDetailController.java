@@ -14,8 +14,8 @@ public class BookDetailController {
     @Autowired
     BookService bookService;
 
-    @GetMapping("/")
-    public @ResponseBody Book getBook(@RequestParam int bookNo) {
+    @GetMapping("")
+    public @ResponseBody Book getBook(@RequestParam("bookNo") int bookNo) {
         Book book = new Book();
         System.out.println("getBook!!!!");
         book = bookService.getBook(bookNo);
@@ -39,3 +39,4 @@ public class BookDetailController {
     }
 
 }
+
