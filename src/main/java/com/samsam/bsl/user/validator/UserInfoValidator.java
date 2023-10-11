@@ -148,7 +148,7 @@ public class UserInfoValidator {
 			}
 		    //비밀번호가 서로 다르면 failed response반환!
 		    if(!password.equals(passwordAgain)) {
-		    	return ResponseDTO.setFailed("비밀번호가 확인과 다릅니다.");
+		    	return ResponseDTO.setFailed("비밀번호가 일치하지 않습니다.");
 		    }
 		    // 아이디 검증
 		    if (!isValidField(username, "^[a-zA-Z0-9]{8,20}$")) {
