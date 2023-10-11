@@ -68,6 +68,7 @@ dependencies {
 }
 
 
+
 //def querydslDir = "$buildDir/generated/querydsl" // intellij
 def querydslDir = "src/main/generated" // sts
 

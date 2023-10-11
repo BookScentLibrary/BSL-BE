@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.samsam.bsl.user.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, String> {
-    Optional<UserEntity> findByUsername(String username);
+	Optional<UserEntity> findById(String userId);
     Optional<UserEntity> findByNickname(String nickname);
     
     // 아이디 중복 검사
@@ -17,6 +17,6 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     boolean existsByNickname(String nickname);
     
     //로그인
-    public boolean existsByUsernameAndPassword(String username, String password);
+    public UserEntity findByUsername(String username);
 
 }
