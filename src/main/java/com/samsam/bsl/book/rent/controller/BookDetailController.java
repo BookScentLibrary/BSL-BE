@@ -22,20 +22,21 @@ public class BookDetailController {
         return book;
     }
 
-//    @GetMapping("/rate")
-//    public @ResponseBody Rate getRate(@RequestParam("bookNo") int bookNo) {
-//        Rate rate = new Rate();
-//        System.out.println("getBookRate!!!");
-//        rate = bookService.getRate(bookNo);
-//        return rate;
-//    }
-//
-//    @GetMapping("/reader")
-//    public @ResponseBody Reader getReader(@RequestParam int bookNo) {
-//        Reader reader = new Reader();
-//        System.out.println("getBookReader!!!");
-//        reader = bookService.getReader(bookNo);
-//        return reader;
-//
-//    }
+    @GetMapping("/rate")
+    public @ResponseBody Rate getRate(@RequestParam int bookNo) {
+        Rate rate = new Rate();
+        System.out.println("getBookRate!!!");
+        rate = bookService.getRate(bookNo);
+        return rate;
+    }
+
+    @GetMapping("/reader")
+    public @ResponseBody Reader getReader(@RequestParam int bookNo) {
+        Reader reader = new Reader();
+        System.out.println("getBookReader!!!");
+        reader = bookService.getReader(bookNo);
+        return reader;
+    }
+
 }
+

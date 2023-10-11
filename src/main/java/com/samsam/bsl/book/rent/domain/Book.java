@@ -14,10 +14,14 @@ import javax.persistence.Table;
 @Table(name="books")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Book {
     @Id
     @Column(name="bookNo")
     private int bookNo;
+
+    @Column(name="bookImageURL")
+    private String bookImageURL;
 
     @Column(name="bookname")
     private String bookname;
@@ -54,4 +58,7 @@ public class Book {
 
     @Column(name="description")
     private String description;
+
+    @Column(name="regDate")
+    private String regDate;
 }
