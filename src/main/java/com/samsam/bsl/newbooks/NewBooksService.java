@@ -1,5 +1,6 @@
 package com.samsam.bsl.newbooks;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class NewBooksService {
 	
     private final NewBooksRepository newBooksRepository;
 
+    @Autowired
     public NewBooksService(NewBooksRepository newBooksRepository) {
         this.newBooksRepository = newBooksRepository;
     }
