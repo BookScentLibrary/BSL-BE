@@ -26,21 +26,25 @@ public class SearchService {
 	SearchRepository searchRepository; 
 	
 	
-	int pageNumber = 1; // 원하는 페이지 번호
-	int pageSize = 10; // 원하는 페이지 크기
-	Sort sort = Sort.by("bookname").ascending(); // 정렬 기준 (예: 제목을 오름차순으로 정렬)
+//	int pageNumber = 1; // 원하는 페이지 번호
+//	int pageSize = 10; // 원하는 페이지 크기
+//	Sort sort = Sort.by("bookname").ascending(); // 정렬 기준 (예: 제목을 오름차순으로 정렬)
 
-	Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-	PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+//	Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+//	PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+
 
 	
 
 
+	PageRequest pageRequest;
+	
        public Page<Book> searchBookConfirm(String searchValue, int pageNumber, int pageSize ) {
-    	   Sort sort = Sort.by("bookname").ascending();
-    	   Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,sort);
-    	   
-    	   return searchRepository.findBybooknameContaining(searchValue, pageNumber, pageSize, pageable);
+    	   // = PageRequest.of(pageNumber-1, pageSize);
+    	   Sort sort = Sort.by(Sort.Order.asc("bookname"));
+    	   Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+    	   System.out.println("service "+ pageable);
+    	   return searchRepository.findBybooknameContaining(searchValue, pageable);
        }
 }
        
