@@ -19,5 +19,4 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     //로그인
     public boolean existsByUsernameAndPassword(String username, String password);
 
-
 }

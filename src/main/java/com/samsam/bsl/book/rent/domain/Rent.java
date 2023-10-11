@@ -17,6 +17,8 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Rent {
     @Id
-    private String userId;
+    private String username;
     private int bookNo;
+    private String rentDate;
+    private String expireDate;
 }

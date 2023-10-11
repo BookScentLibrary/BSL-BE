@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name="books")
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Book {
     @Id
     @Column(name="bookNo")

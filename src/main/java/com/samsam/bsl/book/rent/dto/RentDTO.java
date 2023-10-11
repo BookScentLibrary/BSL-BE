@@ -9,9 +9,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class RentDTO {
-    private String userId;
+    private String username;
     private List<Integer> bookNos;
 }

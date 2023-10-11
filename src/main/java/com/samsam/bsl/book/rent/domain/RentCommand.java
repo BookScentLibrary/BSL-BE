@@ -9,19 +9,19 @@ import lombok.ToString;
 @Builder
 @ToString
 public class RentCommand {
-    private String userId;
+    private String username;
     private int bookNo;
 
     public  RentCommand toCommand() {
         return RentCommand.builder()
-                .userId(userId)
+                .username(username)
                 .bookNo(bookNo)
                 .build();
     }
 
     public Rent toEntity() {
         return Rent.builder()
-                .userId(userId)
+                .username(username)
                 .bookNo(bookNo)
                 .build();
     }
