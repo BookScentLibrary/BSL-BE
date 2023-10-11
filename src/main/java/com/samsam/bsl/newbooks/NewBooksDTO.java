@@ -12,15 +12,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name="books")
+@Table(name="newbook")
 public class NewBooksDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
-    private String bookname;
-    private String author;
-    private String publisher;
-    private String publicationYear;
-    private String regDate;
+    private int bookNo;
 }

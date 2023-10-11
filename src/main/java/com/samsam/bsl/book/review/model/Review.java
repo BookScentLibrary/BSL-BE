@@ -35,10 +35,10 @@ public class Review {
 
 	@Id
 	@Column(nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int rev_postId;
 
-	@Column(nullable = false) 
+	@Column(nullable = false)
 	private String postTitle;
 
 	@Column(nullable = false)
