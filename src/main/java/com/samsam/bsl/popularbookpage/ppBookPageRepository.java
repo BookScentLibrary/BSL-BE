@@ -7,6 +7,6 @@ import com.samsam.bsl.book.rent.domain.Book;
 
 public interface ppBookPageRepository extends JpaRepository<Book, Integer>{
 
-	Page<Book> ppBookDesc();
+//	Page<Book> ppBookDesc();
 	
 }

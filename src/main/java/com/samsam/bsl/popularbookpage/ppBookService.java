@@ -9,13 +9,13 @@ import com.samsam.bsl.book.rent.domain.Book;
 @Service
 public class ppBookService {
 
-	
-	@Autowired
-	private ppBookPageRepository ppbookRepository;
-	
-	public Page<Book> getppBook() {
-	
-	return ppbookRepository.ppBookDesc();
-	
-	}
+
+    @Autowired
+    private ppBookPageRepository ppbookRepository;
+
+    public Page<Book> getppBook() {
+
+//	return ppbookRepository.ppBookDesc();
+        return null;
+    }
 }
