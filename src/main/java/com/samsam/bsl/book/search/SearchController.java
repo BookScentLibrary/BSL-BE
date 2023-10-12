@@ -20,11 +20,14 @@ public class SearchController {
     private SearchService searchService; // BookService 클래스에 대한 의존성 주입
 
     @GetMapping("/search") // 책 검색을 위한 엔드포인트
-    public ResponseEntity<Object> searchBooks(@RequestParam("searchValue") String searchValue,
+    public ResponseEntity<Object> searchBooks(
+	
+    										@RequestParam("searchValue") String searchValue,
+    										@RequestParam("searchType") int searchType,
     										@RequestParam("pageNumber") int pageNumber, 
     										@RequestParam("pageSize")int pageSize) {
        System.out.println("검색어,페이지 번호, 페이지 크기 :" +searchValue +pageNumber + pageSize);
-    	Page<Book> bookDTOs = searchService.searchBookConfirm(searchValue, pageNumber, pageSize);
+    	Page<Book> bookDTOs = searchService.searchBookConfirm(searchValue, searchType, pageNumber, pageSize);
     	
         if (searchValue != null) {
             return ResponseEntity.status(HttpStatus.OK).body(bookDTOs);
@@ -32,39 +35,14 @@ public class SearchController {
         	return ResponseEntity.status(HttpStatus.OK).body("검색 결과 없음");
         }
     }
+    
+    
+    
+    
+    
+    
+    
 
 }
 	
 	
-	
-	
-	
-	
-//	int pageNumber = 1; // 원하는 페이지 번호
-//	int pageSize = 10; // 원하는 페이지 크기
-//	Sort sort = Sort.by("bookname").ascending(); // 정렬 기준 (예: 제목을 오름차순으로 정렬)
-//
-//	Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-//	
-//
-//		@Autowired
-//	    private SearchService searchService; // BookService 클래스에 대한 의존성 주입
-//		
-//		
-//
-//	    @GetMapping("/search") // 책 검색을 위한 엔드포인트
-//	    public ResponseEntity<Object> searchBooks(@RequestParam("searchValue") String searchValue, Book bookDTO) {
-//	       System.out.println("검색어:" +searchValue);
-//	    	Page<Book> bookDTOs = searchService.searchBookConfirm(searchValue);
-//	    	                                                  //이 부분 오류 어떡하지??
-//	    	
-//	        if (bookDTOs != null) {
-//	            return ResponseEntity.status(HttpStatus.OK).body(bookDTOs);
-//	        } else {
-//	        	return ResponseEntity.status(HttpStatus.OK).body("검색 결과 없음");
-//	        }
-//	    }
-//	    
-//
-//
-//}
