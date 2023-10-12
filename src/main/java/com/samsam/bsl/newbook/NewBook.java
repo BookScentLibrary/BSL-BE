@@ -1,4 +1,4 @@
-package com.samsam.bsl.newbooks;
+package com.samsam.bsl.newbook;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="newbook")
-public class NewBooksDTO {
+public class NewBook {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bookNo;
+	private int booknum;
+	private String bookname;
+	private String author;
+	private String publisher;
+	private String regDate;
 }
