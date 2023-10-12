@@ -51,38 +51,12 @@ public class ReviewController {
 			List<ReviewDTO> allReviewDTOList = reviewService.getReviewList();
 
 			if (allReviewDTOList.isEmpty()) {
-				return ResponseEntity.noContent().build(); 
+				return ResponseEntity.noContent().build();
 			} else {
 				return ResponseEntity.ok(allReviewDTOList);
 			}
 		}
 	}
-
-//	@GetMapping("/reviewList")
-//	public ResponseEntity<Page<ReviewDTO>> handleReviewListRequest(
-//	        @RequestParam(value = "keyword", required = false) String keyword,
-//	        @RequestParam(value = "searchType", defaultValue = "all") String searchType,
-//	        @RequestParam(value = "perPage", defaultValue = "20") int perPage,
-//	        @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
-//
-//	    // 페이지 번호는 1 이상이어야 함
-//	    if (pageNum < 1) {
-//	        pageNum = 1;
-//	    }
-//
-//	    // Pageable 객체 생성
-//	    Pageable pageable = PageRequest.of(pageNum - 1, perPage, Sort.by(Sort.Direction.DESC, "createdAt"));
-//
-//	    // 검색 조건에 따라 리뷰 목록 가져오기
-//	    Page<ReviewDTO> reviewDTOPage = reviewService.searchPosts(keyword, searchType, pageable);
-//
-//	    // 검색 결과가 없는 경우
-//	    if (reviewDTOPage.isEmpty()) {
-//	        return ResponseEntity.noContent().build();
-//	    }
-//
-//	    return ResponseEntity.ok(reviewDTOPage);
-//	}
 
 	// 리뷰상세보기
 	@GetMapping("/reviewDetail/{rev_postId}")
@@ -91,12 +65,6 @@ public class ReviewController {
 		return ResponseEntity.ok(reviewDTO);
 	}
 
-//	@GetMapping("/reviewWrite")
-//	public ResponseEntity<String> write() {
-//		// Write logic here
-//		return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-//	}
-
 	// 리뷰쓰기
 	@PostMapping("/reviewWrite")
 	public ResponseEntity<Void> write(@RequestBody ReviewDTO reviewDTO) {
@@ -104,37 +72,28 @@ public class ReviewController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-//	@PostMapping("/reviewWrite")
-//  public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO reviewDTO) {
-//      // 현재 로그인한 사용자의 ID(username)를 가져옴
-//      String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//      
-//      ReviewDTO createdReview = reviewService.createReview(reviewDTO, username);
-//      
-//      if (createdReview != null) {
-//          return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
-//      } else {
-//          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//      }
-//  }
+//	@GetMapping("/reviewEdit/{rev_postId}")
+//	public ResponseEntity<ReviewDTO> edit(@PathVariable("rev_postId") Integer rev_postId) {
+//		ReviewDTO reviewDTO = reviewService.getPost(rev_postId);
+//		return ResponseEntity.ok(reviewDTO);
+//	}
 
-	// 엥머지왜 수정이 두개지
-	@GetMapping("/news/reviewEdit/{rev_postId}")
-	public ResponseEntity<ReviewDTO> edit(@PathVariable("rev_postId") Integer rev_postId) {
-		ReviewDTO reviewDTO = reviewService.getPost(rev_postId);
-		return ResponseEntity.ok(reviewDTO);
-	}
-
+//	@PutMapping("/reviewEdit/{rev_postId}")
+//	public ResponseEntity<Void> updateReview(@PathVariable Integer rev_postId, @RequestBody ReviewDTO reviewDTO) {
+//	    reviewService.modify(reviewDTO); // 1번에서 정의한 수정 메서드 호출
+//	    return ResponseEntity.ok().build(); // 업데이트 성공 시 200 OK 응답 반환
+//	}
 	// 리뷰수정
-	@PutMapping("/news/reviewEdit/{rev_postId}")
+	@PutMapping("/reviewEdit/{rev_postId}")
 	public ResponseEntity<Void> update(@PathVariable("rev_postId") Integer rev_postId,
 			@RequestBody ReviewDTO reviewDTO) {
-		// Update logic here
-		return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+		reviewDTO.setRev_postId(rev_postId); // 리뷰 ID 설정
+	    reviewService.updateReview(reviewDTO); // 리뷰 수정 서비스 호출
+	    return ResponseEntity.ok().build();
 	}
 
 	// 리뷰삭제
-	@DeleteMapping("/news/ReviewDelete/{rev_postId}/")
+	@DeleteMapping("/reviewDetail/{rev_postId}")
 	public ResponseEntity<Void> delete(@PathVariable("rev_postId") Integer rev_postId) {
 		reviewService.deletePost(rev_postId);
 		return ResponseEntity.noContent().build();

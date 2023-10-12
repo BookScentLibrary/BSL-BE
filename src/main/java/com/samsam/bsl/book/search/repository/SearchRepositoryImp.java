@@ -17,16 +17,13 @@ import com.samsam.bsl.book.rent.domain.Book;
 
 import static com.samsam.bsl.book.rent.domain.QBook.book;
 
-
 public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 
 	  private final JPAQueryFactory queryFactory;
 
 	    public SearchRepositoryImp(JPAQueryFactory queryFactory) {
 	        this.queryFactory = queryFactory;
-
 	    }
-
 	
 	@Override
 	public Book getBookname(String bookname) {
@@ -45,6 +42,7 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Autowired
 	EntityManager em;
 
@@ -54,6 +52,7 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 
 		@SuppressWarnings("deprecation")
 		QueryResults<Book> results = queryFactory
+
 				.select(Projections.constructor(
                         Book.class,
                         book.bookNo,
@@ -77,9 +76,10 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
                 .fetchResults();
 		List<Book> content = results.getResults();
 		Long total = results.getTotal();
-		System.out.println("토탈"+total);
-						return new PageImpl<>(content, pageable, total);
+		System.out.println("토탈" + total);
+		return new PageImpl<>(content, pageable, total);
 	}
+
 
 	
 

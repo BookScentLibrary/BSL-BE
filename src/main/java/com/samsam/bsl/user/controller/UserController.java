@@ -1,22 +1,15 @@
 package com.samsam.bsl.user.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.samsam.bsl.user.dto.ResponseDTO;
 import com.samsam.bsl.user.dto.SignInDTO;
 import com.samsam.bsl.user.dto.SignInResponseDTO;
 import com.samsam.bsl.user.dto.SignUpDTO;
-import com.samsam.bsl.user.entity.UserEntity;
-import com.samsam.bsl.user.repository.UserRepository;
 import com.samsam.bsl.user.service.UserService;
 import com.samsam.bsl.user.validator.UserInfoValidator;
 
@@ -39,6 +32,7 @@ public class UserController {
 		// 회원가입 정보 확인
 		System.out.println(signUpDTO.toString());
 		ResponseDTO<?> result = userService.signUp(signUpDTO);
+		System.out.println("[UserController] signup() result" + result.getMessage());
 		return result;
 	}
 
