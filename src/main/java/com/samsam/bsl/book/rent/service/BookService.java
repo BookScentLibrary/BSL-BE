@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class BookService {
@@ -36,13 +37,4 @@ public class BookService {
         return bookRepository.getReader(bookNo);
     }
 
-    public int rent(String username, int bookNo) {
-//        UserEntity user = bookRepository.getUserInfo(username);
-//        Book book = bookRepository.getBook(bookNo);
-        LocalDateTime rentDate = LocalDateTime.now();
-        LocalDateTime expireDate = rentDate.plusDays(7).with(LocalTime.MIDNIGHT);
-        Rent rent = new Rent(username, bookNo, rentDate.toString(), expireDate.toString());
-        rentRepository.save(rent);
-        return 0;
-    }
 }
