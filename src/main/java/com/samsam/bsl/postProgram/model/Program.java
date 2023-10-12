@@ -33,9 +33,7 @@ public class Program {
 	
 	@Column(columnDefinition = "TEXT", nullable = true)
 	private String content;
-	
-	@Column(nullable =false)
-	private Integer userNo;
+
 	
 	
 	@Column(name="createdAt")
@@ -46,6 +44,16 @@ public class Program {
 	@CreatedDate
 	@LastModifiedDate
 	private String modifiedAt;
+
+	@Column(name="startDate")
+	@CreatedDate
+	@LastModifiedDate
+	private String startDate;
+	
+	@Column(name="endDate")
+	@CreatedDate
+	@LastModifiedDate
+	private String endDate;
 	
 	
 	@PrePersist
@@ -60,8 +68,8 @@ public class Program {
 	}
 
 	
-	@Temporal(TemporalType.DATE) java.util.Date startDate;
-	@Temporal(TemporalType.DATE) java.util.Date endDate;
+//	@Temporal(TemporalType.DATE) java.util.Date startDate;
+//	@Temporal(TemporalType.DATE) java.util.Date endDate;
 	
 	@Column(length = 100, nullable = true)
 	private String postImgURL;
@@ -81,6 +89,5 @@ public class Program {
 	@Column(nullable = false)
 	private int programstatus;
 
-	private String expireDate;
 	
 }
