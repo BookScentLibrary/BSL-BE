@@ -1,4 +1,4 @@
-package com.samsam.bsl.newbooks;
+package com.samsam.bsl.newbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/newbooks")
+@RequestMapping("/newbook")
 @Transactional
-public class NewBooksController {
+public class NewBookController {
 
 	@Autowired
-	private NewBooksService newBooksService;
+	private NewBookService newBookService;
 
-    public NewBooksController(NewBooksService newBooksService) {
-        this.newBooksService = newBooksService;
+    public NewBookController(NewBookService newBookService) {
+        this.newBookService = newBookService;
     }
 
-    @GetMapping("/new")
-    public List<NewBooksDTO> newBooksRanking() {
-        return newBooksService.getNewBooks();
+    @GetMapping("/list")
+    public List<NewBook> getNewBooks() {
+        return newBookService.getNewBooksRanking();
     }
 
 }
