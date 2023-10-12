@@ -19,8 +19,8 @@ public class RecommendPostController {
 	
 	@Autowired RecommendService recommendService;
 	//게시글 작성
-    @PostMapping("/recommendWrite")
-    public ResponseDTO<?> createRecommendation(@RequestBody RecommendRequestDTO recommendDTO) {
+    @PostMapping("/createRecommend")
+    public ResponseDTO<?> createRecommend(@RequestBody RecommendRequestDTO recommendDTO) {
     	ResponseDTO<?> result = recommendService.saveRecommendation(recommendDTO);
         
         return result;

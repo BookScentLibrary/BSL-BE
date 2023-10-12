@@ -1,6 +1,5 @@
 package com.samsam.bsl.recommend.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -32,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class Recommend {
 	
 	@Id
-	@Column(nullable = false)
+	@Column(name = "rec_postId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int recPostId;
 
@@ -72,7 +71,7 @@ public class Recommend {
 		this.content = dto.getContent(); // 게시글 내용
 		this.createdAt = currentDate; // 입력 날짜와 시간
 		this.modifiedAt = currentDate; // 수정 날짜와 시간
-//		this.userId = dto.getUserId(); // userUUID
-//		this.bookNo = dto.getBookNo(); // 도서 번호
+		this.userId = dto.getUserId(); // userUUID
+		this.bookNo = dto.getBookNo(); // 도서 번호
 	}
 }
