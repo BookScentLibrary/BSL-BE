@@ -70,8 +70,8 @@ dependencies {
 
 
 
-def querydslDir = "$buildDir/generated/querydsl" // intellij
-//def querydslDir = "src/main/generated" // sts
+//def querydslDir = "$buildDir/generated/querydsl" // intellij
+def querydslDir = "src/main/generated" // sts
 
 querydsl {
     jpa = true
