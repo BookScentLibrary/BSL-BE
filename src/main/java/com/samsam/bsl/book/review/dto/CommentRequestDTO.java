@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.samsam.bsl.book.review.model.Comment;
-import com.samsam.bsl.book.review.model.Review;
+import com.samsam.bsl.book.review.domain.Comment;
+import com.samsam.bsl.book.review.domain.Review;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
