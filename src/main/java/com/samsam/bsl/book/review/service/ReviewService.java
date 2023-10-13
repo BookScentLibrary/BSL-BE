@@ -220,12 +220,6 @@ public class ReviewService {
             review.setRate(reviewDTO.getRate());
             review.setContent(reviewDTO.getContent());
             review.setBookNo(reviewDTO.getBookNo());
-//            review.setBookImageURL(reviewDTO.getBookImageURL());
-//            review.setBookname(reviewDTO.getBookname());
-//            review.setAuthor(reviewDTO.getAuthor());
-//            review.setPublisher(reviewDTO.getPublisher());
-//            review.setCallNum(reviewDTO.getCallNum());
-//            review.setShelfArea(reviewDTO.getShelfArea());
 
             // ReviewRepository를 사용하여 업데이트
             reviewRepository.save(review);

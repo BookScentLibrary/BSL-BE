@@ -94,23 +94,5 @@ public class ReviewDTO {
 
 //	@Builder
 //	public ReviewDTO(Review review) {
-//		this.userId = review.getUserId();
-//		this.bookNo = review.getBookNo();
-//		this.rev_postId = review.getRev_postId();
-//		this.postTitle = review.getPostTitle();
-//		this.content = review.getContent();
-//		this.createdAt = review.getCreatedAt();
-//		this.modifiedAt = review.getModifiedAt();
-//		this.isbn = review.getIsbn();
-//		this.rate = review.getRate();
-//		this.nickname = review.getUser().getNickname();
-//		this.bookname = review.getBook().getBookname();
-//		this.bookImageURL = review.getBook().getBookImageURL();
-//		this.author = review.getBook().getAuthor();
-//		this.publisher = review.getBook().getPublisher();
-//		this.callNum = review.getBook().getCallNum();
-//		this.shelfArea = review.getBook().getShelfArea();
-//		this.comments = review.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
-//	}
 
 }

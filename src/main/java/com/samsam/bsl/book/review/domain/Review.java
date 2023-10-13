@@ -76,8 +76,6 @@ public class Review {
 	private int bookNo;
 
 
-
-
 //	@Column(nullable = false)
 //	private String nickname;
 //
@@ -111,11 +109,5 @@ public class Review {
 		this.content = content;
 		this.rate = rate;
 		this.bookNo = bookNo;
-//		this.bookImageURL = bookImageURL;
-//		this.bookname = bookname;
-//		this.author = author;
-//		this.publisher = publisher;
-//		this.callNum = callNum;
-//		this.shelfArea = shelfArea;
 	}
 }
