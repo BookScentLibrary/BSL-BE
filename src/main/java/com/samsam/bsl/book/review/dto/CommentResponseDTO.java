@@ -2,7 +2,7 @@ package com.samsam.bsl.book.review.dto;
 
 import java.time.LocalDateTime;
 
-import com.samsam.bsl.book.review.model.Comment;
+import com.samsam.bsl.book.review.domain.Comment;
 
 import lombok.Getter;
 

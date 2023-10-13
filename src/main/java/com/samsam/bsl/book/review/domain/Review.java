@@ -1,4 +1,4 @@
-package com.samsam.bsl.book.review.model;
+package com.samsam.bsl.book.review.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -78,26 +78,26 @@ public class Review {
 	
 	
 	
-	@Column(nullable = false)
-	private String nickname;
-	
-	@Column(nullable = false)
-	private String bookname;
-	
-	@Column(nullable = false)
-	private String bookImageURL;
-	
-	@Column(nullable = false)
-	private String author;
-	
-	@Column(nullable = false)
-	private String publisher;
-	
-	@Column(nullable = false)
-	private String callNum;
-	
-	@Column(nullable = false)
-	private String shelfArea;
+//	@Column(nullable = false)
+//	private String nickname;
+//	
+//	@Column(nullable = false)
+//	private String bookname;
+//	
+//	@Column(nullable = false)
+//	private String bookImageURL;
+//	
+//	@Column(nullable = false)
+//	private String author;
+//	
+//	@Column(nullable = false)
+//	private String publisher;
+//	
+//	@Column(nullable = false)
+//	private String callNum;
+//	
+//	@Column(nullable = false)
+//	private String shelfArea;
 
 	@OneToMany(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("rev_postId") // 댓글 정렬
@@ -110,11 +110,11 @@ public class Review {
 		this.content = content;
 		this.rate = rate;
 		this.bookNo = bookNo;
-		this.bookImageURL = bookImageURL;
-		this.bookname = bookname;
-		this.author = author;
-		this.publisher = publisher;
-		this.callNum = callNum;
-		this.shelfArea = shelfArea;
+//		this.bookImageURL = bookImageURL;
+//		this.bookname = bookname;
+//		this.author = author;
+//		this.publisher = publisher;
+//		this.callNum = callNum;
+//		this.shelfArea = shelfArea;
 	}
 }
