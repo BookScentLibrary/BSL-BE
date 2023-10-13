@@ -26,6 +26,9 @@ public class NoticeService {
 	@Autowired
 	private NoticeRepository noticeRepository;
 
+	@Autowired
+	private ReviewRepository reviewRepository;
+
 	@Transactional
 	public List<NoticeDTO> getNoticeList() {
 		List<Notice> notices = noticeRepository.getAllNotices();
@@ -71,8 +74,9 @@ public class NoticeService {
 	public List<ReviewDTO> getReviewsPerPage(int perPage, int pageNum) {
 		Pageable pageable = PageRequest.of(pageNum - 1, perPage, Sort.by(Sort.Direction.ASC, "createdAt"));
 		Page<Review> page = reviewRepository.findAll(pageable);
-		List<ReviewDTO> reviews = page.map(this::convertEntityToDto).getContent();
-		return reviews;
+//		List<ReviewDTO> reviews = page.map(this::convertEntityToDto).getContent();
+//		return reviews;
+		return null;
 	}
 
 	@Transactional
@@ -85,7 +89,8 @@ public class NoticeService {
 		Optional<Review> reviewWrapper = reviewRepository.findById(rev_postId);
 		Review review = reviewWrapper.get();
 
-		return this.convertEntityToDto(review);
+//		return this.convertEntityToDto(review);
+		return null;
 	}
 
 	@Transactional

@@ -29,6 +29,9 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
+	@Autowired
+	private ReviewService reviewService;
+
 	@GetMapping("/notice")
 	public ResponseEntity<List<NoticeDTO>> handleNoticeListRequest(
 			@RequestParam(value = "keyword", required = false) String keyword,
