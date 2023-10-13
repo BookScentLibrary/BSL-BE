@@ -9,18 +9,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.recommend.repository.RecommendRepository;
+import com.samsam.bsl.recommend.service.RecommendService;
+import com.samsam.bsl.user.dto.ResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-public class RecommendListController {
-	@Autowired RecommendRepository recommendRepository;
+public class RecommendController {
+	@Autowired
+	RecommendRepository recommendRepository;
+
+	@Autowired
+	RecommendService recommendService;
+
+//	// 사서 추천 도서 리스트
+//	@GetMapping("/recommendList")
+//	public ResponseDTO<?> getRecommendList() {
+//		// 모든 사서 추천 도서 리스트 반환합니다.
+//		ResponseDTO<?> result = recommendService.getRecommendList();
+//
+//		return result;
+//	}
 	
-	// 사서 추천 도서 리스트
 	@GetMapping("/recommendList")
-	public List<Recommend> getUserList() {
+	public List<Recommend> getRecommendList() {
 		// 모든 사서 추천 도서 리스트 반환합니다.
 		return recommendRepository.findAll();
 	}
