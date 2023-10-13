@@ -25,4 +25,5 @@ public interface SearchRepository extends JpaRepository<Book, Integer>{
 
 	//Page<Book> ErrorPage(Pageable pageable);
 }
+
 	

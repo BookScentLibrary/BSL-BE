@@ -15,7 +15,6 @@ import com.samsam.bsl.book.rent.domain.Book;
 @RequestMapping("/book")
 public class SearchController {
 
-	
 	@Autowired
     private SearchService searchService; // BookService 클래스에 대한 의존성 주입
 
@@ -36,12 +35,7 @@ public class SearchController {
         }
     }
     
-    
-    
-    
-    
-    
-    
+
 
 }
 	

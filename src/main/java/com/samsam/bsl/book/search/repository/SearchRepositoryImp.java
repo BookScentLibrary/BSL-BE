@@ -14,13 +14,13 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsam.bsl.book.rent.domain.Book;
-
 import static com.samsam.bsl.book.rent.domain.QBook.book;
 
 public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 
 	  private final JPAQueryFactory queryFactory;
 
+  
 	    public SearchRepositoryImp(JPAQueryFactory queryFactory) {
 	        this.queryFactory = queryFactory;
 	    }
