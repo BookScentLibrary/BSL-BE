@@ -192,29 +192,29 @@ public class ReviewService {
         return reviews.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
-    @Transactional
-    public void updateReview(ReviewDTO reviewDTO) {
-        Optional<Review> optionalReview = reviewRepository.findById(reviewDTO.getRev_postId());
-
-        if (optionalReview.isPresent()) {
-            Review review = optionalReview.get();
-
-            // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
-            review.setPostTitle(reviewDTO.getPostTitle());
-            review.setRate(reviewDTO.getRate());
-            review.setContent(reviewDTO.getContent());
-            review.setBookNo(reviewDTO.getBookNo());
-            review.setBookImageURL(reviewDTO.getBookImageURL());
-            review.setBookname(reviewDTO.getBookname());
-            review.setAuthor(reviewDTO.getAuthor());
-            review.setPublisher(reviewDTO.getPublisher());
-            review.setCallNum(reviewDTO.getCallNum());
-            review.setShelfArea(reviewDTO.getShelfArea());
-
-            // ReviewRepository를 사용하여 업데이트
-            reviewRepository.save(review);
-        }
-    }
+//    @Transactional
+//    public void updateReview(ReviewDTO reviewDTO) {
+//        Optional<Review> optionalReview = reviewRepository.findById(reviewDTO.getRev_postId());
+//
+//        if (optionalReview.isPresent()) {
+//            Review review = optionalReview.get();
+//
+//            // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+//            review.setPostTitle(reviewDTO.getPostTitle());
+//            review.setRate(reviewDTO.getRate());
+//            review.setContent(reviewDTO.getContent());
+//            review.setBookNo(reviewDTO.getBookNo());
+//            review.setBookImageURL(reviewDTO.getBookImageURL());
+//            review.setBookname(reviewDTO.getBookname());
+//            review.setAuthor(reviewDTO.getAuthor());
+//            review.setPublisher(reviewDTO.getPublisher());
+//            review.setCallNum(reviewDTO.getCallNum());
+//            review.setShelfArea(reviewDTO.getShelfArea());
+//
+//            // ReviewRepository를 사용하여 업데이트
+//            reviewRepository.save(review);
+//        }
+//    }
 
 
 }

@@ -1,13 +1,14 @@
 package com.samsam.bsl.recommend.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.repository.BookRepository;
+import com.samsam.bsl.recommend.dto.RecommendListResponseDTO;
 import com.samsam.bsl.recommend.dto.RecommendRequestDTO;
 import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.recommend.repository.RecommendRepository;
@@ -56,17 +57,37 @@ public class RecommendService {
 		// return ResponseDTO.setFailed("게시글 작성 실패");
 	}
 	
-//	//게시글 목록
-//	public ResponseDTO<?> saveRecommend() {
-//		try {
-//			List<Recommend> recommendList = recommendRepository.findAll();
-//		
-//			// 사용자 정보 가져오기
-//						UserEntity user = userRepository.findByUserId(dto.getUserId());
-//
-//						// 책 정보 가져오기
-//						Book book = bookRepository.getBook(dto.getBookNo());
-//		}
-//	}
+	//게시글 목록
+	public ResponseDTO<List<RecommendListResponseDTO>> getRecommendList() {
+	    try {
+	        List<Recommend> recommendList = recommendRepository.findAll();
+	        List<RecommendListResponseDTO> responseList = new ArrayList<>(); // 리스트 생성
+
+	        for (Recommend recommend : recommendList) {
+	            int bookNo = recommend.getBookNo();
+	            String userId = recommend.getUserId();
+
+	            // 도서 정보 가져오기
+	            Book book = bookRepository.getBook(bookNo);
+
+	            // 사용자 정보 가져오기
+	            UserEntity user = userRepository.findByUserId(userId);
+
+	            // RecommendListResponseDTO 객체 생성
+	            RecommendListResponseDTO recommendListResponseDTO = new RecommendListResponseDTO();
+	            recommendListResponseDTO.setBook(book);
+	            recommendListResponseDTO.setUser(user);
+	            recommendListResponseDTO.setBookImageURL(book.getBookImageURL());
+
+	            responseList.add(recommendListResponseDTO); // 리스트에 객체 추가
+	        }
+
+	        return ResponseDTO.setSuccess("게시글 조회 성공", responseList);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseDTO.setFailed("데이터베이스 오류입니다.");
+	    }
+	}
 
 }

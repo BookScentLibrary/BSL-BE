@@ -84,13 +84,13 @@ public class ReviewController {
 //	    return ResponseEntity.ok().build(); // 업데이트 성공 시 200 OK 응답 반환
 //	}
 	// 리뷰수정
-	@PutMapping("/reviewEdit/{rev_postId}")
-	public ResponseEntity<Void> update(@PathVariable("rev_postId") Integer rev_postId,
-			@RequestBody ReviewDTO reviewDTO) {
-		reviewDTO.setRev_postId(rev_postId); // 리뷰 ID 설정
-	    reviewService.updateReview(reviewDTO); // 리뷰 수정 서비스 호출
-	    return ResponseEntity.ok().build();
-	}
+//	@PutMapping("/reviewEdit/{rev_postId}")
+//	public ResponseEntity<Void> update(@PathVariable("rev_postId") Integer rev_postId,
+//			@RequestBody ReviewDTO reviewDTO) {
+//		reviewDTO.setRev_postId(rev_postId); // 리뷰 ID 설정
+//	    reviewService.updateReview(reviewDTO); // 리뷰 수정 서비스 호출
+//	    return ResponseEntity.ok().build();
+//	}
 
 	// 리뷰삭제
 	@DeleteMapping("/reviewDetail/{rev_postId}")
