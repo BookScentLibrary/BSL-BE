@@ -17,4 +17,9 @@ public class NewBook {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookNo;
+	private String bookname;
+	private String author;
+	private String publisher;
+	private String publicationYear;
+	private String regDate;
 }

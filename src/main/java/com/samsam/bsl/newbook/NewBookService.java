@@ -12,8 +12,8 @@ public class NewBookService {
         this.newBookRepository = newBookRepository;
     }
     
-    public List<NewBook> getNewBooksRanking() {
-        return newBookRepository.newBooksRanking();
+    public List<NewBook> getNewBookRanking() {
+        return newBookRepository.newBookRanking();
     }
     
 }

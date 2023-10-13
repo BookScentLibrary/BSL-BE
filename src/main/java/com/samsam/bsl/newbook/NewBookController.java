@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/newbook")
+@RequestMapping("/newBook")
 @Transactional
 public class NewBookController {
 
@@ -20,8 +20,8 @@ public class NewBookController {
     }
 
     @GetMapping("/list")
-    public List<NewBook> getNewBooks() {
-        return newBookService.getNewBooksRanking();
+    public List<NewBook> getNewBook() {
+        return newBookService.getNewBookRanking();
     }
 
 }
