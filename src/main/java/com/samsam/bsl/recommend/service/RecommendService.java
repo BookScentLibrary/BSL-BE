@@ -65,22 +65,19 @@ public class RecommendService {
 
 	        for (Recommend recommend : recommendList) {
 	            int bookNo = recommend.getBookNo();
-	            String userId = recommend.getUserId();
 
 	            // 도서 정보 가져오기
 	            Book book = bookRepository.getBook(bookNo);
 
-	            // 사용자 정보 가져오기
-	            UserEntity user = userRepository.findByUserId(userId);
-
 	            // RecommendListResponseDTO 객체 생성
 	            RecommendListResponseDTO recommendListResponseDTO = new RecommendListResponseDTO();
-	            recommendListResponseDTO.setBook(book);
-	            recommendListResponseDTO.setUser(user);
 	            recommendListResponseDTO.setBookImageURL(book.getBookImageURL());
+	            recommendListResponseDTO.setPostTitle(recommend.getPostTitle());
+	            recommendListResponseDTO.setCreatedAt(recommend.getCreatedAt());
 
 	            responseList.add(recommendListResponseDTO); // 리스트에 객체 추가
 	        }
+	        System.out.println("responseList : " +responseList);
 
 	        return ResponseDTO.setSuccess("게시글 조회 성공", responseList);
 

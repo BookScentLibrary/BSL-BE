@@ -34,9 +34,4 @@ public class RecommendController {
 	    return result;
 	}
 	
-//	@GetMapping("/recommendList")
-//	public List<Recommend> getRecommendList() {
-//		// 모든 사서 추천 도서 리스트 반환합니다.
-//		return recommendRepository.findAll();
-//	}
 }
