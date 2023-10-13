@@ -21,7 +21,7 @@ public class RecommendPostController {
 	//게시글 작성
     @PostMapping("/createRecommend")
     public ResponseDTO<?> createRecommend(@RequestBody RecommendRequestDTO recommendDTO) {
-    	ResponseDTO<?> result = recommendService.saveRecommendation(recommendDTO);
+    	ResponseDTO<?> result = recommendService.saveRecommend(recommendDTO);
         
         return result;
     }
