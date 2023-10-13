@@ -74,30 +74,30 @@ public class Review {
 
 	@Column(nullable = false)
 	private int bookNo;
-	
-	
-	
-	
-	@Column(nullable = false)
-	private String nickname;
-	
-	@Column(nullable = false)
-	private String bookname;
-	
-	@Column(nullable = false)
-	private String bookImageURL;
-	
-	@Column(nullable = false)
-	private String author;
-	
-	@Column(nullable = false)
-	private String publisher;
-	
-	@Column(nullable = false)
-	private String callNum;
-	
-	@Column(nullable = false)
-	private String shelfArea;
+
+
+
+
+//	@Column(nullable = false)
+//	private String nickname;
+//
+//	@Column(nullable = false)
+//	private String bookname;
+//
+//	@Column(nullable = false)
+//	private String bookImageURL;
+//
+//	@Column(nullable = false)
+//	private String author;
+//
+//	@Column(nullable = false)
+//	private String publisher;
+//
+//	@Column(nullable = false)
+//	private String callNum;
+//
+//	@Column(nullable = false)
+//	private String shelfArea;
 
 	@OneToMany(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("rev_postId") // 댓글 정렬
@@ -105,16 +105,16 @@ public class Review {
 
 	/* 게시글 수정 메소드 */
 	public void update(String postTitle, String content, int rate, int bookNo, String bookImageURL, String bookname,
-			String author, String publisher,  String callNum, String shelfArea) {
+					   String author, String publisher,  String callNum, String shelfArea) {
 		this.postTitle = postTitle;
 		this.content = content;
 		this.rate = rate;
 		this.bookNo = bookNo;
-		this.bookImageURL = bookImageURL;
-		this.bookname = bookname;
-		this.author = author;
-		this.publisher = publisher;
-		this.callNum = callNum;
-		this.shelfArea = shelfArea;
+//		this.bookImageURL = bookImageURL;
+//		this.bookname = bookname;
+//		this.author = author;
+//		this.publisher = publisher;
+//		this.callNum = callNum;
+//		this.shelfArea = shelfArea;
 	}
 }

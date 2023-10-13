@@ -78,7 +78,7 @@ public class ReviewController {
 //		return ResponseEntity.ok(reviewDTO);
 //	}
 
-//	@PutMapping("/reviewEdit/{rev_postId}")
+	//	@PutMapping("/reviewEdit/{rev_postId}")
 //	public ResponseEntity<Void> updateReview(@PathVariable Integer rev_postId, @RequestBody ReviewDTO reviewDTO) {
 //	    reviewService.modify(reviewDTO); // 1번에서 정의한 수정 메서드 호출
 //	    return ResponseEntity.ok().build(); // 업데이트 성공 시 200 OK 응답 반환
@@ -86,10 +86,10 @@ public class ReviewController {
 	// 리뷰수정
 	@PutMapping("/reviewEdit/{rev_postId}")
 	public ResponseEntity<Void> update(@PathVariable("rev_postId") Integer rev_postId,
-			@RequestBody ReviewDTO reviewDTO) {
+									   @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setRev_postId(rev_postId); // 리뷰 ID 설정
-	    reviewService.updateReview(reviewDTO); // 리뷰 수정 서비스 호출
-	    return ResponseEntity.ok().build();
+		reviewService.updateReview(reviewDTO); // 리뷰 수정 서비스 호출
+		return ResponseEntity.ok().build();
 	}
 
 	// 리뷰삭제
