@@ -1,4 +1,4 @@
-package com.samsam.bsl.book.review.model;
+package com.samsam.bsl.book.review.domain;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -96,6 +96,7 @@ public class Review {
 //	@Column(nullable = false)
 //	private String callNum;
 //
+
 //	@Column(nullable = false)
 //	private String shelfArea;
 

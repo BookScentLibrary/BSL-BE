@@ -1,4 +1,4 @@
-package com.samsam.bsl.book.review.model;
+package com.samsam.bsl.book.review.domain;
 
 import java.time.LocalDateTime;
 

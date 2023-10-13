@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.samsam.bsl.book.review.model.Review;
+import com.samsam.bsl.book.review.domain.Review;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {

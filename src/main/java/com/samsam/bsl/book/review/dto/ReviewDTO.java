@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.samsam.bsl.book.review.model.Review;
+import com.samsam.bsl.book.review.domain.Review;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,6 +69,7 @@ public class ReviewDTO {
 					 LocalDateTime createdAt, LocalDateTime modifiedAt, String isbn, int rate, String nickname,
 					 String bookname, String bookImageURL, String author, String publisher, String callNum,
 					 String shelfArea, List<CommentResponseDTO> comments) {
+
 		this.userId = userId;
 		this.bookNo = bookNo;
 		this.rev_postId = rev_postId;
@@ -88,6 +89,8 @@ public class ReviewDTO {
 		this.comments = comments;
 		//this.comments = review.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 	}
+
+	;
 
 //	@Builder
 //	public ReviewDTO(Review review) {
@@ -109,4 +112,5 @@ public class ReviewDTO {
 //		this.shelfArea = review.getBook().getShelfArea();
 //		this.comments = review.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 //	}
+
 }
