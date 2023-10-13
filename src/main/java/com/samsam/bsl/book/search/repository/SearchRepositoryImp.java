@@ -14,7 +14,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsam.bsl.book.rent.domain.Book;
-
 import static com.samsam.bsl.book.rent.domain.QBook.book;
 
 
@@ -22,11 +21,10 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 
 	  private final JPAQueryFactory queryFactory;
 
+  
 	    public SearchRepositoryImp(JPAQueryFactory queryFactory) {
 	        this.queryFactory = queryFactory;
 	    }
-	    
-
 	
 	@Override
 	public Book getBookname(String bookname) {
@@ -57,6 +55,7 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 				.select(Projections.constructor(
                         Book.class,
                         book.bookNo,
+                        book.bookImageURL,
                         book.bookname,
                         book.author,
                         book.publisher,
@@ -68,7 +67,8 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
                         book.bookStatus,
                         book.rentCnt,
                         book.isbn,
-                        book.description
+                        book.description,
+                        book.regDate
                 ))
                 .from(book)
                 .where(book.bookname.contains(searchValue))
@@ -80,6 +80,7 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 	}
 
 	
+
 	public Page<Book> findByAuthorContaining (String searchValue, Pageable pageable){
 		System.out.println("searchType_Author");
 		

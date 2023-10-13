@@ -9,15 +9,17 @@ import org.springframework.stereotype.Service;
 import com.samsam.bsl.book.rent.domain.Book;
 
 @Service
-public class PPBookPageService {
-
-	@Autowired
-	private static PPBookPageRepository ppbookPageRepository;
+public class ppBookPageService {
+		
 	
-	public static Page<Book> findTop10ByOrderByRentCntDesc(Pageable pageable) {
-	return ppbookPageRepository.findTop10ByOrderByRentCntDesc(pageable);
+	@Autowired
+	private static ppBookPageRepository ppbookPageRepository;
+	
+	public static Page<Book> findTop20ByOrderByRentCntDesc(Pageable pageable) {
+	return ppbookPageRepository.findTop20ByOrderByRentCntDesc(pageable);
 	                             
 	}
+
 
 
 	

@@ -11,4 +11,5 @@ public interface SearchRepositoryQueryDsl {
 	Book getPublisher (String publisher);
 	Page<Book> findBybooknameContaining(String searchValue,Pageable pageable);
 //	Page<Book> keywordAll(String searchValue, Pageable pageable);
+
 }

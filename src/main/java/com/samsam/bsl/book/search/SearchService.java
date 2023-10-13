@@ -1,17 +1,11 @@
 package com.samsam.bsl.book.search;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.transaction.Transactional;
 
 import com.samsam.bsl.book.rent.domain.Book;
-import com.samsam.bsl.book.rent.dto.BookDTO;
 import com.samsam.bsl.book.search.repository.SearchRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,6 +19,7 @@ public class SearchService {
 	@Autowired
 	SearchRepository searchRepository; 
 	
+
 	public Page<Book> searchBookConfirm(String searchValue, int searchType, int pageNumber, int pageSize ) {
 	 	   // = PageRequest.of(pageNumber-1, pageSize);
 	 	   Sort sort = Sort.by(Sort.Order.asc("bookname"));
@@ -48,19 +43,16 @@ public class SearchService {
 	 	   			//searchRepository.keywordAll(searchValue, pageable);
 
 	 	   }
-	
 
 	}
 }
-
 
 	
 
        
        
 	       
-	        
-	        
+
 	        
 	    
 	

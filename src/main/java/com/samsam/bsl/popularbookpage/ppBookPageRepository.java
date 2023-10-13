@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.samsam.bsl.book.rent.domain.Book;
 
-public interface PPBookPageRepository extends JpaRepository<Book, Integer> {
-
-	Page<Book> findTop10ByOrderByRentCntDesc(Pageable pageable);
-	
+public interface ppBookPageRepository extends JpaRepository<Book, Integer>{
+	Page<Book> findTop20ByOrderByRentCntDesc(Pageable pageable);
 	
 }
