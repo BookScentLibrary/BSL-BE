@@ -1,5 +1,6 @@
 package com.samsam.bsl.book.rent.dto;
 
+import com.samsam.bsl.book.rent.domain.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,3 +16,5 @@ public class RentDTO {
     private String username;
     private List<Integer> bookNos;
 }
+
+

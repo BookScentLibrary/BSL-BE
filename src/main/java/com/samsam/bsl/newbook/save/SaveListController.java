@@ -31,7 +31,5 @@ public class SaveListController implements CommandLineRunner {
             e.printStackTrace();
             System.err.println("에러 발생");
         }
-        
     }
-    
 }

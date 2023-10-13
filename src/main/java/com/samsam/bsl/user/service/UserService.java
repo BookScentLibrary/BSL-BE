@@ -44,12 +44,14 @@ public class UserService {
 			try {
 				// UserRepository를 이용해서 데이터베이스에 Entity 저장
 				userRepository.save(userEntity);
+				// 성공시 success response반환
+				return ResponseDTO.setSuccess("회원가입 성공", null);
 			} catch (Exception e) {
 				return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 			}
 		}
-		// 성공시 success response반환
-		return ResponseDTO.setSuccess("회원가입 성공", null);
+		// 실패 시 에러 response 반환
+	    return ResponseDTO.setFailed("유효성 검사 실패");
 	}
 
 	// 로그인
