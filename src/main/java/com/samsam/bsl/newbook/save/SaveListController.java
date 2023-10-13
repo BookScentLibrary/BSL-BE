@@ -7,29 +7,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class SaveListController implements CommandLineRunner {
 
-    private final JdbcTemplate jdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
-    public SaveListController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+  public SaveListController(JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
+  }
+
+  @Override
+  public void run(String... args) {
+
+    try {
+      jdbcTemplate.execute("DELETE FROM newBook");
+
+      jdbcTemplate.execute("INSERT INTO newBook (bookNo) " +
+        "SELECT bookNo " +
+        "FROM books " +
+        "ORDER BY regDate DESC " +
+        "LIMIT 20");
+
+      System.out.println("데이터 복사 완료");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println("에러 발생");
     }
-
-    @Override
-    public void run(String... args) {
-    	
-    	try {
-            jdbcTemplate.execute("DELETE FROM newBook");
-
-            jdbcTemplate.execute("INSERT INTO newBook (bookNo) " +
-                    "SELECT bookNo " +
-                    "FROM books " +
-                    "ORDER BY regDate DESC " +
-                    "LIMIT 20");
-
-            System.out.println("데이터 복사 완료");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("에러 발생");
-        }
-    }
+  }
 }
