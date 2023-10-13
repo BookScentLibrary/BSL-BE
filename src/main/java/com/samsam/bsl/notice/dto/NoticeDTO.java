@@ -28,8 +28,15 @@ public class NoticeDTO {
 
 	// NoticeDTO -> Notice
 	public Notice toEntity() {
-		Notice notice = Notice.builder().userId(userId).not_postId(not_postId).postTitle(postTitle).content(content)
-				.postImgURL(postImgURL).createdAt(createdAt).modifiedAt(modifiedAt).build();
+		Notice notice = Notice.builder()
+				.userId(userId)
+				.not_postId(not_postId)
+				.postTitle(postTitle)
+				.content(content)
+				.postImgURL(postImgURL)
+				.createdAt(createdAt)
+				.modifiedAt(modifiedAt)
+				.build();
 		return notice;
 	}
 	
@@ -39,8 +46,8 @@ public class NoticeDTO {
 		this.userId = userId;
 		this.not_postId = not_postId;
 		this.postTitle = postTitle;
-		this.content = postImgURL;
-		this.postImgURL = content;
+		this.content = content;
+		this.postImgURL = postImgURL;
 		this.createdAt = createdAt;
 		this.modifiedAt = modifiedAt;
 		this.nickname = nickname;
