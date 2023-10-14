@@ -7,15 +7,22 @@ import java.util.List;
 @Service
 public class NewBookService {
 	
-    private final NewBookRepository newBookRepository;
+//    private final NewBookRepository newBookRepository;
+
+//    @Autowired
+//    public NewBookService(NewBookRepository newBookRepository) {
+//        this.newBookRepository = newBookRepository;
+//    }
 
     @Autowired
-    public NewBookService(NewBookRepository newBookRepository) {
-        this.newBookRepository = newBookRepository;
+    NewBookRepository newBookRepository;
+
+//    public List<NewBook> getNewBooksRanking() {
+//        return newBookRepository.newBooksRanking();
+//    }
+
+    public List<NewBookDTO> getNewBooks() {
+        return newBookRepository.getNewBooks();
     }
-    
-    public List<NewBook> getNewBooksRanking() {
-        return newBookRepository.newBooksRanking();
-    }
-    
+
 }
