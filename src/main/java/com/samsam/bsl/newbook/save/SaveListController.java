@@ -1,4 +1,5 @@
-/*package com.samsam.bsl.newbook.save;
+
+package com.samsam.bsl.newbook.save;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,4 +33,4 @@ public class SaveListController implements CommandLineRunner {
       System.err.println("에러 발생");
     }
   }
-}*/
+}

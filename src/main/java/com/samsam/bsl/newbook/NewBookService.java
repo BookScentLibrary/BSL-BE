@@ -1,3 +1,4 @@
+
 package com.samsam.bsl.newbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class NewBookService {
 //    public NewBookService(NewBookRepository newBookRepository) {
 //        this.newBookRepository = newBookRepository;
 //    }
+
 
     @Autowired
     NewBookRepository newBookRepository;

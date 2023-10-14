@@ -1,3 +1,4 @@
+
 package com.samsam.bsl.newbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class NewBookController {
 //        return newBookService.getNewBooksRanking();
 //    }
 
+
   @GetMapping("/list")
   public ResponseEntity<?> getNewBooks() {
     try {
@@ -38,3 +40,4 @@ public class NewBookController {
   }
 
 }
+

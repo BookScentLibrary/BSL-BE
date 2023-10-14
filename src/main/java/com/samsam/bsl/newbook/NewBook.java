@@ -1,3 +1,4 @@
+
 package com.samsam.bsl.newbook;
 
 import javax.persistence.Entity;
@@ -7,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.*;
+
 
 //@Entity
 //@Getter
