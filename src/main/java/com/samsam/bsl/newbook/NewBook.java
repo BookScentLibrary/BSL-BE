@@ -1,4 +1,4 @@
-package com.samsam.bsl.newbook;
+/*package com.samsam.bsl.newbook;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,4 +21,4 @@ public class NewBook {
 	private String author;
 	private String publisher;
 	private String regDate;
-}
+}*/
