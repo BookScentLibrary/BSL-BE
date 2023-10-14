@@ -10,7 +10,7 @@ import com.samsam.bsl.postProgram.model.Program;
 
 public interface ProgramRepository extends JpaRepository<Program , Integer>{
 	
-	@Query("SELECT p FROM Program p ")
+	@Query("SELECT p FROM Program p ") //이게 문제인건가..
 
 	List<Program> findAll();
 	
