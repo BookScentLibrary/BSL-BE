@@ -1,8 +1,12 @@
 package com.samsam.bsl.popularbookpage;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -13,15 +17,14 @@ public class ppBookPageService {
 		
 	
 	@Autowired
-	private static ppBookPageRepository ppbookPageRepository;
+	private ppBookPageRepository ppbookPageRepository;
 	
-	public static Page<Book> findTop20ByOrderByRentCntDesc(Pageable pageable) {
-	return ppbookPageRepository.findTop20ByOrderByRentCntDesc(pageable);
-	                             
+	
+	public List<Book> findByrentCntOrderByRentCntDesc() {
+	
+		Sort sort = Sort.by(Sort.Order.desc("rentCnt"));
+
+		 return  ppbookPageRepository.findByrentCntOrderByRentCntDesc();
+
 	}
-
-
-
-	
-	
 }

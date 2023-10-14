@@ -12,48 +12,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.samsam.bsl.book.rent.domain.Book;
 
-@Controller
+@RestController
+@RequestMapping("/book")
 public class ppBookPageController {
 
+
 	@Autowired
-    private ppBookPageService bookService;
+    private ppBookPageService ppbookService;
 	
 	@GetMapping("/ppBooks")
-	@ResponseBody
-	public Page<Book> findTop20ByOrderByRentCntDesc(Pageable pageable){
-		return bookService.findTop20ByOrderByRentCntDesc(pageable);
+	public List<Book> getppBook(){
+		List<Book> getppBook = ppbookService.findByrentCntOrderByRentCntDesc();
+		
+		return getppBook;
+		 
 	}
-	
-	
+
 }
 	
-	
 
-	
-//	@Autowired
-//    private ppBookService bookService;
+//@ResponseBody
+// public ResponseEntity<Object> findByrentCntOrderByRentCntDesc(
+//		@RequestParam("rentCnt") String searchValue
+//		){
+//	return bookService.findByrentCntOrderByRentCntDesc(rentCnt);
+//	System.out.println("오류 발생");
 
-
-//    @GetMapping
-//    public ResponseEntity<List<Book>> getPopularBooks() {
-//        Page<Book> popularBooks = bookService.getppBook();
-//        return new ResponseEntity<>(popularBooks, HttpStatus.OK);
-
-//    }
-
-	
-	
-//	@GetMapping("/popularBookPage")
-//	@ResponseBody
-//	public String main() {
-//		
-//		return "Hello World";
-//	}
-
-	
-//}
 
