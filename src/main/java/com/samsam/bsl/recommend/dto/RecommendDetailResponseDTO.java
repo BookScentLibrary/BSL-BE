@@ -9,9 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecommendListResponseDTO {
+public class RecommendDetailResponseDTO {
 	private int recPostId;
     private String bookImageURL;
+    private String bookname;
+    private String author;
+    private String publisher;
+    private String publicationYear;
     private String postTitle;
+    private String content; // 게시글 내용
     private LocalDateTime createdAt;
+    
 }

@@ -3,10 +3,15 @@ package com.samsam.bsl.recommend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.samsam.bsl.book.review.dto.ReviewDTO;
+import com.samsam.bsl.recommend.dto.RecommendListResponseDTO;
 import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.recommend.repository.RecommendRepository;
 import com.samsam.bsl.recommend.service.RecommendService;
@@ -24,18 +29,20 @@ public class RecommendController {
 	@Autowired
 	RecommendService recommendService;
 
-//	// 사서 추천 도서 리스트
-//	@GetMapping("/recommendList")
-//	public ResponseDTO<?> getRecommendList() {
-//		// 모든 사서 추천 도서 리스트 반환합니다.
-//		ResponseDTO<?> result = recommendService.getRecommendList();
-//
-//		return result;
-//	}
-	
+	// 사서 추천 도서 리스트
 	@GetMapping("/recommendList")
-	public List<Recommend> getRecommendList() {
-		// 모든 사서 추천 도서 리스트 반환합니다.
-		return recommendRepository.findAll();
+	public ResponseDTO<List<RecommendListResponseDTO>> getRecommendList() {
+	    // 모든 사서 추천 도서 리스트 반환합니다.
+	    ResponseDTO<List<RecommendListResponseDTO>> result = recommendService.getRecommendList();
+
+	    return result;
 	}
+	
+	// 사서 추천 도서 상세보기
+	@GetMapping("/recommendDetail")
+	public ResponseDTO<?> detail(@RequestParam("recPostId") int recPostId) {
+		ResponseDTO<?> result = recommendService.getPost(recPostId);
+		return result;
+	}
+	
 }
