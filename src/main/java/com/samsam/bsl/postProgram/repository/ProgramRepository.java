@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Query;
 
-import com.samsam.bsl.postProgram.dto.PostProgramDTO;
 import com.samsam.bsl.postProgram.model.Program;
 
 public interface ProgramRepository extends JpaRepository<Program , Integer>{

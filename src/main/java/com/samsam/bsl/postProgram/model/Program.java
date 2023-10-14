@@ -1,21 +1,19 @@
 package com.samsam.bsl.postProgram.model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.persistence.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.samsam.bsl.postProgram.dto.PostProgramDTO.PostProgramDTOBuilder;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+
 
 
 @Getter
@@ -24,14 +22,12 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="post_program")
+@Table(name="program")
 public class Program {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable =false)
 	private Integer pro_postId;
-	
 	
 	@Column(length = 40, nullable = false)
 	private String userId;
@@ -39,49 +35,59 @@ public class Program {
 	@Column(length = 40, nullable = false)
 	private String postTitle;
 	
-	@Column(columnDefinition = "TEXT", nullable = true)
+	@Column(columnDefinition = "TEXT")
 	private String content;
 
-	@Column(length = 40, nullable = true)
+	@Column(length = 40, nullable = false)
 	private String place;
 	
 	
-	@Column(name="createdAt")
+	@Column(name="createdAt" , nullable = false)
 	@CreatedDate
 	private String createdAt;
 	
-	@Column(name="modifiedAt")
+	@Column(name="modifiedAt", nullable = false)
 	@CreatedDate
 	@LastModifiedDate
 	private String modifiedAt;
 
-	@Column(name="startDate")
+	@Column(name="startDate", nullable = false)
 	@CreatedDate
 	@LastModifiedDate
 	private String startDate;
 	
-	@Column(name="endDate")
+	@Column(name="endDate", nullable = false)
 	@CreatedDate
 	@LastModifiedDate
 	private String endDate;
+
+	@Column(name="deadlineStartDate", nullable = false)
+	@CreatedDate
+	@LastModifiedDate
+	private String deadlineStartDate;
+	
+	@Column(name="deadlineEndDate", nullable = false)
+	@CreatedDate
+	@LastModifiedDate
+	private String deadlineEndDate;
 	
 	
-	@PrePersist
-	public void onPrePersist() {
-		this.createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-		this.modifiedAt = this.createdAt;
-	}
-	
-	@PreUpdate
-	public void onPreUpdate() {
-		this.modifiedAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-	}
+//	@PrePersist
+//	public void onPrePersist() {
+//		this.createdAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+//		this.modifiedAt = this.createdAt;
+//	}
+//	
+//	@PreUpdate
+//	public void onPreUpdate() {
+//		this.modifiedAt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+//	}
 
 	
 //	@Temporal(TemporalType.DATE) java.util.Date startDate;
 //	@Temporal(TemporalType.DATE) java.util.Date endDate;
 	
-	@Column(length = 100, nullable = true)
+	@Column(length = 100)
 	private String postImgURL;
 	
 	@Column(length = 100, nullable = false)
@@ -97,14 +103,12 @@ public class Program {
 	private Integer extraGuests;
 	
 	@Column(nullable = false)
-	private int programstatus;
-
-
-	public static Program builder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private Integer programGuest;
 	
+	@Column(nullable = false)
+	private int programStatus;
+
+
 	
 
 	

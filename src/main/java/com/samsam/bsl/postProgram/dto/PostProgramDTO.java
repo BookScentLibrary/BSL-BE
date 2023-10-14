@@ -5,13 +5,17 @@ package com.samsam.bsl.postProgram.dto;
 
 import javax.persistence.Table;
 
+import com.samsam.bsl.postProgram.model.Program;
+
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "post_program")
+@Table(name = "program")
 public class PostProgramDTO {
 	
 	private String userId;
@@ -27,13 +31,16 @@ public class PostProgramDTO {
 	private String endDate;
 	private String charge;
 	private String phone;
-	private int extraGuest;
+	private String deadlineStartDate;
+	private String deadlineEndDate;
+	private int extraGuests;
+	private int programGuest;
 	private int programStatus;
 	
 
 	
-	public PostProgramDTO toEntity() {
-		return PostProgramDTO.builder()
+	public Program toEntity() {
+	 Program program = Program.builder()
 				.userId(userId)
 				.pro_postId(pro_postId)
 				.content(content)
@@ -46,20 +53,28 @@ public class PostProgramDTO {
 				.startDate(startDate)
 				.endDate(endDate)
 				.charge(charge)
+				.deadlineStartDate(deadlineStartDate)
+				.deadlineEndDate(deadlineStartDate)
 				.phone(phone)
-				.extraGuest(extraGuest)
+				.extraGuests(extraGuests)
+				.programGuest(programGuest)
 				.programStatus(programStatus)
 				.build();
+	 	return program;
 	}
-	
+
+
+
 	@Builder
-	public PostProgramDTO(String userId, int pro_postId, String content,String place, String postTitle,  String createdAt,
-			String modifiedAt, String postImgURL, String target, String startDate, String endDate, String charge,
-			String phone, int extraGuest, int programStatus) {
+	public PostProgramDTO(String userId, int pro_postId, String content, String place, String postTitle,
+			String createdAt, String modifiedAt, String postImgURL, String target, String startDate, String endDate,
+			String charge, String phone, String deadlineStartDate, String deadlineEndDate, int extraGuests,
+			int programGuest, int programStatus) {
 		super();
 		this.userId = userId;
 		this.pro_postId = pro_postId;
 		this.content = content;
+		this.place = place;
 		this.postTitle = postTitle;
 		this.createdAt = createdAt;
 		this.modifiedAt = modifiedAt;
@@ -69,9 +84,37 @@ public class PostProgramDTO {
 		this.endDate = endDate;
 		this.charge = charge;
 		this.phone = phone;
-		this.extraGuest = extraGuest;
+		this.deadlineStartDate = deadlineStartDate;
+		this.deadlineEndDate = deadlineEndDate;
+		this.extraGuests = extraGuests;
+		this.programGuest = programGuest;
 		this.programStatus = programStatus;
 	}
+	
+//	 public PostProgramDTO toEntity() {
+//		    return PostProgramDTO.builder()
+//		        .userId(userId)
+//		        .pro_postId(pro_postId)
+//		        .content(content)
+//		        .postTitle(postImgURL)
+//		        .createdAt(createdAt)
+//		        .modifiedAt(modifiedAt)
+//		        .postImgURL(postImgURL)
+//		        .target(target)
+//		        .startDate(startDate)
+//		        .endDate(endDate)
+//		        .charge(charge)
+//		        .phone(phone)
+//		        .extraGuest(extraGuest)
+//		        .programStatus(programStatus)
+//		        .build();
+//		  }
+	
+	
+
+
+
+	
 	
 
 	

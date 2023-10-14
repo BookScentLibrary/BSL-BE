@@ -42,11 +42,14 @@ public class PostProgramService {
 						.modifiedAt(program.getModifiedAt())
 						.postImgURL(program.getPostImgURL())
 						.target(program.getTarget())
-						.startDate(program.getStartDate())
+						.endDate(program.getEndDate())
 						.charge(program.getCharge())
+						.deadlineStartDate(program.getDeadlineStartDate())
+						.deadlineEndDate(program.getDeadlineStartDate())
 						.phone(program.getPhone())
-						.extraGuest(program.getExtraGuests())
-						.programStatus(program.getProgramstatus())
+						.extraGuests(program.getExtraGuests())
+						.programGuest(program.getProgramGuest())
+						.programStatus(program.getProgramStatus())
 						.build();
 	     			}
 
@@ -55,7 +58,7 @@ public class PostProgramService {
 //	        return programRepository.save(programDTO.toEntity().getPro_postId());
 //	    }
 	 	@Transactional
-	    public List<PostProgramDTO> findAll(Integer pageNum, int perPage, String sortBy) {
+	    public List<PostProgramDTO> getAllProgram(Integer pageNum, int perPage, String sortBy) {
 	        Page<Program> page = programRepository.findAll(PageRequest.of(
 	                pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdAt")));
 	        List<Program> programs = programRepository.findAll();
@@ -68,17 +71,23 @@ public class PostProgramService {
 	        return programList;
 	    }
 	 	
+		@Transactional
+		public List<PostProgramDTO> getProgramList() {
+			List<Program> programs = programRepository.findAll();
+			List<PostProgramDTO> reviewDTOList = new ArrayList<>();
+			for (Program program : programs) {
+				reviewDTOList.add(this.convertEntityToDto(program));
+			}
 
-//	 	@Transactional
-//		public Integer savePost(PostProgramDTO programDTO) {
-//			return (programRepository.save(programDTO.toEntity()).getPro_postId();
-//		}
+			return reviewDTOList;
+		}
+	 	
+
 	 	
 	 	@Transactional
 	 	public Integer savePost(PostProgramDTO programDTO) {
-	 	    Program program = programDTO.toEntity(); // Convert DTO to Entity
-	 	    Program savedProgram = programRepository.save(program); // Save the Program
-	 	    return savedProgram.getPro_postId(); // Return the saved Pro_postId
+	 		return (programRepository.save(programDTO.toEntity()).getPro_postId());
+	 		
 	 	}
 
 	 	public List<PostProgramDTO> getProgramPerPage(int perPage, int pageNum, String sortBy) {
@@ -87,30 +96,42 @@ public class PostProgramService {
 			List<PostProgramDTO> programs = page.map(this::convertEntityToDto).getContent();
 			return programs;
 		}
-	 	public PostProgramDTO getPost(Integer pro_postId) {
-	        // Optional : NPE(NullPointerException) 방지
-	        Optional<Program> programWrapper = programRepository.findById(pro_postId);
-	        Program program = programWrapper.get();
+	 	
+	 	@Transactional
+		public PostProgramDTO getPost(Integer pro_postId) {
+			Optional<Program> programWrapper = programRepository.findById(pro_postId);
+			Program program = programWrapper.get();
 
-	        PostProgramDTO postProgramDTO = PostProgramDTO.builder()
-					.userId(program.getUserId())
-					.pro_postId(program.getPro_postId())
-					.content(program.getContent())
-					.postTitle(program.getPostTitle())
-					.createdAt(program.getCreatedAt())
-					.modifiedAt(program.getModifiedAt())
-					.postImgURL(program.getPostImgURL())
-					.target(program.getTarget())
-					.startDate(program.getStartDate())
-					.endDate(program.getEndDate())
-					.charge(program.getCharge())
-					.phone(program.getPhone())
-					.extraGuest(program.getExtraGuests())
-					.programStatus(program.getProgramstatus())
-					.build();
+			return this.convertEntityToDto(program);
+		}
 
-	        return postProgramDTO;
-	    }
+//	 	public PostProgramDTO getPost(Integer pro_postId) {
+//	        // Optional : NPE(NullPointerException) 방지
+//	        Optional<Program> programWrapper = programRepository.findById(pro_postId);
+//	        Program programs = programWrapper.get();
+
+//	        Program program = Program.builder()
+//					.userId(program.getUserId())
+//					.pro_postId(program.getPro_postId())
+//					.content(program.getContent())
+//					.postTitle(program.getPostTitle())
+//					.createdAt(program.getCreatedAt())
+//					.modifiedAt(program.getModifiedAt())
+//					.postImgURL(program.getPostImgURL())
+//					.target(program.getTarget())
+//					.startDate(program.getStartDate())
+//					.endDate(program.getEndDate())
+//					.charge(program.getCharge())
+//					.phone(program.getPhone())
+//					.extraGuest(program.getExtraGuest())
+//					.programGuest(program.getProgramGuest())
+//					.deadlineStartDate(program.getDeadlineStartDate())
+//					.deadlineEndDate(program.getDeadlineEndDate())
+//					.programStatus(program.getProgramStatus())
+//					.build();
+//
+//	        return program;
+//	    }
 
 	 	//삭제
 	     @Transactional
