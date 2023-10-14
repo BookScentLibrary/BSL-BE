@@ -1,14 +1,15 @@
-//package com.samsam.bsl.newbook;
-//
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
-//import javax.persistence.Table;
-//
-//import lombok.Getter;
-//import lombok.Setter;
-//
+
+package com.samsam.bsl.newbook;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.*;
+
+
 //@Entity
 //@Getter
 //@Setter
@@ -22,3 +23,13 @@
 //	private String publisher;
 //	private String regDate;
 //}
+
+
+@Entity
+@Table(name="newbook")
+@Getter
+@ToString
+public class NewBook {
+	@Id
+	private int bookNo;
+}

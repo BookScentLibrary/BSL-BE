@@ -16,16 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.user.entity.UserEntity;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
@@ -33,6 +28,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString
 @Table(name = "post_review")
 public class Review {
 
@@ -76,8 +72,6 @@ public class Review {
 	private int bookNo;
 
 
-
-
 //	@Column(nullable = false)
 //	private String nickname;
 //
@@ -111,11 +105,5 @@ public class Review {
 		this.content = content;
 		this.rate = rate;
 		this.bookNo = bookNo;
-//		this.bookImageURL = bookImageURL;
-//		this.bookname = bookname;
-//		this.author = author;
-//		this.publisher = publisher;
-//		this.callNum = callNum;
-//		this.shelfArea = shelfArea;
 	}
 }

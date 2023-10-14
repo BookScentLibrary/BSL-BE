@@ -13,5 +13,6 @@ public class MainReview {
     private int rev_postId;
     private String nickname;
     private String postTitle;
+    private String bookname;
     private String createdAt;
 }
