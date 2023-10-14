@@ -1,4 +1,4 @@
-/*package com.samsam.bsl.newbook;
+package com.samsam.bsl.newbook;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
