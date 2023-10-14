@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.recommend.dto.RecommendRequestDTO;
+import com.samsam.bsl.recommend.dto.RecommendUpdateRequestDTO;
 import com.samsam.bsl.user.entity.UserEntity;
 
 import lombok.AllArgsConstructor;
@@ -77,4 +78,15 @@ public class Recommend {
 		this.userId = dto.getUserId(); // userUUID
 		this.bookNo = dto.getBookNo(); // 도서 번호
 	}
+	
+    //게시글 수정
+    public void update(RecommendUpdateRequestDTO dto) {
+		LocalDateTime currentDate = LocalDateTime.now();
+		
+		this.postTitle = dto.getPostTitle(); //게시글 제목
+		this.content = dto.getContent(); // 게시글 내용
+		this.modifiedAt = currentDate; // 수정 날짜와 시간
+		this.userId = dto.getUserId(); // userUUID
+		this.bookNo = dto.getBookNo(); // 도서 번호
+    }
 }

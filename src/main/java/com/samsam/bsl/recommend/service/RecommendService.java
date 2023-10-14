@@ -10,11 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.repository.BookRepository;
-import com.samsam.bsl.book.review.domain.Review;
-import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.recommend.dto.RecommendDetailResponseDTO;
 import com.samsam.bsl.recommend.dto.RecommendListResponseDTO;
 import com.samsam.bsl.recommend.dto.RecommendRequestDTO;
+import com.samsam.bsl.recommend.dto.RecommendUpdateRequestDTO;
 import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.recommend.repository.RecommendRepository;
 import com.samsam.bsl.user.dto.ResponseDTO;
@@ -115,6 +114,33 @@ public class RecommendService {
 
 			return ResponseDTO.setSuccess("게시글 조회 성공", recommendDetailResponseDTO);
 		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
+		}
+	}
+
+	// 사서 추천 도서 게시글 수정
+	@Transactional
+	public ResponseDTO<?> updateRecommend(int recPostId, RecommendUpdateRequestDTO recommendUpdateRequestDTO) {
+		try {
+			Optional<Recommend> recommendWrapper = recommendRepository.findById(recPostId);
+			Recommend recommend = recommendWrapper.get();
+
+			recommend.update(recommendUpdateRequestDTO);
+			return ResponseDTO.setSuccess("게시글 수정 성공", null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
+		}
+	}
+	
+	//사서 추천 도서 게시글 삭제
+	public ResponseDTO<?> deleteRecommend (int recPostId){
+		try {
+			
+			recommendRepository.deleteById(recPostId);
+			return ResponseDTO.setSuccess("게시글 삭제 성공", null);
+		}catch (Exception e) {
 			e.printStackTrace();
 			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 		}
