@@ -38,7 +38,6 @@ public class PostProgramService {
 						.pro_postId(program.getPro_postId())
 						.content(program.getContent())
 						.postTitle(program.getPostTitle())
-						.userNo(program.getUserNo())
 						.createdAt(program.getCreatedAt())
 						.modifiedAt(program.getModifiedAt())
 						.postImgURL(program.getPostImgURL())
@@ -70,10 +69,17 @@ public class PostProgramService {
 	    }
 	 	
 
+//	 	@Transactional
+//		public Integer savePost(PostProgramDTO programDTO) {
+//			return (programRepository.save(programDTO.toEntity()).getPro_postId();
+//		}
+	 	
 	 	@Transactional
-		public Integer savePost(PostProgramDTO programDTO) {
-			return (programRepository.save(programDTO.toEntity()).getPro_postId();
-		}
+	 	public Integer savePost(PostProgramDTO programDTO) {
+	 	    Program program = programDTO.toEntity(); // Convert DTO to Entity
+	 	    Program savedProgram = programRepository.save(program); // Save the Program
+	 	    return savedProgram.getPro_postId(); // Return the saved Pro_postId
+	 	}
 
 	 	public List<PostProgramDTO> getProgramPerPage(int perPage, int pageNum, String sortBy) {
 			Pageable pageable = PageRequest.of(pageNum - 1, perPage, Sort.by(Sort.Direction.ASC, "createdAt"));
@@ -91,7 +97,6 @@ public class PostProgramService {
 					.pro_postId(program.getPro_postId())
 					.content(program.getContent())
 					.postTitle(program.getPostTitle())
-					.userNo(program.getUserNo())
 					.createdAt(program.getCreatedAt())
 					.modifiedAt(program.getModifiedAt())
 					.postImgURL(program.getPostImgURL())
@@ -107,12 +112,13 @@ public class PostProgramService {
 	        return postProgramDTO;
 	    }
 
-
+	 	//삭제
 	     @Transactional
 	     public void deletePost(Integer pro_postId) {
 	         programRepository.deleteById(pro_postId);
 	     }
-
+	     
+	     //검색
 	     @Transactional
 	     public List<PostProgramDTO> searchPosts(String keyword) {
 	         List<Program> programEntities = programRepository.findByPostTitleContaining(keyword);
@@ -127,17 +133,22 @@ public class PostProgramService {
 	         return programList;
 	     }
 	     
-	     public List<PostProgramDTO> searchPrograms(String keyword, String sortBy, int pageNum, int perPage) {
+	     public List<PostProgramDTO> searchPrograms(String keyword, String searchType) {
 	         // 검색 결과를 저장할 리스트
-	         List<PostProgramDTO> searchResults = new ArrayList<>();
+	         List<Program> searchResults = new ArrayList<>();
 
-	         // 프로그램 검색 로직을 구현
-	         // 예: 데이터베이스에서 검색어를 사용하여 프로그램을 검색
+	         if ("all".equals(searchType)) {
+	        	 searchResults = programRepository
+		 					.findByPostTitleContainingOrPlaceContaining(keyword, keyword);  
+		 		} else if ("postTitle".equals(searchType)) {
+		 			searchResults = programRepository.findByPostTitleContaining(keyword);
+		 		} else if ("place".equals(searchType)) {
+		 			searchResults = programRepository.findByPlaceContaining(keyword);
+		 		}
 
-	         // 검색 결과를 searchResults 리스트에 추가
-
-	         return searchResults;
-	     }
+		 		return searchResults.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+		 	}
+	   
 
 	     //페이징
 	     @Transactional

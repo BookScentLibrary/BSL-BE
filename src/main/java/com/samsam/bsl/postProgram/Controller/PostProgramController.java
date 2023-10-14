@@ -42,7 +42,7 @@ public class PostProgramController {
 
 		    if (searchKeyword != null && !searchKeyword.isEmpty()) {
 		        // If a search keyword is provided, perform a search based on the keyword.
-		        programList = postProgramService.searchPrograms(searchKeyword, sortBy, pageNum, perPage);
+		        programList = postProgramService.searchPrograms(searchKeyword, sortBy);
 		    } else {
 		        // If no search keyword is provided, retrieve the full list of programs.
 		        programList = postProgramService.findAll(pageNum, perPage, sortBy);
@@ -59,12 +59,11 @@ public class PostProgramController {
 	//작성
 
 
-    @PostMapping("/programPost")
-    public ResponseEntity<Object> write(PostProgramDTO programDTO) {
+    @PostMapping("/registerForm")
+    public ResponseEntity<Void> write(PostProgramDTO programDTO) {
         postProgramService.savePost(programDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
 
 
 	 //삭제
@@ -73,6 +72,12 @@ public class PostProgramController {
 
 		 postProgramService.deletePost(pro_postId);
 		    return ResponseEntity.noContent().build();
+		}
+	 
+	 @GetMapping("/programDetail/{rev_postId}")
+		public ResponseEntity<PostProgramDTO> detail(@PathVariable("pro_postId") Integer pro_postId) {
+			PostProgramDTO programDTO = postProgramService.getPost(pro_postId);
+			return ResponseEntity.ok(programDTO);
 		}
 
 

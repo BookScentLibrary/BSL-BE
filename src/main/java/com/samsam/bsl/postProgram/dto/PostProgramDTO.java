@@ -2,7 +2,6 @@ package com.samsam.bsl.postProgram.dto;
 
 
 
-import java.util.Date;
 
 import javax.persistence.Table;
 
@@ -15,9 +14,10 @@ import lombok.Setter;
 @Table(name = "post_program")
 public class PostProgramDTO {
 	
-	private int userId;
+	private String userId;
 	private int pro_postId;
 	private String content;
+	private String place;
 	private String postTitle;
 	private String createdAt;
 	private String modifiedAt;
@@ -37,6 +37,7 @@ public class PostProgramDTO {
 				.userId(userId)
 				.pro_postId(pro_postId)
 				.content(content)
+				.place(place)
 				.postTitle(postImgURL)
 				.createdAt(createdAt)
 				.modifiedAt(modifiedAt)
@@ -52,7 +53,7 @@ public class PostProgramDTO {
 	}
 	
 	@Builder
-	public PostProgramDTO(int userId, int pro_postId, String content, String postTitle,  String createdAt,
+	public PostProgramDTO(String userId, int pro_postId, String content,String place, String postTitle,  String createdAt,
 			String modifiedAt, String postImgURL, String target, String startDate, String endDate, String charge,
 			String phone, int extraGuest, int programStatus) {
 		super();

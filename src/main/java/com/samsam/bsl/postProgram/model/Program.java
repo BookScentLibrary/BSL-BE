@@ -8,14 +8,19 @@ import javax.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.samsam.bsl.postProgram.dto.PostProgramDTO.PostProgramDTOBuilder;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,10 +28,13 @@ import lombok.Setter;
 public class Program {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable =false)
 	private Integer pro_postId;
 	
-	private Integer userId;
+	
+	@Column(length = 40, nullable = false)
+	private String userId;
 	
 	@Column(length = 40, nullable = false)
 	private String postTitle;
@@ -34,6 +42,8 @@ public class Program {
 	@Column(columnDefinition = "TEXT", nullable = true)
 	private String content;
 
+	@Column(length = 40, nullable = true)
+	private String place;
 	
 	
 	@Column(name="createdAt")
@@ -88,6 +98,14 @@ public class Program {
 	
 	@Column(nullable = false)
 	private int programstatus;
+
+
+	public static Program builder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 	
 }
