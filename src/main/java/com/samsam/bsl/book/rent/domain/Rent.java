@@ -1,13 +1,8 @@
 package com.samsam.bsl.book.rent.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -15,10 +10,20 @@ import javax.persistence.Table;
 @Table(name="rent")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Rent {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int PK;
     private String username;
     private int bookNo;
     private String rentDate;
     private String expireDate;
+
+    public Rent(String username, int bookNo, String rentDate, String expireDate) {
+        this.username = username;
+        this.bookNo = bookNo;
+        this.rentDate = rentDate;
+        this.expireDate = expireDate;
+    }
 }

@@ -12,6 +12,4 @@ import com.samsam.bsl.book.rent.domain.Book;
 @Repository
 public interface ppBookPageRepository extends JpaRepository<Book, Integer>{
 	List<Book> findByrentCntOrderByRentCntDesc();
-
-	
 }
