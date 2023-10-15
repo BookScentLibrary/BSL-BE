@@ -34,31 +34,14 @@ public class RecommendService {
 
 	// 게시글 작성
 	public ResponseDTO<?> saveRecommend(RecommendRequestDTO dto) {
-		System.out.println("RecommendRequestDTO : " + dto);
 		Recommend recommend = new Recommend(dto);
-		System.out.println("recommend : " + recommend);
 		try {
-			// 사용자 정보 가져오기
-			UserEntity user = userRepository.findByUserId(dto.getUserId());
-
-			// 책 정보 가져오기
-			Book book = bookRepository.getBook(dto.getBookNo());
-
-			// 추천 게시글 작성
-			recommend.setUserId(user.getUserId());
-			System.out.println(recommend.getUser());
-			recommend.setBookNo(book.getBookNo());
-			System.out.println(recommend.getBook());
 			// RecommendRepository를 이용해서 데이터베이스에 Entity 저장
 			recommendRepository.save(recommend);
-			System.out.println("recommend 성공: " + recommend);
-			// 성공시 success response반환
 			return ResponseDTO.setSuccess("게시글 작성 성공", null);
 		} catch (Exception e) {
 			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 		}
-		// 실패 시 에러 response 반환
-		// return ResponseDTO.setFailed("게시글 작성 실패");
 	}
 
 	// 게시글 목록
@@ -81,7 +64,6 @@ public class RecommendService {
 				recommendListResponseDTO.setRecPostId(recommend.getRecPostId());
 				responseList.add(recommendListResponseDTO); // 리스트에 객체 추가
 			}
-			System.out.println("responseList : " + responseList);
 
 			return ResponseDTO.setSuccess("게시글 조회 성공", responseList);
 
@@ -109,8 +91,11 @@ public class RecommendService {
 			recommendDetailResponseDTO.setPostTitle(recommend.getPostTitle());
 			recommendDetailResponseDTO.setPublicationYear(book.getPublicationYear());
 			recommendDetailResponseDTO.setPublisher(book.getPublisher());
+			recommendDetailResponseDTO.setBookNo(book.getBookNo());
 			recommendDetailResponseDTO.setRecPostId(recommend.getRecPostId());
-			System.out.println("recommendDetailResponseDTO : " + recommendDetailResponseDTO);
+			recommendDetailResponseDTO.setUserId(recommend.getUserId());
+			recommendDetailResponseDTO.setShelfarea(book.getShelfArea());
+			recommendDetailResponseDTO.setCallNum(book.getCallNum());
 
 			return ResponseDTO.setSuccess("게시글 조회 성공", recommendDetailResponseDTO);
 		} catch (Exception e) {
@@ -125,7 +110,6 @@ public class RecommendService {
 		try {
 			Optional<Recommend> recommendWrapper = recommendRepository.findById(recPostId);
 			Recommend recommend = recommendWrapper.get();
-
 			recommend.update(recommendUpdateRequestDTO);
 			return ResponseDTO.setSuccess("게시글 수정 성공", null);
 		} catch (Exception e) {
@@ -133,14 +117,13 @@ public class RecommendService {
 			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 		}
 	}
-	
-	//사서 추천 도서 게시글 삭제
-	public ResponseDTO<?> deleteRecommend (int recPostId){
+
+	// 사서 추천 도서 게시글 삭제
+	public ResponseDTO<?> deleteRecommend(int recPostId) {
 		try {
-			
 			recommendRepository.deleteById(recPostId);
 			return ResponseDTO.setSuccess("게시글 삭제 성공", null);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 		}
