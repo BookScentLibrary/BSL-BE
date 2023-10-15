@@ -12,10 +12,10 @@ import static com.samsam.bsl.book.rent.domain.QBook.book;
 
 public class NewBookRepositoryImpl implements NewBookRepositoryQueryDsl {
   private final JPAQueryFactory queryFactory;
+  
   public NewBookRepositoryImpl(EntityManager em) {
     this.queryFactory = new JPAQueryFactory(em);
   }
-
 
   @Override
   public List<NewBookDTO> getNewBooks() {
@@ -25,6 +25,7 @@ public class NewBookRepositoryImpl implements NewBookRepositoryQueryDsl {
       .fetch();
 
     List<NewBookDTO> NewBooks = new ArrayList<NewBookDTO>();
+    
     for(int i=0; i<bookNos.size(); i++) {
       Book b = queryFactory
         .selectFrom(book)
@@ -42,6 +43,8 @@ public class NewBookRepositoryImpl implements NewBookRepositoryQueryDsl {
 
       NewBooks.add(nb);
     }
+    
     return NewBooks;
   }
+  
 }
