@@ -19,6 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class ReviewDTO {
 	private String userId;
 	private int bookNo;
