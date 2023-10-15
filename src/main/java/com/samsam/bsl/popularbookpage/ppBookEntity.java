@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PPBookEntity {
+public class ppBookEntity {
 
 	
 
