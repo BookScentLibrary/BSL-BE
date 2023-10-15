@@ -5,113 +5,88 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.domain.Rate;
 import com.samsam.bsl.book.rent.domain.Reader;
+import com.samsam.bsl.book.review.domain.Review;
+import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.user.entity.UserEntity;
 
 import javax.persistence.EntityManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.samsam.bsl.book.rent.domain.QBook.book;
 import static com.samsam.bsl.book.rent.domain.QRate.rate;
 import static com.samsam.bsl.book.rent.domain.QReader.reader;
-import static com.samsam.bsl.user.entity.QUserEntity.userEntity;
+import static com.samsam.bsl.book.review.domain.QReview.review;
 
 public class BookRepositoryImpl implements BookRepositoryQueryDsl {
-    private final JPAQueryFactory queryFactory;
+  private final JPAQueryFactory queryFactory;
 
-    public BookRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
+  public BookRepositoryImpl(EntityManager em) {
+    this.queryFactory = new JPAQueryFactory(em);
+  }
+
+  @Override
+  public Book getBook(int bookNo) {
+    Book result;
+    return result = queryFactory
+      .selectFrom(book)
+      .where(book.bookNo.eq(bookNo))
+      .fetchOne();
+  }
+
+  @Override
+  public Rate getRate(int bookNo) {
+    Rate result;
+    return result = queryFactory
+      .selectFrom(rate)
+      .where(rate.bookNo.eq(bookNo))
+      .fetchOne();
+  }
+
+  @Override
+  public Reader getReader(int bookNo) {
+    Reader result;
+    return result = queryFactory
+      .selectFrom(reader)
+      .where(reader.bookNo.eq(bookNo))
+      .fetchOne();
+  }
+
+  @Override
+  public List<ReviewDTO> getReview(int bookNo) {
+    List<Review> result = queryFactory
+      .selectFrom(review)
+      .where(review.bookNo.eq(bookNo))
+      .orderBy(review.createdAt.desc())
+      .limit(5)
+      .fetch();
+    List<ReviewDTO> reviews = new ArrayList<ReviewDTO>();
+    for (int i = 0; i < result.size(); i++) {
+      Review r = result.get(i);
+      Book b = r.getBook();
+      System.out.println(b);
+      ReviewDTO rev = new ReviewDTO();
+
+      rev.setBookImageURL(b.getBookImageURL());
+      rev.setBookNo(b.getBookNo());
+      rev.setAuthor(b.getAuthor());
+      rev.setBookname(b.getBookname());
+      rev.setIsbn(b.getIsbn());
+      rev.setModifiedAt(r.getModifiedAt());
+      rev.setNickname(r.getUser().getNickname());
+      rev.setPostTitle(r.getPostTitle());
+      rev.setPublisher(b.getPublisher());
+      rev.setCallNum(b.getCallNum());
+      rev.setRev_postId(r.getRev_postId());
+      rev.setUserId(r.getUserId());
+      rev.setContent(r.getContent());
+      rev.setShelfArea(b.getShelfArea());
+      rev.setCreatedAt(r.getCreatedAt());
+      rev.setRate(r.getRate());
+      reviews.add(rev);
     }
 
-    @Override
-    public Book getBook(int bookNo) {
-        Book result;
-        return result = queryFactory
-                .select(Projections.constructor(
-                        Book.class,
-                        book.bookNo,
-                        book.bookImageURL,
-                        book.bookname,
-                        book.author,
-                        book.publisher,
-                        book.publicationYear,
-                        book.callNum,
-                        book.shelfArea,
-                        book.format,
-                        book.className,
-                        book.bookStatus,
-                        book.rentCnt,
-                        book.isbn,
-                        book.description,
-                        book.regDate
-                ))
-                .from(book)
-                .where(book.bookNo.eq(bookNo))
-                .fetchOne();
-    }
-
-    @Override
-    public Rate getRate(int bookNo) {
-        Rate result;
-        return result = queryFactory
-                .select(Projections.constructor(
-                        Rate.class,
-                        rate.bookNo,
-                        book,
-                        rate.point_1,
-                        rate.point_2,
-                        rate.point_3,
-                        rate.point_4,
-                        rate.point_5
-                ))
-                .from(rate)
-                .where(rate.bookNo.eq(bookNo))
-                .fetchOne();
-    }
-
-    @Override
-    public Reader getReader(int bookNo) {
-        Reader result;
-        return result = queryFactory
-                .select(Projections.constructor(
-                        Reader.class,
-                        reader.bookNo,
-                        book,
-                        reader.m_10,
-                        reader.f_10,
-                        reader.m_20,
-                        reader.f_20,
-                        reader.m_30,
-                        reader.f_30,
-                        reader.m_40,
-                        reader.f_40,
-                        reader.m_50,
-                        reader.f_50,
-                        reader.m_senior,
-                        reader.f_senior
-                ))
-                .from(reader)
-                .where(reader.bookNo.eq(bookNo))
-                .fetchOne();
-    }
-
-    @Override
-    public UserEntity getUserInfo(String username) {
-        UserEntity result;
-        return result = queryFactory
-                .select(Projections.constructor(
-                        UserEntity.class,
-                        userEntity.userId,
-                        userEntity.username,
-                        userEntity.password,
-                        userEntity.email,
-                        userEntity.nickname,
-                        userEntity.phone,
-                        userEntity.gender,
-                        userEntity.userBirth,
-                        userEntity.userAge,
-                        userEntity.permission
-                ))
-                .from(userEntity)
-                .where(userEntity.username.eq(username))
-                .fetchOne();
-    }
+    return reviews;
+  }
 }
