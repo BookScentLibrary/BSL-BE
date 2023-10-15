@@ -21,17 +21,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class PPBookEntity {
-
-	
-
 	  @Id
 	  @Column(name="bookNo")
-	    private int bookNo;
+		private int bookNo;
 
 	    @Column(name="pk")
 	    private int pk;
-	
-	
-	
-	
 }
