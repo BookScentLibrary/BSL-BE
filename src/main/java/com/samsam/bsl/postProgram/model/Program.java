@@ -41,7 +41,6 @@ public class Program {
 	@Column(length = 40, nullable = false)
 	private String place;
 	
-	
 	@Column(name="createdAt" , nullable = false)
 	@CreatedDate
 	private String createdAt;
