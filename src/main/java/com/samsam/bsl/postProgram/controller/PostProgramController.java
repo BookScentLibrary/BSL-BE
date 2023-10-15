@@ -1,22 +1,26 @@
 package com.samsam.bsl.postProgram.Controller;
 
 
+
 import java.util.List;
 
 import com.samsam.bsl.postProgram.service.PostProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.samsam.bsl.postProgram.dto.PostProgramDTO;
+import com.samsam.bsl.postProgram.model.Program;
 
 
 @RestController
@@ -80,19 +84,23 @@ public class PostProgramController {
   }
 
 
+
   //작성
 
 
-  //    @PostMapping("/registerForm")
-//    public ResponseEntity<Void> write(@RequestBody PostProgramDTO programDTO) {
-//        postProgramService.savePost(programDTO);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
   @PostMapping("/registerForm")
-  public ResponseEntity<Void> write(@RequestBody PostProgramDTO postProgramDTO) {
-    postProgramService.savePost(postProgramDTO);
+  public ResponseEntity<Void> write(@RequestBody PostProgramDTO programDTO) {
+    postProgramService.savePost(programDTO);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
+
+  @PutMapping("/news/modifyForm/{pro_postId}")
+  public ResponseEntity<Void> update(@PathVariable("pro_postId") Integer pro_postId,
+                                     @RequestBody PostProgramDTO programDTO) {
+    // Update logic here
+    return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+  }
+
 
 
   //삭제
@@ -108,7 +116,6 @@ public class PostProgramController {
     PostProgramDTO programDTO = postProgramService.getPost(pro_postId);
     return ResponseEntity.ok(programDTO);
   }
-
 
   //검색
 
@@ -131,6 +138,20 @@ public class PostProgramController {
     return ResponseEntity.ok(ProgramList);
   }
 
+
+  @GetMapping("/search")
+  public ResponseEntity<Object> searchPrograms(@RequestParam("searchValue") String searchValue,
+                                               @RequestParam("pageNumber") int pageNumber,
+                                               @RequestParam("pageSize")int pageSize) {
+    System.out.println("검색어,페이지 번호, 페이지 크기 :" +searchValue +pageNumber + pageSize);
+    Page<Program> ProgramDTOs = postProgramService.searchPrograms(searchValue, pageNumber, pageSize);
+
+    if (searchValue != null) {
+      return ResponseEntity.status(HttpStatus.OK).body(ProgramDTOs);
+    } else {
+      return ResponseEntity.status(HttpStatus.OK).body("검색 결과 없음");
+    }
+  }
   private boolean isValidSearchType(String searchType) {
     return true;
   }

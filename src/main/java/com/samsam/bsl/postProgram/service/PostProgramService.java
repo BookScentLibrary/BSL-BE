@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.book.review.domain.Review;
 import com.samsam.bsl.postProgram.dto.PostProgramDTO;
@@ -192,6 +193,16 @@ public class PostProgramService {
 	    	    return pageList;
 	    	}
 
+	     PageRequest pageRequest;
+	 	
+	       public Page<Program> searchPrograms(String searchValue, int pageNumber, int pageSize ) {
+	    	   // = PageRequest.of(pageNumber-1, pageSize);
+	    	   Sort sort = Sort.by(Sort.Order.asc("bookname"));
+	    	   Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);
+	    	   System.out.println("service "+ pageable);
+	    	   return programRepository.findByPostTitleContainingOrPlaceContaining(searchValue, searchValue, pageable);
+	       
+	}
 
 		
 
