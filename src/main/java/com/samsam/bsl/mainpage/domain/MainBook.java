@@ -12,5 +12,6 @@ import lombok.Setter;
 public class MainBook {
     private String bookname;
     private String bookImageURL;
+    private String author;
     private int bookNo;
 }
