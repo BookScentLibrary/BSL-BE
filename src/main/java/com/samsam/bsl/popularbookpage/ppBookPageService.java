@@ -20,11 +20,12 @@ public class ppBookPageService {
 	private ppBookPageRepository ppbookPageRepository;
 	
 	
-	public List<Book> findByrentCntOrderByRentCntDesc() {
+	public List<Book> findByOrderByRentCntDesc() {
 	
 		Sort sort = Sort.by(Sort.Order.desc("rentCnt"));
+	
 
-		 return  ppbookPageRepository.findByrentCntOrderByRentCntDesc();
+		 return  ppbookPageRepository.findByOrderByRentCntDesc();
 
 	}
 }

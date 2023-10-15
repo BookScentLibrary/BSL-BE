@@ -30,7 +30,7 @@ public class ppBookPageController {
 	
 	@GetMapping("/ppBooks")
 	public List<Book> getppBook(){
-		List<Book> getppBook = ppbookService.findByrentCntOrderByRentCntDesc();
+		List<Book> getppBook = ppbookService.findByOrderByRentCntDesc();
 		
 		return getppBook;
 		 

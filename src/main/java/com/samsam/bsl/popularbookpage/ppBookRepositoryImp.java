@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
@@ -17,8 +18,8 @@ import static com.samsam.bsl.book.rent.domain.QBook.book;
 
 import java.util.List;
 
+
 public class ppBookRepositoryImp implements ppBookPageRepositoryQueryDsl {
-	
 	private final JPAQueryFactory queryFactory;
 	
 	public ppBookRepositoryImp(JPAQueryFactory queryFactory) {
@@ -30,9 +31,8 @@ public class ppBookRepositoryImp implements ppBookPageRepositoryQueryDsl {
 	
 
 	@Override
-	public List<Book> findByrentCntOrderByRentCntDesc() {
+	public List<Book> findByOrderByRentCntDesc() {
 		System.out.println("파인드 인기 도서 ");
-		
 		@SuppressWarnings("deprecation")
 		QueryResults<Book> ppBookresults = queryFactory
 				.select(Projections.constructor(
@@ -54,13 +54,13 @@ public class ppBookRepositoryImp implements ppBookPageRepositoryQueryDsl {
                         book.regDate
                 ))
                 .from(book)
-                .orderBy(book.rentCnt.desc()) // 인기도서를 rentCnt 내림차순으로 정렬
+                .orderBy(book.rentCnt.desc()) 
 //                .offset(pageable.getOffset())
                 .limit(20) //상위 20개의 책만 가져옴. 
                 .fetchResults();
 		List<Book> content = ppBookresults.getResults();
 		Long total = ppBookresults.getTotal();
-		System.out.println("토탈"+total);
+		System.out.println("전체 출력"+content.size());
 						return content;
 								//new PageImpl<>(content, pageable, total);
 	}

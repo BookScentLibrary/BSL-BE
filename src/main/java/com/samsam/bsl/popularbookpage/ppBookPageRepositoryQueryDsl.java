@@ -9,5 +9,5 @@ import com.samsam.bsl.book.rent.domain.Book;
 
 public interface ppBookPageRepositoryQueryDsl {
 
-	List<Book> findByrentCntOrderByRentCntDesc();
+	List<Book> findByOrderByRentCntDesc();
 }
