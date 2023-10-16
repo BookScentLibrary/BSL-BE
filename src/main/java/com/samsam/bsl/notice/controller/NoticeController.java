@@ -154,13 +154,20 @@ public class NoticeController {
 	}
 
 	// 공지사항 수정
-	@PutMapping("/noticeEdit/{not_postId}")
+	//@PutMapping("/noticeEdit/{not_postId}")
 	public ResponseEntity<Void> update(@PathVariable("not_postId") Integer not_postId,
 			@RequestBody NoticeDTO noticeDTO) {
 		// noticeDTO.setNot_postId(not_postId); // 공지사항 ID 설정
 		noticeService.savePost(noticeDTO); // 공지사항 수정 서비스 호출
 		return ResponseEntity.ok().build();
 	}
+	// 공지사항 수정
+	@PutMapping("/noticeEdit/{not_postId}")
+	public ResponseEntity<NoticeDTO> updateNotice(@PathVariable("not_postId") Integer not_postId, @RequestBody NoticeDTO updatedNoticeDTO) {
+	    NoticeDTO updatedNotice = noticeService.updateNotice(not_postId, updatedNoticeDTO);
+	    return ResponseEntity.ok(updatedNotice);
+	}
+
 
 	// 공지사항 삭제
 	@DeleteMapping("/noticeDetail/{not_postId}")

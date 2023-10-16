@@ -22,6 +22,6 @@ public class RecommendDetailResponseDTO {
     private LocalDateTime createdAt;
     private String userId;
     private String callNum;
-    private String shelfarea;
+    private String shelfArea;
     
 }

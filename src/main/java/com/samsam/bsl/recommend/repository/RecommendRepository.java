@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.samsam.bsl.recommend.model.Recommend;
 
 @Repository
-public interface RecommendRepository extends JpaRepository<Recommend, Integer>, RecommendRepositoryQueryDsl {
+public interface RecommendRepository extends JpaRepository<Recommend, Integer> {
 
 }
