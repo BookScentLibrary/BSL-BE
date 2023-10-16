@@ -16,8 +16,21 @@ public class SaveListController implements CommandLineRunner {
 
   @Override
   public void run(String... args) {
+	  
 
     try {
+    	
+        jdbcTemplate.execute("DELETE FROM bestseller");
+        
+        jdbcTemplate.execute("INSERT INTO bestseller (bookNo) " +
+      	        "SELECT bookNo " +
+      	        "FROM books " +
+      	        "ORDER BY rentCnt DESC " +
+      	        "LIMIT 20");
+    	
+    	
+    	
+    	
       jdbcTemplate.execute("DELETE FROM newBook");
 
       jdbcTemplate.execute("INSERT INTO newBook (bookNo) " +
@@ -25,6 +38,10 @@ public class SaveListController implements CommandLineRunner {
         "FROM books " +
         "ORDER BY regDate DESC " +
         "LIMIT 20");
+      
+      
+     
+     
 
       System.out.println("데이터 복사 완료");
 
@@ -33,4 +50,12 @@ public class SaveListController implements CommandLineRunner {
       System.err.println("에러 발생");
     }
   }
+  
+  
+  
+  
+  
+  
+  
+  
 }

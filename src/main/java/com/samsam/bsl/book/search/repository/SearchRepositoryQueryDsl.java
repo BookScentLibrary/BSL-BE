@@ -10,6 +10,6 @@ public interface SearchRepositoryQueryDsl {
 	Book getAuthor (String author);
 	Book getPublisher (String publisher);
 	Page<Book> findBybooknameContaining(String searchValue,Pageable pageable);
-//	Page<Book> keywordAll(String searchValue, Pageable pageable);
+//	Page<Book> findAllbooknameContainingOrAuthorContainingOrPublisherContaining(String searchValue, Pageable pageable);
 
 }

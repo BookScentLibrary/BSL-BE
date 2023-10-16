@@ -36,11 +36,11 @@ public class SearchService {
 	 	   }else if(searchType == 3){ 
 	 		   return searchRepository.findByPublisherContaining(searchValue, pageable);
 //	 	   }else if (searchType == 0) {
-//	 		   return searchRepository.keywordAll(searchValue, pageable);
+//	 		   return searchRepository.findAllbooknameContainingOrAuthorContainingOrPublisherContaining (searchValue, pageable);
 //	 	   }
 	 	   }else {
 	 	   	return searchRepository.findBybooknameContaining(searchValue, pageable);
-	 	   			//searchRepository.keywordAll(searchValue, pageable);
+	 	   			//searchRepository.findAllbooknameContainingOrAuthorContainingOrPublisherContaining(searchValue, pageable);
 
 	 	   }
 
