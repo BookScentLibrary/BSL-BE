@@ -1,6 +1,7 @@
 package com.samsam.bsl.book.review.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,9 +15,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.samsam.bsl.book.rent.domain.Book;
+import com.samsam.bsl.book.rent.repository.BookRepository;
 import com.samsam.bsl.book.review.domain.Review;
+import com.samsam.bsl.book.review.domain.ReviewRequestDTO;
 import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.book.review.repository.ReviewRepository;
+import com.samsam.bsl.recommend.dto.RecommendRequestDTO;
+import com.samsam.bsl.recommend.model.Recommend;
+import com.samsam.bsl.user.dto.ResponseDTO;
 import com.samsam.bsl.user.entity.UserEntity;
 import com.samsam.bsl.user.repository.UserRepository;
 
@@ -25,6 +32,12 @@ public class ReviewService {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private BookRepository bookRepository;
 
 //	@Autowired
 //	private UserRepository userRepository;
@@ -50,16 +63,22 @@ public class ReviewService {
 //
 //		return null; // 사용자 정보를 찾지 못한 경우
 //	}
-
+	
+	//리뷰리스트 가져옴
+//	@Transactional
+//	public List<ReviewDTO> getReviewList() {
+//		List<Review> reviews = reviewRepository.getAllReviews();
+//		List<ReviewDTO> reviewDTOList = new ArrayList<>();
+//		for (Review review : reviews) {
+//			reviewDTOList.add(this.convertEntityToDto(review));
+//		}
+//
+//		return reviewDTOList;
+//	}
+	
 	@Transactional
-	public List<ReviewDTO> getReviewList() {
-		List<Review> reviews = reviewRepository.getAllReviews();
-		List<ReviewDTO> reviewDTOList = new ArrayList<>();
-		for (Review review : reviews) {
-			reviewDTOList.add(this.convertEntityToDto(review));
-		}
-
-		return reviewDTOList;
+	public List<Review> getReviewList() {
+	    return reviewRepository.getAllReviews();
 	}
 
 //	@Transactional
@@ -78,11 +97,9 @@ public class ReviewService {
 				.rev_postId(review.getRev_postId()).postTitle(review.getPostTitle()).content(review.getContent())
 				.createdAt(review.getCreatedAt()).modifiedAt(review.getModifiedAt()).isbn(review.getIsbn())
 				.rate(review.getRate()).nickname(review.getUser().getNickname())
-				.bookname(review.getBook().getBookname())
-				.bookImageURL(review.getBook().getBookImageURL())
-				.author(review.getBook().getAuthor())
-				.publisher(review.getBook().getPublisher()).callNum(review.getBook().getCallNum())
-				.shelfArea(review.getBook().getShelfArea()).build();
+				.bookname(review.getBook().getBookname()).bookImageURL(review.getBook().getBookImageURL())
+				.author(review.getBook().getAuthor()).publisher(review.getBook().getPublisher())
+				.callNum(review.getBook().getCallNum()).shelfArea(review.getBook().getShelfArea()).build();
 	}
 
 	public List<ReviewDTO> getReviewsPerPage(int perPage, int pageNum) {
@@ -106,9 +123,29 @@ public class ReviewService {
 	}
 
 	// 리뷰작성
+//	@Transactional
+//	public Integer savePost(ReviewDTO reviewDTO) {
+//		return reviewRepository.save(reviewDTO.toEntity()).getRev_postId();
+//	}
 	@Transactional
-	public Integer savePost(ReviewDTO reviewDTO) {
-		return reviewRepository.save(reviewDTO.toEntity()).getRev_postId();
+	public int savePost(ReviewRequestDTO reviewRequestDTO) {
+		Review review = new Review();
+		review.setPostTitle(reviewRequestDTO.getPostTitle());
+		review.setContent(reviewRequestDTO.getContent());
+		review.setBookNo(reviewRequestDTO.getBookNo());
+		review.setUserId(reviewRequestDTO.getUserId());
+		review.setRate(reviewRequestDTO.getRate());
+		review.setIsbn(reviewRequestDTO.getIsbn());
+
+		try {
+			reviewRepository.save(review);
+			System.out.println("굿");
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+
 	}
 
 	@Transactional
@@ -168,46 +205,68 @@ public class ReviewService {
 //	}
 
 	// 리뷰를 제목, 저자, 출판사로 검색할 수 있는 메서드 추가
+//	@Transactional
+//	public List<ReviewDTO> searchPosts(String keyword, String searchType) {
+//		List<Review> reviews = new ArrayList<>();
+//
+//		if ("all".equals(searchType)) {
+//			reviews = reviewRepository
+//					.findByBook_booknameContainingOrPostTitleContainingOrBook_authorContainingOrBook_publisherContainingOrBook_callNumContainingOrBook_publicationYearContaining(
+//							keyword, keyword, keyword, keyword, keyword, keyword);
+//		} else if ("bookname".equals(searchType)) {
+//			reviews = reviewRepository.findByBook_booknameContaining(keyword); // Book 엔티티의 bookname을 사용
+//		} else if ("postTitle".equals(searchType)) {
+//			reviews = reviewRepository.findByPostTitleContaining(keyword); // Book 엔티티의 bookname을 사용
+//		} else if ("author".equals(searchType)) {
+//			reviews = reviewRepository.findByBook_authorContaining(keyword);
+//		} else if ("publisher".equals(searchType)) {
+//			reviews = reviewRepository.findByBook_publisherContaining(keyword);
+//		} else if ("callNum".equals(searchType)) {
+//			reviews = reviewRepository.findByBook_callNumContaining(keyword);
+//		} else if ("publicationYear".equals(searchType)) {
+//			reviews = reviewRepository.findByBook_publicationYearContaining(keyword);
+//		}
+//
+//		return reviews.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+//	}
 	@Transactional
-	public List<ReviewDTO> searchPosts(String keyword, String searchType) {
-		List<Review> reviews = new ArrayList<>();
+	public List<Review> searchPosts(String keyword, String searchType) {
+	    if ("all".equals(searchType)) {
+	        return reviewRepository.findByBook_booknameContainingOrPostTitleContainingOrBook_authorContainingOrBook_publisherContainingOrBook_callNumContainingOrBook_publicationYearContaining(
+	                keyword, keyword, keyword, keyword, keyword, keyword
+	        );
+	    } else if ("bookname".equals(searchType)) {
+	        return reviewRepository.findByBook_booknameContaining(keyword);
+	    } else if ("postTitle".equals(searchType)) {
+	        return reviewRepository.findByPostTitleContaining(keyword);
+	    } else if ("author".equals(searchType)) {
+	        return reviewRepository.findByBook_authorContaining(keyword);
+	    } else if ("publisher".equals(searchType)) {
+	        return reviewRepository.findByBook_publisherContaining(keyword);
+	    } else if ("callNum".equals(searchType)) {
+	        return reviewRepository.findByBook_callNumContaining(keyword);
+	    } else if ("publicationYear".equals(searchType)) {
+	        return reviewRepository.findByBook_publicationYearContaining(keyword);
+	    }
 
-		if ("all".equals(searchType)) {
-			reviews = reviewRepository
-					.findByBook_booknameContainingOrPostTitleContainingOrBook_authorContainingOrBook_publisherContainingOrBook_callNumContainingOrBook_publicationYearContaining(
-							keyword, keyword, keyword, keyword, keyword, keyword);
-		} else if ("bookname".equals(searchType)) {
-			reviews = reviewRepository.findByBook_booknameContaining(keyword); // Book 엔티티의 bookname을 사용
-		} else if ("postTitle".equals(searchType)) {
-			reviews = reviewRepository.findByPostTitleContaining(keyword); // Book 엔티티의 bookname을 사용
-		} else if ("author".equals(searchType)) {
-			reviews = reviewRepository.findByBook_authorContaining(keyword);
-		} else if ("publisher".equals(searchType)) {
-			reviews = reviewRepository.findByBook_publisherContaining(keyword);
-		} else if ("callNum".equals(searchType)) {
-			reviews = reviewRepository.findByBook_callNumContaining(keyword);
-		} else if ("publicationYear".equals(searchType)) {
-			reviews = reviewRepository.findByBook_publicationYearContaining(keyword);
-		}
-
-		return reviews.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+	    return Collections.emptyList(); // Return an empty list if no matches found.
 	}
-	
+
 	@Transactional
 	public void updateReview(ReviewDTO reviewDTO) {
-	    Optional<Review> optionalReview = reviewRepository.findById(reviewDTO.getRev_postId());
+		Optional<Review> optionalReview = reviewRepository.findById(reviewDTO.getRev_postId());
 
-	    if (optionalReview.isPresent()) {
-	        Review review = optionalReview.get();
+		if (optionalReview.isPresent()) {
+			Review review = optionalReview.get();
 
-	        // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
-	        review.setPostTitle(reviewDTO.getPostTitle());
-	        review.setRate(reviewDTO.getRate());
-	        review.setContent(reviewDTO.getContent());
-	        review.setBookNo(reviewDTO.getBookNo());
-	        review.setCreatedAt(reviewDTO.getCreatedAt());
-	        review.setModifiedAt(reviewDTO.getModifiedAt());
-	        review.setIsbn(reviewDTO.getIsbn());
+			// 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+			review.setPostTitle(reviewDTO.getPostTitle());
+			review.setRate(reviewDTO.getRate());
+			review.setContent(reviewDTO.getContent());
+			review.setBookNo(reviewDTO.getBookNo());
+			review.setCreatedAt(reviewDTO.getCreatedAt());
+			review.setModifiedAt(reviewDTO.getModifiedAt());
+			review.setIsbn(reviewDTO.getIsbn());
 //	        review.setBookImageURL(reviewDTO.getBookImageURL());
 //	        review.setBookname(reviewDTO.getBookname());
 //	        review.setAuthor(reviewDTO.getAuthor());
@@ -215,17 +274,9 @@ public class ReviewService {
 //	        review.setCallNum(reviewDTO.getCallNum());
 //	        review.setShelfArea(reviewDTO.getShelfArea());
 
-            // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
-            review.setPostTitle(reviewDTO.getPostTitle());
-            review.setRate(reviewDTO.getRate());
-            review.setContent(reviewDTO.getContent());
-            review.setBookNo(reviewDTO.getBookNo());
-
-            // ReviewRepository를 사용하여 업데이트
-            reviewRepository.save(review);
-        }
-    }
-
-
+			// ReviewRepository를 사용하여 업데이트
+			reviewRepository.save(review);
+		}
+	}
 
 }
