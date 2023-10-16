@@ -1,4 +1,4 @@
-package com.samsam.bsl.book.review.domain;
+package com.samsam.bsl.book.review.dto;
 
 
 import lombok.AllArgsConstructor;

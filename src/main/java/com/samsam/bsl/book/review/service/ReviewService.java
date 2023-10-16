@@ -19,28 +19,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-<<<<<<< HEAD
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.rent.repository.BookRepository;
 import com.samsam.bsl.book.review.domain.Review;
-import com.samsam.bsl.book.review.domain.ReviewRequestDTO;
-=======
 import com.samsam.bsl.book.review.domain.Comment;
 import com.samsam.bsl.book.review.domain.RatingData;
 import com.samsam.bsl.book.review.domain.Review;
 import com.samsam.bsl.book.review.dto.CommentDTO;
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 import com.samsam.bsl.book.review.dto.ReviewDTO;
+import com.samsam.bsl.book.review.dto.ReviewRequestDTO;
 import com.samsam.bsl.book.review.repository.CommentRepository;
 import com.samsam.bsl.book.review.repository.RatingDataRepository;
 import com.samsam.bsl.book.review.repository.ReviewRepository;
-<<<<<<< HEAD
 import com.samsam.bsl.recommend.dto.RecommendRequestDTO;
 import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.user.dto.ResponseDTO;
-=======
 import com.samsam.bsl.notice.dto.NoticeDTO;
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 import com.samsam.bsl.user.entity.UserEntity;
 import com.samsam.bsl.user.repository.UserRepository;
 
@@ -51,12 +45,10 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 
 	@Autowired
-<<<<<<< HEAD
 	private UserRepository userRepository;
 
 	@Autowired
 	private BookRepository bookRepository;
-=======
 	private RatingDataRepository ratingDataRepository;
 
 	@Autowired
@@ -93,7 +85,6 @@ public class ReviewService {
 
 		ratingDataRepository.save(ratingData);
 	}
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 
 //	@Autowired
 //	private UserRepository userRepository;
@@ -332,21 +323,16 @@ public class ReviewService {
 //	        review.setCallNum(reviewDTO.getCallNum());
 //	        review.setShelfArea(reviewDTO.getShelfArea());
 
-<<<<<<< HEAD
-=======
 			// 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
 			review.setPostTitle(reviewDTO.getPostTitle());
 			review.setRate(reviewDTO.getRate());
 			review.setContent(reviewDTO.getContent());
 			review.setBookNo(reviewDTO.getBookNo());
 
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 			// ReviewRepository를 사용하여 업데이트
 			reviewRepository.save(review);
 		}
 	}
-<<<<<<< HEAD
-=======
 
 //	// 댓글작성
 //	@Transactional
@@ -415,6 +401,5 @@ public class ReviewService {
 //
 //        return commentDTO;
 //    }
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 
 }

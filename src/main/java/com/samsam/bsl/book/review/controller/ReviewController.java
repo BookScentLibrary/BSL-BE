@@ -21,13 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
 import com.samsam.bsl.book.review.domain.Review;
-import com.samsam.bsl.book.review.domain.ReviewRequestDTO;
-=======
 import com.samsam.bsl.book.review.dto.CommentDTO;
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 import com.samsam.bsl.book.review.dto.ReviewDTO;
+import com.samsam.bsl.book.review.dto.ReviewRequestDTO;
 import com.samsam.bsl.book.review.service.ReviewService;
 import com.samsam.bsl.notice.dto.NoticeDTO;
 
@@ -38,8 +35,8 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
-	
-	//리뷰가져옴
+
+	// 리뷰가져옴
 //	@GetMapping("/reviewList")
 //	public ResponseEntity<List<ReviewDTO>> handleReviewListRequest(
 //			@RequestParam(value = "keyword", required = false) String keyword,
@@ -67,23 +64,22 @@ public class ReviewController {
 //	}
 	@GetMapping("/reviewList")
 	public ResponseEntity<List<Review>> handleReviewListRequest(
-	        @RequestParam(value = "keyword", required = false) String keyword,
-	        @RequestParam(value = "searchType", defaultValue = "all") String searchType) {
-	    List<Review> reviewList;
+			@RequestParam(value = "keyword", required = false) String keyword,
+			@RequestParam(value = "searchType", defaultValue = "all") String searchType) {
+		List<Review> reviewList;
 
-	    if (keyword != null && !keyword.isEmpty()) {
-	        reviewList = reviewService.searchPosts(keyword, searchType);
-	    } else {
-	        reviewList = reviewService.getReviewList();
-	    }
+		if (keyword != null && !keyword.isEmpty()) {
+			reviewList = reviewService.searchPosts(keyword, searchType);
+		} else {
+			reviewList = reviewService.getReviewList();
+		}
 
-	    if (reviewList.isEmpty()) {
-	        return ResponseEntity.noContent().build();
-	    } else {
-	        return ResponseEntity.ok(reviewList);
-	    }
+		if (reviewList.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.ok(reviewList);
+		}
 	}
-
 
 	// 리뷰상세보기
 	@GetMapping("/reviewDetail/{rev_postId}")
@@ -99,7 +95,6 @@ public class ReviewController {
 //		return ResponseEntity.status(HttpStatus.CREATED).build();
 //	}
 	@PostMapping("/reviewWrite")
-<<<<<<< HEAD
 	public ResponseEntity<?> writeReview(@RequestBody ReviewRequestDTO reviewRequestDTO) {
 		// 이제 ReviewRequestDTO를 사용하여 게시물 작성
 		System.out.println(reviewRequestDTO.toString());
@@ -111,14 +106,13 @@ public class ReviewController {
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
 		}
-
-=======
-	public ResponseEntity<Void> write(@RequestBody ReviewDTO reviewDTO) {
-		reviewService.savePost(reviewDTO);
-		reviewService.updateRatingData(reviewDTO.getBookNo(), reviewDTO.getRate());
-		return ResponseEntity.status(HttpStatus.CREATED).build();
->>>>>>> e8134c87a2e86f0bad287fcf713013aa695b62a3
 	}
+
+//	public ResponseEntity<Void> write(@RequestBody ReviewDTO reviewDTO) {
+//		reviewService.savePost(reviewDTO);
+//		reviewService.updateRatingData(reviewDTO.getBookNo(), reviewDTO.getRate());
+//		return ResponseEntity.status(HttpStatus.CREATED).build();
+//	}
 
 //	@GetMapping("/reviewEdit/{rev_postId}")
 //	public ResponseEntity<ReviewDTO> edit(@PathVariable("rev_postId") Integer rev_postId) {
