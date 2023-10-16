@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.samsam.bsl.book.review.dto.CommentDTO;
 import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.book.review.service.ReviewService;
+import com.samsam.bsl.notice.dto.NoticeDTO;
 
 @CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
@@ -69,6 +71,7 @@ public class ReviewController {
 	@PostMapping("/reviewWrite")
 	public ResponseEntity<Void> write(@RequestBody ReviewDTO reviewDTO) {
 		reviewService.savePost(reviewDTO);
+		reviewService.updateRatingData(reviewDTO.getBookNo(), reviewDTO.getRate());
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
@@ -78,7 +81,7 @@ public class ReviewController {
 //		return ResponseEntity.ok(reviewDTO);
 //	}
 
-	//	@PutMapping("/reviewEdit/{rev_postId}")
+	// @PutMapping("/reviewEdit/{rev_postId}")
 //	public ResponseEntity<Void> updateReview(@PathVariable Integer rev_postId, @RequestBody ReviewDTO reviewDTO) {
 //	    reviewService.modify(reviewDTO); // 1번에서 정의한 수정 메서드 호출
 //	    return ResponseEntity.ok().build(); // 업데이트 성공 시 200 OK 응답 반환
@@ -86,7 +89,7 @@ public class ReviewController {
 	// 리뷰수정
 	@PutMapping("/reviewEdit/{rev_postId}")
 	public ResponseEntity<Void> update(@PathVariable("rev_postId") Integer rev_postId,
-									   @RequestBody ReviewDTO reviewDTO) {
+			@RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setRev_postId(rev_postId); // 리뷰 ID 설정
 		reviewService.updateReview(reviewDTO); // 리뷰 수정 서비스 호출
 		return ResponseEntity.ok().build();
@@ -98,5 +101,28 @@ public class ReviewController {
 		reviewService.deletePost(rev_postId);
 		return ResponseEntity.noContent().build();
 	}
+
+	// 댓글작성
+//	@PostMapping("/reviewDetail/{rev_postId}")
+//	public ResponseEntity<Void> writeComment(@RequestBody CommentDTO commentDTO) {
+//		reviewService.saveComment(commentDTO);
+//		return ResponseEntity.status(HttpStatus.CREATED).build();
+//	}
+
+//	// 댓글수정
+//	@PutMapping("/reviewDetail/{rev_postId}")
+//	public ResponseEntity<Void> updateComment(@PathVariable("commentId") Integer commentId,
+//			@RequestBody CommentDTO commentDTO) {
+//		commentDTO.setCommentId(commentId);
+//		reviewService.updateComment(commentDTO); // 공지사항 수정 서비스 호출
+//		return ResponseEntity.ok().build();
+//	}
+//
+//	// 댓글삭제
+//	@DeleteMapping("/reviewDetail/{rev_postId}")
+//	public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Integer commentId) {
+//		reviewService.deleteComment(commentId);
+//		return ResponseEntity.noContent().build();
+//	}
 
 }

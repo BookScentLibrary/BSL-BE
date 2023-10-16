@@ -11,12 +11,22 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.samsam.bsl.book.review.domain.Comment;
+import com.samsam.bsl.book.review.domain.RatingData;
 import com.samsam.bsl.book.review.domain.Review;
+import com.samsam.bsl.book.review.dto.CommentDTO;
 import com.samsam.bsl.book.review.dto.ReviewDTO;
+import com.samsam.bsl.book.review.repository.CommentRepository;
+import com.samsam.bsl.book.review.repository.RatingDataRepository;
 import com.samsam.bsl.book.review.repository.ReviewRepository;
+import com.samsam.bsl.notice.dto.NoticeDTO;
 import com.samsam.bsl.user.entity.UserEntity;
 import com.samsam.bsl.user.repository.UserRepository;
 
@@ -25,6 +35,44 @@ public class ReviewService {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private RatingDataRepository ratingDataRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
+
+	@Transactional
+	public void updateRatingData(int bookNo, int rate) {
+		RatingData ratingData = ratingDataRepository.findByBookNo(bookNo);
+
+		if (ratingData == null) {
+			// 해당 bookNo에 대한 레코드가 없는 경우 새 레코드를 생성
+			ratingData = new RatingData();
+			ratingData.setBookNo(bookNo);
+		}
+
+		// 선택한 평점(rate)에 따라 해당 칼럼을 업데이트
+		switch (rate) {
+		case 1:
+			ratingData.setPoint_1(ratingData.getPoint_1() + 1);
+			break;
+		case 2:
+			ratingData.setPoint_2(ratingData.getPoint_2() + 1);
+			break;
+		case 3:
+			ratingData.setPoint_3(ratingData.getPoint_3() + 1);
+			break;
+		case 4:
+			ratingData.setPoint_4(ratingData.getPoint_4() + 1);
+			break;
+		case 5:
+			ratingData.setPoint_5(ratingData.getPoint_5() + 1);
+			break;
+		}
+
+		ratingDataRepository.save(ratingData);
+	}
 
 //	@Autowired
 //	private UserRepository userRepository;
@@ -78,11 +126,9 @@ public class ReviewService {
 				.rev_postId(review.getRev_postId()).postTitle(review.getPostTitle()).content(review.getContent())
 				.createdAt(review.getCreatedAt()).modifiedAt(review.getModifiedAt()).isbn(review.getIsbn())
 				.rate(review.getRate()).nickname(review.getUser().getNickname())
-				.bookname(review.getBook().getBookname())
-				.bookImageURL(review.getBook().getBookImageURL())
-				.author(review.getBook().getAuthor())
-				.publisher(review.getBook().getPublisher()).callNum(review.getBook().getCallNum())
-				.shelfArea(review.getBook().getShelfArea()).build();
+				.bookname(review.getBook().getBookname()).bookImageURL(review.getBook().getBookImageURL())
+				.author(review.getBook().getAuthor()).publisher(review.getBook().getPublisher())
+				.callNum(review.getBook().getCallNum()).shelfArea(review.getBook().getShelfArea()).build();
 	}
 
 	public List<ReviewDTO> getReviewsPerPage(int perPage, int pageNum) {
@@ -110,6 +156,8 @@ public class ReviewService {
 	public Integer savePost(ReviewDTO reviewDTO) {
 		return reviewRepository.save(reviewDTO.toEntity()).getRev_postId();
 	}
+	
+	
 
 	@Transactional
 	public void deletePost(Integer rev_postId) {
@@ -192,22 +240,22 @@ public class ReviewService {
 
 		return reviews.stream().map(this::convertEntityToDto).collect(Collectors.toList());
 	}
-	
+
 	@Transactional
 	public void updateReview(ReviewDTO reviewDTO) {
-	    Optional<Review> optionalReview = reviewRepository.findById(reviewDTO.getRev_postId());
+		Optional<Review> optionalReview = reviewRepository.findById(reviewDTO.getRev_postId());
 
-	    if (optionalReview.isPresent()) {
-	        Review review = optionalReview.get();
+		if (optionalReview.isPresent()) {
+			Review review = optionalReview.get();
 
-	        // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
-	        review.setPostTitle(reviewDTO.getPostTitle());
-	        review.setRate(reviewDTO.getRate());
-	        review.setContent(reviewDTO.getContent());
-	        review.setBookNo(reviewDTO.getBookNo());
-	        review.setCreatedAt(reviewDTO.getCreatedAt());
-	        review.setModifiedAt(reviewDTO.getModifiedAt());
-	        review.setIsbn(reviewDTO.getIsbn());
+			// 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+			review.setPostTitle(reviewDTO.getPostTitle());
+			review.setRate(reviewDTO.getRate());
+			review.setContent(reviewDTO.getContent());
+			review.setBookNo(reviewDTO.getBookNo());
+			review.setCreatedAt(reviewDTO.getCreatedAt());
+			review.setModifiedAt(reviewDTO.getModifiedAt());
+			review.setIsbn(reviewDTO.getIsbn());
 //	        review.setBookImageURL(reviewDTO.getBookImageURL());
 //	        review.setBookname(reviewDTO.getBookname());
 //	        review.setAuthor(reviewDTO.getAuthor());
@@ -215,17 +263,83 @@ public class ReviewService {
 //	        review.setCallNum(reviewDTO.getCallNum());
 //	        review.setShelfArea(reviewDTO.getShelfArea());
 
-            // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
-            review.setPostTitle(reviewDTO.getPostTitle());
-            review.setRate(reviewDTO.getRate());
-            review.setContent(reviewDTO.getContent());
-            review.setBookNo(reviewDTO.getBookNo());
+			// 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+			review.setPostTitle(reviewDTO.getPostTitle());
+			review.setRate(reviewDTO.getRate());
+			review.setContent(reviewDTO.getContent());
+			review.setBookNo(reviewDTO.getBookNo());
 
-            // ReviewRepository를 사용하여 업데이트
-            reviewRepository.save(review);
-        }
-    }
+			// ReviewRepository를 사용하여 업데이트
+			reviewRepository.save(review);
+		}
+	}
 
+//	// 댓글작성
+//	@Transactional
+//	public Integer saveComment(CommentDTO commentDTO) {
+//		return commentRepository.save(commentDTO.toEntity()).getCommentId();
+//	}
+//
+//	// 댓글수정
+//	@Transactional
+//	public void updateComment(CommentDTO commentDTO) {
+//		Optional<Comment> optionalComment = commentRepository.findById(commentDTO.getCommentId());
+//
+//		if (optionalComment.isPresent()) {
+//			Comment comment = optionalComment.get();
+//
+//			// 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+//			comment.setContent(commentDTO.getContent());
+//
+//			// ReviewRepository를 사용하여 업데이트
+//			commentRepository.save(comment);
+//		}
+//	}
+//	
+//	//댓글삭제
+//	@Transactional
+//	public void deleteComment(Integer commentId) {
+//		commentRepository.deleteById(commentId);
+//	}
 
+//	public CommentDTO addComment(int rev_postId, CommentDTO commentDTO) {
+//        Review review = reviewRepository.findById(rev_postId)
+//                .orElseThrow(() -> new ReviewNotFoundException("Review not found"));
+//
+//        Comment comment = commentDTO.toEntity();
+//        comment.setReview(review);
+//
+//        commentRepository.save(comment);
+//
+//        return convertCommentEntityToDto(comment); // Convert and return the added comment as DTO
+//    }
+//
+//    public CommentDTO updateComment(int commentId, CommentDTO commentDTO) {
+//        Comment comment = commentRepository.findById(commentId)
+//                .orElseThrow(() -> new CommentNotFoundException("Comment not found"));
+//
+//        // Update the content and modifiedAt
+//        comment.setContent(commentDTO.getContent());
+//        comment.setModifiedAt(LocalDateTime.now());
+//
+//        commentRepository.save(comment);
+//
+//        return convertCommentEntityToDto(comment); // Convert and return the updated comment as DTO
+//    }
+//
+//    public void deleteComment(int commentId) {
+//        commentRepository.deleteById(commentId);
+//    }
+//    
+//    private CommentDTO convertCommentEntityToDto(Comment comment) {
+//        CommentDTO commentDTO = new CommentDTO();
+//        commentDTO.setCommentId(comment.getCommentId());
+//        commentDTO.setContent(comment.getContent());
+//        commentDTO.setCreatedAt(comment.getCreatedAt());
+//        commentDTO.setModifiedAt(comment.getModifiedAt());
+//        // You can set other fields as needed
+//
+//        return commentDTO;
+//    }
 
 }
