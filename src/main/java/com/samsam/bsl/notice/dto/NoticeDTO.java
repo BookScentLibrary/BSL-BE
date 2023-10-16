@@ -32,7 +32,7 @@ public class NoticeDTO {
 	// NoticeDTO -> Notice
 	public Notice toEntity() {
 		Notice notice = Notice.builder().not_postId(not_postId).userId(userId).postTitle(postTitle).content(content)
-				.postImgURL(postImgURL).imgId(imgId).imgId(imgId).build();
+				.postImgURL(postImgURL).imgId(imgId).build();
 		return notice;
 	}
 
