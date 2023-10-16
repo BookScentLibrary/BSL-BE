@@ -15,7 +15,7 @@ import com.samsam.bsl.book.rent.domain.Book;
 @Repository
 public interface SearchRepository extends JpaRepository<Book, Integer>{
 	
-//	Page<Book> keywordAll(String searchValue, Pageable pageable);
+//	Page<Book> findAllbooknameContainingOrAuthorContainingOrPublisherContaining(String searchValue, Pageable pageable);
 
 	Page<Book>findBybooknameContaining(String searchValue,Pageable pageable);
 
