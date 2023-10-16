@@ -2,6 +2,7 @@ package com.samsam.bsl.notice.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +66,32 @@ public class NoticeService {
 	public int savePost(NoticeDTO noticeDTO) {
 		return noticeRepository.save(noticeDTO.toEntity()).getNot_postId();
 	}
+	@Transactional
+	public NoticeDTO updateNotice(int not_postId, NoticeDTO updatedNoticeDTO) {
+	    Notice existingNotice = noticeRepository.findById(not_postId).get();
+
+	    // 업데이트된 데이터로 업데이트
+	    existingNotice.setPostTitle(updatedNoticeDTO.getPostTitle());
+	    existingNotice.setContent(updatedNoticeDTO.getContent());
+	    existingNotice.setPostImgURL(updatedNoticeDTO.getPostImgURL());
+	    existingNotice.setModifiedAt(LocalDateTime.now()); // modifiedAt 업데이트
+
+	    // 저장
+	    noticeRepository.save(existingNotice);
+
+	    // 업데이트된 공지사항 정보 반환
+	    return NoticeDTO.builder()
+	            .not_postId(existingNotice.getNot_postId())
+	            .userId(existingNotice.getUserId())
+	            .postTitle(existingNotice.getPostTitle())
+	            .content(existingNotice.getContent())
+	            .postImgURL(existingNotice.getPostImgURL())
+	            .imgId(existingNotice.getImgId())
+	            .createdAt(existingNotice.getCreatedAt())
+	            .modifiedAt(existingNotice.getModifiedAt())
+	            .build();
+	}
+
 
 	@Transactional
 	public List<NoticeDTO> getNoticeList() {

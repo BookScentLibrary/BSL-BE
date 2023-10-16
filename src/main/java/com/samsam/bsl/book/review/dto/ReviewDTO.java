@@ -54,13 +54,6 @@ public class ReviewDTO {
 				.createdAt(createdAt)
 				.modifiedAt(modifiedAt)
 				.rate(rate)
-				//.nickname(nickname)
-				//.bookname(bookname)
-				//.author(author)
-				//.bookImageURL(bookImageURL)
-				//.publisher(publisher)
-				//.callNum(callNum)
-				//.shelfArea(shelfArea)
 				.build();
 		return review;
 	}
@@ -68,8 +61,8 @@ public class ReviewDTO {
 	@Builder
 	public ReviewDTO(String userId, int bookNo, int rev_postId, String postTitle, String content,
 					 LocalDateTime createdAt, LocalDateTime modifiedAt, String isbn, int rate, String nickname,
-					 String bookname, String bookImageURL, String author, String publisher, String callNum,
-					 String shelfArea, List<CommentResponseDTO> comments) {
+			           String bookname, String bookImageURL, String author, String publisher, String callNum,
+			           String shelfArea, List<CommentResponseDTO> comments) {
 
 		this.userId = userId;
 		this.bookNo = bookNo;
@@ -90,8 +83,6 @@ public class ReviewDTO {
 		this.comments = comments;
 		//this.comments = review.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 	}
-
-	;
 
 //	@Builder
 //	public ReviewDTO(Review review) {

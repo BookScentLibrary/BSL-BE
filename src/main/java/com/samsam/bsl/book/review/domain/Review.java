@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.user.entity.UserEntity;
 
