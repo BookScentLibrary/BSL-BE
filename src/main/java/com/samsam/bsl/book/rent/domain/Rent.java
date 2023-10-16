@@ -15,13 +15,13 @@ public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int PK;
-    private String username;
+    private String userId;
     private int bookNo;
     private String rentDate;
     private String expireDate;
 
-    public Rent(String username, int bookNo, String rentDate, String expireDate) {
-        this.username = username;
+    public Rent(String userId, int bookNo, String rentDate, String expireDate) {
+        this.userId = userId;
         this.bookNo = bookNo;
         this.rentDate = rentDate;
         this.expireDate = expireDate;

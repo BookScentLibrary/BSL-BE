@@ -155,7 +155,7 @@ public class SearchRepositoryImp implements SearchRepositoryQueryDsl {
 	
 	
 	
-//	public Page<Book> keywordAll (String searchValue, Pageable pageable){
+//	public Page<Book> findAllbooknameContainingOrAuthorContainingOrPublisherContaining (String searchValue, Pageable pageable){
 //		System.out.println("searchType_searchAll");
 //		
 //		@SuppressWarnings("deprecation")

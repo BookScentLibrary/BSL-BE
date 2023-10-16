@@ -12,32 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/newbook")
+@RequestMapping("/book")
 @Transactional
 public class NewBookController {
 
   @Autowired
   private NewBookService newBookService;
 
-//    public NewBookController(NewBookService newBookService) {
-//        this.newBookService = newBookService;
-//    }
-
-//    @GetMapping("/list")
-//    public List<NewBook> getNewBooks() {
-//        return newBookService.getNewBooksRanking();
-//    }
-
-
-  @GetMapping("/list")
+  @GetMapping("/newbook")
   public ResponseEntity<?> getNewBooks() {
+	  
     try {
       List<NewBookDTO> books = newBookService.getNewBooks();
+      
       return ResponseEntity.status(HttpStatus.OK).body(books);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("요청 처리에 실패했습니다.");
     }
+    
   }
 
 }
-

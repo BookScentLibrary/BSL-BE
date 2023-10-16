@@ -1,5 +1,6 @@
 package com.samsam.bsl.book.rent.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class Reader {
     @Column(name = "bookNo")
     private int bookNo;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bookNo", referencedColumnName = "bookNo")
     private Book book;
