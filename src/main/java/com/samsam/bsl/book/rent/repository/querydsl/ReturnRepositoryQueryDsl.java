@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ReturnRepositoryQueryDsl {
   int updateReturnedDate(String userId, int bookNo, LocalDateTime returnedDate);
-
   List<RentHistory> getRentHistory(String userId);
+
 }

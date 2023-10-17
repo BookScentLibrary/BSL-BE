@@ -12,25 +12,31 @@ import static com.samsam.bsl.book.review.domain.QReview.review;
 
 public class MyPageRepositoryImpl implements MyPageRepositoryQueryDsl {
 
-  private final JPAQueryFactory queryFactory;
+    private final JPAQueryFactory queryFactory;
 
-  public MyPageRepositoryImpl(EntityManager em) {
-    this.queryFactory = new JPAQueryFactory(em);
-  }
+    public MyPageRepositoryImpl(EntityManager em) {
+        this.queryFactory = new JPAQueryFactory(em);
+    }
 
-  @Override
-  public List<ReviewDTO> getMyReviews(String userId) {
-    List<ReviewDTO> reviews = queryFactory
-      .select(Projections.constructor(
-        ReviewDTO.class,
-        review.rev_postId,
-        review.postTitle,
-        review.bookNo,
-        review.createdAt))
-      .from(review)
-      .where(review.userId.eq(userId))
-      .fetch();
+    @Override
+    public List<Review> getMyReviews(String userId) {
+        List<Review> reviews = queryFactory
+                .selectFrom(review)
+                .where(review.userId.eq(userId))
+                .orderBy(review.createdAt.desc())
+                .fetch();
 
-    return reviews;
-  }
+        return reviews;
+    }
+
+    public List<Review> getMyReviewMain(String userId) {
+        List<Review> reviews = queryFactory
+                .selectFrom(review)
+                .where(review.userId.eq(userId))
+                .orderBy(review.createdAt.desc())
+                .limit(6)
+                .fetch();
+
+        return reviews;
+    }
 }

@@ -5,5 +5,6 @@ import com.samsam.bsl.book.rent.repository.querydsl.BookRepositoryQueryDsl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookRepository extends JpaRepository<Book, Long>, BookRepositoryQueryDsl {
+    Book findByBookNo(int BookNo);
 }
 
