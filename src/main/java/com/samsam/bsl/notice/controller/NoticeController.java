@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.samsam.bsl.book.review.dto.ReviewDTO;
+import com.samsam.bsl.book.review.dto.ReviewRequestDTO;
 import com.samsam.bsl.notice.domain.Images;
 import com.samsam.bsl.notice.dto.ImagesDTO;
 import com.samsam.bsl.notice.dto.NoticeDTO;
+import com.samsam.bsl.notice.dto.NoticeRequestDTO;
 import com.samsam.bsl.notice.service.ImagesService;
 import com.samsam.bsl.notice.service.NoticeService;
 import com.samsam.bsl.notice.util.MD5Generator;
@@ -70,81 +74,180 @@ public class NoticeController {
 		}
 	}
 
-	@Value("${image.upload.directory}")
-	private String imageUploadDirectory;
-
-	@PostMapping("/noticeWrite")
-	public ResponseEntity<Void> write(@RequestPart(name = "file", required = false) MultipartFile image,
-			@RequestParam("userId") String userId, @RequestParam("postTitle") String postTitle,
-			@RequestParam("content") String content) {
-		try {
-			if (image != null && !image.isEmpty()) {
-				String origImgName = image.getOriginalFilename();
-				String storedImgName = new MD5Generator(origImgName).toString();
-				String imgPath = imageUploadDirectory + File.separator + storedImgName;
-
-				File dest = new File(imgPath);
-				image.transferTo(dest);
-
-				ImagesDTO imagesDTO = new ImagesDTO();
-				imagesDTO.setOrigImgName(origImgName);
-				imagesDTO.setStoredImgName(storedImgName);
-				imagesDTO.setImgPath(imgPath);
-
-				Long imgId = imagesService.saveImage(imagesDTO);
-
-				NoticeDTO noticeDTO = new NoticeDTO();
-				noticeDTO.setUserId(userId);
-				noticeDTO.setPostTitle(postTitle);
-				noticeDTO.setContent(content);
-				noticeDTO.setImgId(imgId);
-				noticeService.savePost(noticeDTO);
-			} else {
-				NoticeDTO noticeDTO = new NoticeDTO();
-				noticeDTO.setUserId(userId);
-				noticeDTO.setPostTitle(postTitle);
-				noticeDTO.setContent(content);
-				noticeService.savePost(noticeDTO);
-			}
-
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
+//	@Value("${image.upload.directory}")
+//	private String imageUploadDirectory;
 
 //	@PostMapping("/noticeWrite")
-//	public ResponseEntity<Void> write(@RequestPart("file") MultipartFile images, @RequestBody NoticeDTO noticeDTO) {
+//	public ResponseEntity<Void> write(@RequestPart(name = "file", required = false) MultipartFile image,
+//			@RequestParam("userId") String userId, @RequestParam("postTitle") String postTitle,
+//			@RequestParam("content") String content) {
 //		try {
-//			String origImgName = images.getOriginalFilename();
-//			String storedImgName = new MD5Generator(origImgName).toString();
-//			/* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
-//			String savePath = System.getProperty("user.dir") + "\\files";
-//			/* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
-//			if (!new File(savePath).exists()) {
-//				try {
-//					new File(savePath).mkdir();
-//				} catch (Exception e) {
-//					e.getStackTrace();
-//				}
+//			if (image != null && !image.isEmpty()) {
+//				String origImgName = image.getOriginalFilename();
+//				String storedImgName = new MD5Generator(origImgName).toString();
+//				String imgPath = imageUploadDirectory + File.separator + storedImgName;
+//
+//				File dest = new File(imgPath);
+//				image.transferTo(dest);
+//
+//				ImagesDTO imagesDTO = new ImagesDTO();
+//				imagesDTO.setOrigImgName(origImgName);
+//				imagesDTO.setStoredImgName(storedImgName);
+//				imagesDTO.setImgPath(imgPath);
+//
+//				Long imgId = imagesService.saveImage(imagesDTO);
+//
+//				NoticeDTO noticeDTO = new NoticeDTO();
+//				noticeDTO.setUserId(userId);
+//				noticeDTO.setPostTitle(postTitle);
+//				noticeDTO.setContent(content);
+//				noticeDTO.setImgId(imgId);
+//				noticeService.savePost(noticeDTO);
+//			} else {
+//				NoticeDTO noticeDTO = new NoticeDTO();
+//				noticeDTO.setUserId(userId);
+//				noticeDTO.setPostTitle(postTitle);
+//				noticeDTO.setContent(content);
+//				noticeService.savePost(noticeDTO);
 //			}
-//			String imgPath = savePath + "\\" + storedImgName;
-//			images.transferTo(new File(imgPath));
 //
-//			ImagesDTO imagesDTO = new ImagesDTO();
-//			imagesDTO.setOrigImgName(origImgName);
-//			imagesDTO.setStoredImgName(storedImgName);
-//			imagesDTO.setImgPath(imgPath);
-//
-//			Long imgId = imagesService.saveImage(imagesDTO);
-//			noticeDTO.setImgId(imgId);
-//			noticeService.savePost(noticeDTO);
+//			return ResponseEntity.status(HttpStatus.OK).build();
 //		} catch (Exception e) {
 //			e.printStackTrace();
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //		}
-//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //	}
+	
+	//공지사항 작성
+//	@PostMapping("/noticeWrite")//글만넣었을 때 공지사항 작성됨
+//	public ResponseEntity<?> writeNtice(@RequestBody NoticeRequestDTO noticeRequestDTO) {
+//		// 이제 ReviewRequestDTO를 사용하여 게시물 작성
+//		System.out.println(noticeRequestDTO.toString());
+//		int result = noticeService.savePost(noticeRequestDTO);
+//
+//		if (result == 1) {
+//			return ResponseEntity.status(HttpStatus.CREATED).build();
+//
+//		} else {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
+//		}
+//	}
+//	@PostMapping("/noticeWrite")
+//	public ResponseEntity<Void> write(@RequestPart(value = "file", required = false) MultipartFile images, NoticeRequestDTO noticeRequestDTO) {
+//	    try {
+//	        if (images != null) {
+//	            String origImgName = images.getOriginalFilename();
+//	            String storedImgName = new MD5Generator(origImgName).toString();
+//	            /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+//	            String savePath = System.getProperty("user.dir") + "\\files";
+//	            /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+//	            if (!new File(savePath).exists()) {
+//	                try {
+//	                    new File(savePath).mkdir();
+//	                } catch (Exception e) {
+//	                    e.getStackTrace();
+//	                }
+//	            }
+//	            String imgPath = savePath + "\\" + storedImgName;
+//	            images.transferTo(new File(imgPath));
+//
+//	            ImagesDTO imagesDTO = new ImagesDTO();
+//	            imagesDTO.setOrigImgName(origImgName);
+//	            imagesDTO.setStoredImgName(storedImgName);
+//	            imagesDTO.setImgPath(imgPath);
+//
+//	            Long imgId = imagesService.saveImage(imagesDTO);
+//	            noticeRequestDTO.setImgId(imgId);
+//	        }
+//
+//	        noticeService.savePost(noticeRequestDTO);
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//	    }
+//	    
+//	    return ResponseEntity.ok().build();
+//	}
+
+	@PostMapping("/noticeWrite")
+	public ResponseEntity<Void> write(@RequestPart("file") MultipartFile images, NoticeRequestDTO noticeRequestDTO) {
+		try {
+			String origImgName = images.getOriginalFilename();
+			String storedImgName = new MD5Generator(origImgName).toString();
+			/* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
+			String savePath = System.getProperty("user.dir") + "\\files";
+			/* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
+			if (!new File(savePath).exists()) {
+				try {
+					new File(savePath).mkdir();
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			}
+			String imgPath = savePath + "\\" + storedImgName;
+			images.transferTo(new File(imgPath));
+
+			ImagesDTO imagesDTO = new ImagesDTO();
+			imagesDTO.setOrigImgName(origImgName);
+			imagesDTO.setStoredImgName(storedImgName);
+			imagesDTO.setImgPath(imgPath);
+
+			Long imgId = imagesService.saveImage(imagesDTO);
+			noticeRequestDTO.setImgId(imgId);
+			noticeService.savePost(noticeRequestDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	}
+//	@PostMapping("/noticeWrite")
+//	public ResponseEntity<?> writeNotice(
+//	    @RequestParam("postTitle") String postTitle,
+//	    @RequestParam("content") String content,
+//	    @RequestParam("userId") String userId,
+//	    @RequestParam("postImgURL") MultipartFile postImgURL
+//	) {
+//	    try {
+//	        // Create a NoticeRequestDTO and populate it with the data obtained from request parameters.
+//	        NoticeRequestDTO noticeRequestDTO = new NoticeRequestDTO();
+//	        noticeRequestDTO.setPostTitle(postTitle);
+//	        noticeRequestDTO.setContent(content);
+//	        noticeRequestDTO.setUserId(userId);
+//
+//	        // Process the uploaded file (postImgURL) and save it to the desired location.
+//	        if (postImgURL != null && !postImgURL.isEmpty()) {
+//	            String fileName = StringUtils.cleanPath(postImgURL.getOriginalFilename());
+//	            String uploadDir = "C:\\Temp\\images"; // Your desired upload directory
+//
+//	            // Create the upload directory if it doesn't exist
+//	            File uploadPath = new File(uploadDir);
+//	            if (!uploadPath.exists()) {
+//	                uploadPath.mkdirs();
+//	            }
+//
+//	            // Save the file to the upload directory
+//	            File file = new File(uploadPath, fileName);
+//	            postImgURL.transferTo(file);
+//
+//	            // Set the file path in your DTO
+//	            noticeRequestDTO.setPostImgURL(file.getAbsolutePath());
+//	        }
+//
+//	        // Save the other fields (postTitle, content, userId) to your database.
+//	        int result = noticeService.savePost(noticeRequestDTO);
+//
+//	        if (result == 1) {
+//	            return ResponseEntity.status(HttpStatus.CREATED).build();
+//	        } else {
+//	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save notice.");
+//	        }
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload and save the file.");
+//	    }
+//	}
+
+
 
 	// 공지사항 상세보기
 	@GetMapping("/noticeDetail/{not_postId}")
@@ -155,16 +258,16 @@ public class NoticeController {
 
 	// 공지사항 수정
 	//@PutMapping("/noticeEdit/{not_postId}")
-	public ResponseEntity<Void> update(@PathVariable("not_postId") Integer not_postId,
-			@RequestBody NoticeDTO noticeDTO) {
-		// noticeDTO.setNot_postId(not_postId); // 공지사항 ID 설정
-		noticeService.savePost(noticeDTO); // 공지사항 수정 서비스 호출
-		return ResponseEntity.ok().build();
-	}
+//	public ResponseEntity<Void> update(@PathVariable("not_postId") Integer not_postId,
+//			@RequestBody NoticeDTO noticeDTO) {
+//		// noticeDTO.setNot_postId(not_postId); // 공지사항 ID 설정
+//		noticeService.savePost(noticeDTO); // 공지사항 수정 서비스 호출
+//		return ResponseEntity.ok().build();
+//	}
 	// 공지사항 수정
 	@PutMapping("/noticeEdit/{not_postId}")
-	public ResponseEntity<NoticeDTO> updateNotice(@PathVariable("not_postId") Integer not_postId, @RequestBody NoticeDTO updatedNoticeDTO) {
-	    NoticeDTO updatedNotice = noticeService.updateNotice(not_postId, updatedNoticeDTO);
+	public ResponseEntity<NoticeDTO> updateNotice(@PathVariable("not_postId") Integer not_postId, @RequestBody NoticeDTO noticeDTO) {
+	    NoticeDTO updatedNotice = noticeService.updateNotice(not_postId, noticeDTO);
 	    return ResponseEntity.ok(updatedNotice);
 	}
 

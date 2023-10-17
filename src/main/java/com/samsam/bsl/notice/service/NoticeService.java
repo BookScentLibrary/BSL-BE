@@ -22,10 +22,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.samsam.bsl.book.review.domain.Review;
 import com.samsam.bsl.book.review.dto.ReviewDTO;
+import com.samsam.bsl.book.review.dto.ReviewRequestDTO;
 import com.samsam.bsl.book.review.repository.ReviewRepository;
 import com.samsam.bsl.notice.domain.Notice;
 import com.samsam.bsl.notice.dto.NoticeDTO;
+import com.samsam.bsl.notice.dto.NoticeRequestDTO;
 import com.samsam.bsl.notice.repository.NoticeRepository;
+import java.io.File;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.Files;
 
 @Service
 public class NoticeService {
@@ -55,7 +60,8 @@ public class NoticeService {
 			NoticeDTO noticeDTO = NoticeDTO.builder().not_postId(notice.getNot_postId())
 					.userId(notice.getUserId())
 					.postTitle(notice.getPostTitle())
-					.content(notice.getContent()).postImgURL(notice.getPostImgURL()).imgId(notice.getImgId())
+					.content(notice.getContent()).postImgURL(notice.getPostImgURL())
+					.imgId(notice.getImgId())
 					.createdAt(notice.getCreatedAt()).build();
 			noticeDtoList.add(noticeDTO);
 		}
@@ -66,6 +72,68 @@ public class NoticeService {
 	public int savePost(NoticeDTO noticeDTO) {
 		return noticeRepository.save(noticeDTO.toEntity()).getNot_postId();
 	}
+	@Transactional
+	public int savePost(NoticeRequestDTO noticeRequestDTO) {
+		Notice notice = new Notice();
+		notice.setPostTitle(noticeRequestDTO.getPostTitle());
+		notice.setContent(noticeRequestDTO.getContent());
+		notice.setUserId(noticeRequestDTO.getUserId());
+		notice.setPostImgURL(noticeRequestDTO.getPostImgURL());
+
+		try {
+			noticeRepository.save(notice);
+			System.out.println("굿");
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+//	@Transactional
+//	public int savePost(NoticeRequestDTO noticeRequestDTO) {
+//	    Notice notice = new Notice();
+//	    notice.setPostTitle(noticeRequestDTO.getPostTitle());
+//	    notice.setContent(noticeRequestDTO.getContent());
+//	    notice.setUserId(noticeRequestDTO.getUserId());
+//
+//	    try {
+//	        // Save the notice without the image information
+//	        noticeRepository.save(notice);
+//
+//	        // Process the uploaded file (postImgURL) and save it to the desired location.
+//	        String postImgURL = noticeRequestDTO.getPostImgURL();
+//	        if (postImgURL != null) {
+//	            // Create a File object for the source file (the uploaded image)
+//	            File sourceFile = new File(postImgURL);
+//
+//	            // Define the destination directory where you want to save the file
+//	            String destinationDirectory = "C:\\Temp\\images";
+//
+//	            // Create a File object for the destination directory
+//	            File destinationDir = new File(destinationDirectory);
+//
+//	            // Ensure the destination directory exists; if not, create it
+//	            if (!destinationDir.exists()) {
+//	                destinationDir.mkdirs();
+//	            }
+//
+//	            // Create a File object for the destination file
+//	            File destinationFile = new File(destinationDir, sourceFile.getName());
+//
+//	            // Copy the source file to the destination file
+//	            Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//	        }
+//
+//	        return 1;
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        return 0;
+//	    }
+//	}
+
+
+	
+	
 	@Transactional
 	public NoticeDTO updateNotice(int not_postId, NoticeDTO updatedNoticeDTO) {
 	    Notice existingNotice = noticeRepository.findById(not_postId).get();
@@ -99,11 +167,13 @@ public class NoticeService {
 		List<NoticeDTO> noticeDtoList = new ArrayList<>();
 
 		for (Notice notice : noticeList) {
-			NoticeDTO noticeDTO = NoticeDTO.builder().not_postId(notice.getNot_postId()).userId(notice.getUserId())
+			NoticeDTO noticeDTO = NoticeDTO.builder()
+					.not_postId(notice.getNot_postId())
+					.userId(notice.getUserId())
 					.postTitle(notice.getPostTitle())
 					.content(notice.getContent())
 					//.postImgURL(notice.getPostImgURL())
-					//.imgId(notice.getImgId())
+					.imgId(notice.getImgId())
 					.createdAt(notice.getCreatedAt())
 					.nickname(notice.getUser().getNickname())
 					.build();

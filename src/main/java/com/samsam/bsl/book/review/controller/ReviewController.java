@@ -105,7 +105,6 @@ public class ReviewController {
 		} else {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
 		}
-
 	}
 
 //	@GetMapping("/reviewEdit/{rev_postId}")
