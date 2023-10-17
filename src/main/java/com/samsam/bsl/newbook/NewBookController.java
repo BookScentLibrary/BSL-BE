@@ -1,4 +1,3 @@
-
 package com.samsam.bsl.newbook;
 
 import org.springframework.beans.factory.annotation.Autowired;

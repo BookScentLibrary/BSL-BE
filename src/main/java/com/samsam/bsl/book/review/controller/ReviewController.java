@@ -22,11 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.samsam.bsl.book.review.domain.Review;
-import com.samsam.bsl.book.review.dto.CommentDTO;
 import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.book.review.dto.ReviewRequestDTO;
 import com.samsam.bsl.book.review.service.ReviewService;
-import com.samsam.bsl.notice.dto.NoticeDTO;
 
 @CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
@@ -35,8 +33,8 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
-
-	// 리뷰가져옴
+	
+	//리뷰가져옴
 //	@GetMapping("/reviewList")
 //	public ResponseEntity<List<ReviewDTO>> handleReviewListRequest(
 //			@RequestParam(value = "keyword", required = false) String keyword,
@@ -64,22 +62,23 @@ public class ReviewController {
 //	}
 	@GetMapping("/reviewList")
 	public ResponseEntity<List<Review>> handleReviewListRequest(
-			@RequestParam(value = "keyword", required = false) String keyword,
-			@RequestParam(value = "searchType", defaultValue = "all") String searchType) {
-		List<Review> reviewList;
+	        @RequestParam(value = "keyword", required = false) String keyword,
+	        @RequestParam(value = "searchType", defaultValue = "all") String searchType) {
+	    List<Review> reviewList;
 
-		if (keyword != null && !keyword.isEmpty()) {
-			reviewList = reviewService.searchPosts(keyword, searchType);
-		} else {
-			reviewList = reviewService.getReviewList();
-		}
+	    if (keyword != null && !keyword.isEmpty()) {
+	        reviewList = reviewService.searchPosts(keyword, searchType);
+	    } else {
+	        reviewList = reviewService.getReviewList();
+	    }
 
-		if (reviewList.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.ok(reviewList);
-		}
+	    if (reviewList.isEmpty()) {
+	        return ResponseEntity.noContent().build();
+	    } else {
+	        return ResponseEntity.ok(reviewList);
+	    }
 	}
+
 
 	// 리뷰상세보기
 	@GetMapping("/reviewDetail/{rev_postId}")
@@ -108,12 +107,6 @@ public class ReviewController {
 		}
 	}
 
-//	public ResponseEntity<Void> write(@RequestBody ReviewDTO reviewDTO) {
-//		reviewService.savePost(reviewDTO);
-//		reviewService.updateRatingData(reviewDTO.getBookNo(), reviewDTO.getRate());
-//		return ResponseEntity.status(HttpStatus.CREATED).build();
-//	}
-
 //	@GetMapping("/reviewEdit/{rev_postId}")
 //	public ResponseEntity<ReviewDTO> edit(@PathVariable("rev_postId") Integer rev_postId) {
 //		ReviewDTO reviewDTO = reviewService.getPost(rev_postId);
@@ -140,28 +133,5 @@ public class ReviewController {
 		reviewService.deletePost(rev_postId);
 		return ResponseEntity.noContent().build();
 	}
-
-	// 댓글작성
-//	@PostMapping("/reviewDetail/{rev_postId}")
-//	public ResponseEntity<Void> writeComment(@RequestBody CommentDTO commentDTO) {
-//		reviewService.saveComment(commentDTO);
-//		return ResponseEntity.status(HttpStatus.CREATED).build();
-//	}
-
-//	// 댓글수정
-//	@PutMapping("/reviewDetail/{rev_postId}")
-//	public ResponseEntity<Void> updateComment(@PathVariable("commentId") Integer commentId,
-//			@RequestBody CommentDTO commentDTO) {
-//		commentDTO.setCommentId(commentId);
-//		reviewService.updateComment(commentDTO); // 공지사항 수정 서비스 호출
-//		return ResponseEntity.ok().build();
-//	}
-//
-//	// 댓글삭제
-//	@DeleteMapping("/reviewDetail/{rev_postId}")
-//	public ResponseEntity<Void> deleteComment(@PathVariable("commentId") Integer commentId) {
-//		reviewService.deleteComment(commentId);
-//		return ResponseEntity.noContent().build();
-//	}
 
 }
