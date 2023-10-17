@@ -1,8 +1,7 @@
-package com.samsam.bsl.book.review.dto;
+package com.samsam.bsl.notice.dto;
 
 
-
-
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewRequestDTO {
+public class NoticeRequestDTO {
 	String postTitle; // 게시글 제목
 	String content; // 게시글 내용
-	int bookNo; // 도서 번호
 	String userId; //userUUID
-	int rate;
-	String isbn;
+	//MultipartFile  postImgURL;
+	String postImgURL;
+	Long imgId;
 }

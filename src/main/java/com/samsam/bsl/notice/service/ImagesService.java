@@ -58,8 +58,11 @@ public class ImagesService {
 	public ImagesDTO getImage(Long not_imgId) {
 		Images images = imagesRepository.findById(not_imgId).get();
 
-		ImagesDTO imagesDTO = ImagesDTO.builder().not_imgId(not_imgId).origImgName(images.getOrigImgName())
-				.storedImgName(images.getStoredImgName()).imgPath(images.getImgPath()).build();
+		ImagesDTO imagesDTO = ImagesDTO.builder()
+				.not_imgId(not_imgId)
+				.origImgName(images.getOrigImgName())
+				.storedImgName(images.getStoredImgName())
+				.imgPath(images.getImgPath()).build();
 		return imagesDTO;
 	}
 	
