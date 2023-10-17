@@ -5,8 +5,8 @@ import com.samsam.bsl.book.rent.dto.RentedBook;
 import java.util.List;
 
 public interface RentRepositoryQueryDsl {
-    List<RentedBook> getUsersRentBook(String username);
-    int RentedBookCnt(String username);
-    int updateBookStatus(String username, int bookNo);
-    int returnBook(String username, int bookNo);
+    List<RentedBook> getUsersRentBook(String userId);
+    int RentedBookCnt(String userId);
+    int updateBookStatus(String userId, int bookNo);
+    int returnBook(String userId, int bookNo);
 }

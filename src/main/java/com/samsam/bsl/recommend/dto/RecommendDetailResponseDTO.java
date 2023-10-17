@@ -14,10 +14,14 @@ public class RecommendDetailResponseDTO {
     private String bookImageURL;
     private String bookname;
     private String author;
+    private int bookNo;
     private String publisher;
     private String publicationYear;
     private String postTitle;
     private String content; // 게시글 내용
     private LocalDateTime createdAt;
+    private String userId;
+    private String callNum;
+    private String shelfArea;
     
 }

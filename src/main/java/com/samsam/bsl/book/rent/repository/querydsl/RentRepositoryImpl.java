@@ -28,7 +28,7 @@ public class RentRepositoryImpl implements RentRepositoryQueryDsl {
 
   @Override
   @Transactional
-  public int updateBookStatus(String username, int bookNo) {
+  public int updateBookStatus(String userId, int bookNo) {
     Long bookResult = queryFactory
       .update(book)
       .set(book.bookStatus, 1)
@@ -42,7 +42,7 @@ public class RentRepositoryImpl implements RentRepositoryQueryDsl {
 
     UserEntity user = queryFactory
       .selectFrom(userEntity)
-      .where(userEntity.username.eq(username))
+      .where(userEntity.userId.eq(userId))
       .fetchOne();
 
     int age = user.getUserAge();
@@ -135,11 +135,11 @@ public class RentRepositoryImpl implements RentRepositoryQueryDsl {
   }
 
   @Override
-  public List<RentedBook> getUsersRentBook(String username) {
+  public List<RentedBook> getUsersRentBook(String userId) {
 
     List<Rent> userdata = queryFactory
       .selectFrom(rent)
-      .where(rent.username.eq(username))
+      .where(rent.userId.eq(userId))
       .fetch();
     List<RentedBook> rentedBooks = new ArrayList<RentedBook>();
 
@@ -158,17 +158,17 @@ public class RentRepositoryImpl implements RentRepositoryQueryDsl {
   }
 
   @Override
-  public int RentedBookCnt(String username) {
+  public int RentedBookCnt(String userId) {
     List<Rent> result = queryFactory
       .selectFrom(rent)
-      .where(rent.username.eq(username))
+      .where(rent.userId.eq(userId))
       .fetch();
     return result.size();
   }
 
   @Override
   @Transactional
-  public int returnBook(String username, int bookNo) {
+  public int returnBook(String userId, int bookNo) {
     Long result = queryFactory
       .update(book)
       .set(book.bookStatus, 0)
@@ -181,7 +181,7 @@ public class RentRepositoryImpl implements RentRepositoryQueryDsl {
 
     Long deleteRent = queryFactory
       .delete(rent)
-      .where(rent.bookNo.eq(bookNo))
+      .where(rent.bookNo.eq(bookNo), rent.userId.eq(userId))
       .execute();
 
     if (deleteRent == 0) {

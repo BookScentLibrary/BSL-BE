@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsam.bsl.book.rent.domain.Book;
 import com.samsam.bsl.book.review.domain.Review;
 import com.samsam.bsl.mainpage.domain.*;
+import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.user.entity.UserEntity;
 import com.samsam.bsl.user.repository.UserRepository;
 import org.jboss.jandex.Main;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static com.samsam.bsl.book.rent.domain.QBook.book;
 import static com.samsam.bsl.book.review.domain.QReview.review;
+import static com.samsam.bsl.recommend.model.QRecommend.recommend;
 
 public class MainRepositoryImpl implements MainRepositoryQueryDsl {
 
@@ -90,7 +92,31 @@ public class MainRepositoryImpl implements MainRepositoryQueryDsl {
 
   @Override
   public List<MainRecomm> getRecommendBook() {
-    return null;
+    List<Recommend> result = queryFactory
+      .selectFrom(recommend)
+      .orderBy(recommend.createdAt.desc())
+      .limit(3)
+      .fetch();
+
+    List<MainRecomm> recommendList = new ArrayList<MainRecomm>();
+    for(int i=0; i<result.size(); i++) {
+      Recommend recomm = result.get(i);
+      Book b = queryFactory
+        .selectFrom(book)
+        .where(book.bookNo.eq(recomm.getBookNo()))
+        .fetchOne();
+      MainRecomm mr = new MainRecomm();
+
+      mr.setBookname(b.getBookname());
+      mr.setAuthor(b.getAuthor());
+      mr.setContent(recomm.getContent());
+      mr.setBookImageUrl(b.getBookImageURL());
+      mr.setRec_postId(recomm.getRecPostId());
+
+      recommendList.add(mr);
+    }
+
+    return recommendList;
   }
 
   @Override

@@ -1,5 +1,6 @@
 package com.samsam.bsl.book.rent.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -18,6 +19,7 @@ public class Rate {
     @Column(name = "bookNo")
     private int bookNo;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bookNo", referencedColumnName = "bookNo")
     private Book book;
