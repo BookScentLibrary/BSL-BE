@@ -20,7 +20,7 @@ public class SearchService {
 	SearchRepository searchRepository; 
 	
 
-	public Page<Book> searchBookConfirm(String searchValue, int searchType, int pageNumber, int pageSize ) {
+	public Page<Book> searchBookConfirm( int searchType,String searchValue, int pageNumber, int pageSize ) {
 	 	   // = PageRequest.of(pageNumber-1, pageSize);
 	 	   Sort sort = Sort.by(Sort.Order.asc("bookname"));
 	 	   Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);

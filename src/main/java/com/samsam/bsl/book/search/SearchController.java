@@ -26,7 +26,7 @@ public class SearchController {
     @RequestParam("pageNumber") int pageNumber,
     @RequestParam("pageSize") int pageSize) {
     System.out.println("검색어,페이지 번호, 페이지 크기 :" + searchValue + pageNumber + pageSize);
-    Page<Book> bookDTOs = searchService.searchBookConfirm(searchValue, searchType, pageNumber, pageSize);
+    Page<Book> bookDTOs = searchService.searchBookConfirm(searchType, searchValue, pageNumber, pageSize);
 
     if (searchValue != null) {
       return ResponseEntity.status(HttpStatus.OK).body(bookDTOs);
