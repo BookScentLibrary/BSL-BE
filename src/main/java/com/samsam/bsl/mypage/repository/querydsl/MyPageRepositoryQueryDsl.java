@@ -6,5 +6,6 @@ import com.samsam.bsl.mypage.dto.ReviewDTO;
 import java.util.List;
 
 public interface MyPageRepositoryQueryDsl {
-  List<ReviewDTO> getMyReviews(String userId);
+  List<Review> getMyReviews(String userId);
+  List<Review> getMyReviewMain(String userId);
 }
