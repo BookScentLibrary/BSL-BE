@@ -1,8 +1,13 @@
 package com.samsam.bsl.postProgram.model;
 
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -39,36 +44,32 @@ public class Program {
 	private String content;
 
 	@Column(length = 40, nullable = false)
-	private String place;
+	String place;
 	
 	@Column(name="createdAt" , nullable = false)
 	@CreatedDate
-	private String createdAt;
+	private LocalDateTime createdAt;
 	
 	@Column(name="modifiedAt", nullable = false)
 	@CreatedDate
 	@LastModifiedDate
-	private String modifiedAt;
+	private LocalDateTime modifiedAt;
 
 	@Column(name="startDate", nullable = false)
-	@CreatedDate
-	@LastModifiedDate
-	private String startDate;
+	private LocalDateTime startDate;
 	
 	@Column(name="endDate", nullable = false)
-	@CreatedDate
-	@LastModifiedDate
-	private String endDate;
+	private LocalDateTime endDate;
 
 	@Column(name="deadlineStartDate", nullable = false)
 	@CreatedDate
 	@LastModifiedDate
-	private String deadlineStartDate;
+	private LocalDateTime deadlineStartDate;
 	
 	@Column(name="deadlineEndDate", nullable = false)
 	@CreatedDate
 	@LastModifiedDate
-	private String deadlineEndDate;
+	private LocalDateTime deadlineEndDate;
 	
 	
 //	@PrePersist
@@ -86,6 +87,7 @@ public class Program {
 //	@Temporal(TemporalType.DATE) java.util.Date startDate;
 //	@Temporal(TemporalType.DATE) java.util.Date endDate;
 	
+	@Value("${file.dir}/")
 	@Column(length = 100)
 	private String postImgURL;
 	
@@ -107,8 +109,6 @@ public class Program {
 	@Column(nullable = false)
 	private int programStatus;
 
-
-	
 
 	
 }

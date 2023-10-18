@@ -17,8 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.samsam.bsl.book.review.dto.ReviewDTO;
-import com.samsam.bsl.book.review.domain.Review;
 import com.samsam.bsl.postProgram.dto.PostProgramDTO;
 
 
@@ -83,12 +81,6 @@ public class PostProgramService {
 		}
 	 	
 
-	 	
-	 	@Transactional
-	 	public Integer savePost(PostProgramDTO programDTO) {
-	 		return (programRepository.save(programDTO.toEntity()).getPro_postId());
-	 		
-	 	}
 
 	 	public List<PostProgramDTO> getProgramPerPage(int perPage, int pageNum, String sortBy) {
 			Pageable pageable = PageRequest.of(pageNum - 1, perPage, Sort.by(Sort.Direction.ASC, "createdAt"));
@@ -97,7 +89,20 @@ public class PostProgramService {
 			return programs;
 		}
 	 	
-	 	@Transactional
+
+		public List<PostProgramDTO> getProgramPerPage(int perPage, int pageNum) {
+			Pageable pageable = PageRequest.of(pageNum - 1, perPage, Sort.by(Sort.Direction.ASC, "createdAt"));
+			Page<Program> page = programRepository.findAll(pageable);
+			List<PostProgramDTO> reviews = page.map(this::convertEntityToDto).getContent();
+			return reviews;
+		}
+
+		@Transactional
+		public Long getReviewCount() {
+			return programRepository.count();
+		}
+
+		@Transactional
 		public PostProgramDTO getPost(Integer pro_postId) {
 			Optional<Program> programWrapper = programRepository.findById(pro_postId);
 			Program program = programWrapper.get();
@@ -105,39 +110,16 @@ public class PostProgramService {
 			return this.convertEntityToDto(program);
 		}
 
-//	 	public PostProgramDTO getPost(Integer pro_postId) {
-//	        // Optional : NPE(NullPointerException) 방지
-//	        Optional<Program> programWrapper = programRepository.findById(pro_postId);
-//	        Program programs = programWrapper.get();
+		// 리뷰작성
+		@Transactional
+		public Integer savePost(PostProgramDTO programDTO) {
+			return programRepository.save(programDTO.toEntity()).getPro_postId();
+		}
 
-//	        Program program = Program.builder()
-//					.userId(program.getUserId())
-//					.pro_postId(program.getPro_postId())
-//					.content(program.getContent())
-//					.postTitle(program.getPostTitle())
-//					.createdAt(program.getCreatedAt())
-//					.modifiedAt(program.getModifiedAt())
-//					.postImgURL(program.getPostImgURL())
-//					.target(program.getTarget())
-//					.startDate(program.getStartDate())
-//					.endDate(program.getEndDate())
-//					.charge(program.getCharge())
-//					.phone(program.getPhone())
-//					.extraGuest(program.getExtraGuest())
-//					.programGuest(program.getProgramGuest())
-//					.deadlineStartDate(program.getDeadlineStartDate())
-//					.deadlineEndDate(program.getDeadlineEndDate())
-//					.programStatus(program.getProgramStatus())
-//					.build();
-//
-//	        return program;
-//	    }
-
-	 	//삭제
-	     @Transactional
-	     public void deletePost(Integer pro_postId) {
-	         programRepository.deleteById(pro_postId);
-	     }
+		@Transactional
+		public void deletePost(Integer pro_postId) {
+			programRepository.deleteById(pro_postId);
+		}
 	     
 	     //검색
 	     @Transactional
@@ -154,6 +136,7 @@ public class PostProgramService {
 	         return programList;
 	     }
 	     
+	     //검색
 	     public List<PostProgramDTO> searchPrograms(String keyword, String searchType) {
 	         // 검색 결과를 저장할 리스트
 	         List<Program> searchResults = new ArrayList<>();
@@ -191,8 +174,46 @@ public class PostProgramService {
 
 	    	    return pageList;
 	    	}
+	     //업데이트
+	     @Transactional
+	 	public void updateProgram(PostProgramDTO programDTO) {
+	 	    Optional<Program> optionalProgram = programRepository.findById(programDTO.getPro_postId());
 
+	 	    if (optionalProgram.isPresent()) {
+	 	        Program program = optionalProgram.get();
 
-		
+	 	        // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+	 	        
+	 	        program.setUserId(programDTO.getUserId());
+	 	        program.setContent(programDTO.getContent());
+	 	        program.setPostTitle(programDTO.getPostTitle());
+	 	        program.setPlace(programDTO.getPlace());
+	 	        program.setCreatedAt(programDTO.getCreatedAt());
+	 	        program.setModifiedAt(programDTO.getModifiedAt());
+	 	        program.setPostImgURL(programDTO.getPostImgURL());
+	 	        program.setTarget(programDTO.getTarget());
+	 	        program.setPostImgURL(programDTO.getPostImgURL());
+	 	        program.setEndDate(programDTO.getEndDate());
+	 	        program.setCharge(programDTO.getCharge());
+	 	        program.setDeadlineEndDate(programDTO.getDeadlineEndDate());
+	 	        program.setDeadlineStartDate(programDTO.getDeadlineStartDate());
+	 	        program.setPhone(programDTO.getPhone());
+	 	        program.setExtraGuests(programDTO.getExtraGuests());
+	 	        program.setProgramGuest(programDTO.getProgramGuest());
+	 	        program.setProgramStatus(programDTO.getProgramStatus());
+
+	 	        
+	           // 리뷰 업데이트에 필요한 정보를 ReviewDTO에서 가져와서 업데이트
+	           program.setPostTitle(programDTO.getPostTitle());
+	           program.setPlace(programDTO.getPlace());
+	           program.setContent(programDTO.getContent());
+
+	           // ReviewRepository를 사용하여 업데이트
+	           programRepository.save(program);
+	 	    }
+	 	    
+	     }
+	     
+
 
 }
