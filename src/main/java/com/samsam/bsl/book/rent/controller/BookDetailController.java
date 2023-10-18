@@ -21,7 +21,6 @@ public class BookDetailController {
     @GetMapping("")
     public @ResponseBody Book getBook(@RequestParam("bookNo") int bookNo) {
         Book book = new Book();
-        System.out.println("getBook!!!!");
         book = bookService.getBook(bookNo);
         return book;
     }
@@ -29,7 +28,6 @@ public class BookDetailController {
     @GetMapping("/rate")
     public @ResponseBody Rate getRate(@RequestParam int bookNo) {
         Rate rate = new Rate();
-        System.out.println("getBookRate!!!");
         rate = bookService.getRate(bookNo);
         return rate;
     }
@@ -37,7 +35,6 @@ public class BookDetailController {
     @GetMapping("/reader")
     public @ResponseBody Reader getReader(@RequestParam int bookNo) {
         Reader reader = new Reader();
-        System.out.println("getBookReader!!!");
         reader = bookService.getReader(bookNo);
         return reader;
     }

@@ -1,6 +1,6 @@
 package com.samsam.bsl.book.rent.dto;
 
-import com.samsam.bsl.book.rent.domain.Book;
+
 import lombok.*;
 
 import java.util.List;
@@ -10,9 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RentDTO {
-    private String userId;
+public class CartDTO {
     private int bookNo;
+    private String userId;
 }
-
-

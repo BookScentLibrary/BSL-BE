@@ -33,44 +33,44 @@ import com.samsam.bsl.user.entity.UserEntity;
 @Table(name = "post_review")
 public class Review {
 
-	@Id
-	@Column(nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int rev_postId;
+    @Id
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int rev_postId;
 
-	@Column(nullable = false)
-	private String postTitle;
+    @Column(nullable = false)
+    private String postTitle;
 
-	@Column(nullable = false)
-	private String content;
+    @Column(nullable = false)
+    private String content;
 
-	@CreationTimestamp
-	@Column(nullable = false)
-	private LocalDateTime createdAt;
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
-	@CreationTimestamp
-	@Column(nullable = false)
-	private LocalDateTime modifiedAt;
+    @CreationTimestamp
+    @Column(nullable = false)
+    private LocalDateTime modifiedAt;
 
-	@Column(nullable = false)
-	private String isbn;
+    @Column(nullable = false)
+    private String isbn;
 
-	@Column(nullable = false)
-	private int rate;
+    @Column(nullable = false)
+    private int rate;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "userId", referencedColumnName = "userId", insertable = false, updatable = false, nullable = false)
-	private UserEntity user;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "userId", referencedColumnName = "userId", insertable = false, updatable = false, nullable = false)
+    private UserEntity user;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "bookNo", referencedColumnName = "bookNo", insertable = false, updatable = false, nullable = false)
-	private Book book;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "bookNo", referencedColumnName = "bookNo", insertable = false, updatable = false, nullable = false)
+    private Book book;
 
-	@Column(nullable = false)
-	private String userId;
+    @Column(nullable = false)
+    private String userId;
 
-	@Column(nullable = false)
-	private int bookNo;
+    @Column(nullable = false)
+    private int bookNo;
 
 
 //	@Column(nullable = false)
@@ -95,16 +95,16 @@ public class Review {
 //	@Column(nullable = false)
 //	private String shelfArea;
 
-	@OneToMany(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@OrderBy("rev_postId") // 댓글 정렬
-	private List<Comment> comments;
+    @OneToMany(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("rev_postId") // 댓글 정렬
+    private List<Comment> comments;
 
-	/* 게시글 수정 메소드 */
-	public void update(String postTitle, String content, int rate, int bookNo, String bookImageURL, String bookname,
-					   String author, String publisher,  String callNum, String shelfArea) {
-		this.postTitle = postTitle;
-		this.content = content;
-		this.rate = rate;
-		this.bookNo = bookNo;
-	}
+    /* 게시글 수정 메소드 */
+    public void update(String postTitle, String content, int rate, int bookNo, String bookImageURL, String bookname,
+                       String author, String publisher, String callNum, String shelfArea) {
+        this.postTitle = postTitle;
+        this.content = content;
+        this.rate = rate;
+        this.bookNo = bookNo;
+    }
 }
