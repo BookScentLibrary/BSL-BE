@@ -1,4 +1,4 @@
-package com.samsam.bsl.postProgram.Controller;
+package com.samsam.bsl.postProgram.controller;
 
 
 import java.util.List;

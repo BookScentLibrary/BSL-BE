@@ -13,7 +13,7 @@ public class BestService {
 	BestRepository bestRepository;
 
 	public List<Best> getBest() {
-		System.out.println(bestRepository.findAll());
+		
 		return bestRepository.findAllByOrderByRankAsc();
 	}
 }
