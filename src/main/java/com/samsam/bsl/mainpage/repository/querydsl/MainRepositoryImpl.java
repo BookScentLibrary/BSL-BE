@@ -96,7 +96,7 @@ public class MainRepositoryImpl implements MainRepositoryQueryDsl {
             MainProgram mp = new MainProgram();
 
 
-            mp.setCreatedAt(program.getCreatedAt());
+            mp.setCreatedAt(program.getCreatedAt().toString());
             mp.setPostTitle(program.getPostTitle());
             mp.setPro_postId(program.getPro_postId());
 
