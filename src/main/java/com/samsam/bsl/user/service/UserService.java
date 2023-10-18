@@ -56,41 +56,30 @@ public class UserService {
 
 	// 로그인
 	public ResponseDTO<SignInResponseDTO> signIn(SignInDTO dto) {
-		System.out.println("[UserService] signIn()");
 		String username = dto.getUsername();
 		String userPassword = dto.getPassword();
 
 		UserEntity userEntity = null;
 		try {
 			userEntity = userRepository.findByUsername(username);
-			System.out.println("[UserService] signIn() username : "+username);
 			// 아이디 못 찾을때
 			if (userEntity == null) {
-				System.out.println("[UserService] signIn() null 아이디 못 찾음.");
-				return ResponseDTO.setFailed("아이디 못 찾음. 아이디 혹은 비밀번호가 일치하지 않습니다.");
+				return ResponseDTO.setFailed("아이디 혹은 비밀번호가 일치하지 않습니다.");
 			}
 			// 잘못된 비밀번호
 			if (!passwordEncoder.matches(userPassword, userEntity.getPassword())) {
-				System.out.println("[UserService] signIn() 입력한 비밀번호 : " + passwordEncoder.encode(userPassword));
-				System.out.println("[UserService] signIn() 가져온 비밀번호 : " + userEntity.getPassword());
-				System.out.println("[UserService] signIn() 비밀번호 다름.");
-				return ResponseDTO.setFailed("비밀번호 다름. 아이디 혹은 비밀번호가 일치하지 않습니다.");
+				return ResponseDTO.setFailed("아이디 혹은 비밀번호가 일치하지 않습니다.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("[UserService] signIn() 데이터베이스 오류입니다.");
 			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 		}
 		userEntity.setPassword("");
 
 		String token = tokenProvider.create(username);
-		System.out.println("[UserService] signIn() token만들었다 : " + token);
 		int exprTime = 3600000;
 
 		SignInResponseDTO signInResponseDTO = new SignInResponseDTO(token, exprTime, userEntity);
-		System.out.println("[UserService] signIn() token반환가능하다 : " + token);
-		System.out.println("[UserService] signIn() exprTime 반환: " + exprTime);
-		System.out.println("[UserService] signIn() userEntity 반환: " + userEntity.toString());
 		return ResponseDTO.setSuccess("로그인 성공", signInResponseDTO);
 	}
 
@@ -114,7 +103,6 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("[UserService] signIn() 데이터베이스 오류입니다.");
 			return ResponseDTO.setFailed("데이터베이스 오류입니다.");
 		}
 	}

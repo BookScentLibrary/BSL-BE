@@ -17,7 +17,6 @@ import com.samsam.bsl.recommend.dto.RecommendUpdateRequestDTO;
 import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.recommend.repository.RecommendRepository;
 import com.samsam.bsl.user.dto.ResponseDTO;
-import com.samsam.bsl.user.entity.UserEntity;
 import com.samsam.bsl.user.repository.UserRepository;
 
 @Service
