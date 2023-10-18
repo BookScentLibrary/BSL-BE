@@ -1,9 +1,14 @@
 package com.samsam.bsl.postProgram.controller;
 
 
+import java.nio.file.Files;
 import java.util.List;
 
 import com.samsam.bsl.postProgram.service.PostProgramService;
+
+import io.swagger.models.Path;
+import io.swagger.v3.oas.models.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +16,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.postProgram.dto.PostProgramDTO;
 
 
@@ -57,6 +66,8 @@ public class PostProgramController {
   public ResponseEntity<List<PostProgramDTO>> handleProgramListRequest(
     @RequestParam(value = "keyword", required = false) String keyword,
     @RequestParam(value = "searchType", defaultValue = "all") String searchType) {
+	  
+	  System.out.println("[programController] getList");
 
     // keyword 파라미터가 있을 경우 검색 동작을 수행
     if (keyword != null && !keyword.isEmpty()) {
@@ -92,20 +103,34 @@ public class PostProgramController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
+	@PutMapping("/programEdit/{pro_postId}")
+	public ResponseEntity<Void> update(@PathVariable("pro_postId") Integer pro_postId,
+									   @RequestBody PostProgramDTO postProgramDTO) {
+		postProgramDTO.setPro_postId(pro_postId); // 리뷰 ID 설정
+		postProgramService.updateProgram(postProgramDTO); // 리뷰 수정 서비스 호출
+		return ResponseEntity.ok().build();
+	}
+
 
   //삭제
-  @DeleteMapping("/news/ProgramDelete/{pro_postId}/")
+  @DeleteMapping("/news/Delete/{pro_postId}/")
   public ResponseEntity<Void> delete(@PathVariable("pro_postId") Integer pro_postId) {
 
     postProgramService.deletePost(pro_postId);
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/programDetail/{pro_postId}")
+  @GetMapping("programDetail/{pro_postId}")
   public ResponseEntity<PostProgramDTO> detail(@PathVariable("pro_postId") Integer pro_postId) {
     PostProgramDTO programDTO = postProgramService.getPost(pro_postId);
     return ResponseEntity.ok(programDTO);
   }
+  
+//  @GetMapping("/reviewDetail/{rev_postId}")
+//	public ResponseEntity<ReviewDTO> detail(@PathVariable("rev_postId") Integer rev_postId) {
+//		ReviewDTO reviewDTO = reviewService.getPost(rev_postId);
+//		return ResponseEntity.ok(reviewDTO);
+//	}
 
 
   //검색
@@ -131,6 +156,8 @@ public class PostProgramController {
 
   private boolean isValidSearchType(String searchType) {
     return true;
-  }
+  
+      }
+  
 
-}
+  }

@@ -3,6 +3,8 @@ package com.samsam.bsl.postProgram.dto;
 
 
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Table;
 
 import com.samsam.bsl.postProgram.model.Program;
@@ -23,20 +25,19 @@ public class PostProgramDTO {
 	private String content;
 	private String place;
 	private String postTitle;
-	private String createdAt;
-	private String modifiedAt;
+	private LocalDateTime createdAt;
+	private LocalDateTime modifiedAt;
 	private String postImgURL;
 	private String target;
-	private String startDate;
-	private String endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	private String charge;
 	private String phone;
-	private String deadlineStartDate;
-	private String deadlineEndDate;
+	private LocalDateTime deadlineStartDate;
+	private LocalDateTime deadlineEndDate;
 	private int extraGuests;
 	private int programGuest;
 	private int programStatus;
-	
 
 	
 	public Program toEntity() {
@@ -54,7 +55,7 @@ public class PostProgramDTO {
 				.endDate(endDate)
 				.charge(charge)
 				.deadlineStartDate(deadlineStartDate)
-				.deadlineEndDate(deadlineStartDate)
+				.deadlineEndDate(deadlineEndDate)
 				.phone(phone)
 				.extraGuests(extraGuests)
 				.programGuest(programGuest)
@@ -67,8 +68,8 @@ public class PostProgramDTO {
 
 	@Builder
 	public PostProgramDTO(String userId, int pro_postId, String content, String place, String postTitle,
-			String createdAt, String modifiedAt, String postImgURL, String target, String startDate, String endDate,
-			String charge, String phone, String deadlineStartDate, String deadlineEndDate, int extraGuests,
+			LocalDateTime createdAt, LocalDateTime modifiedAt, String postImgURL, String target, LocalDateTime startDate, LocalDateTime endDate,
+			String charge, String phone, LocalDateTime deadlineStartDate, LocalDateTime deadlineEndDate, int extraGuests,
 			int programGuest, int programStatus) {
 		super();
 		this.userId = userId;
