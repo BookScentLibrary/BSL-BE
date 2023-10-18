@@ -3,16 +3,12 @@ package com.samsam.bsl.recommend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.samsam.bsl.book.review.dto.ReviewDTO;
 import com.samsam.bsl.recommend.dto.RecommendListResponseDTO;
-import com.samsam.bsl.recommend.model.Recommend;
 import com.samsam.bsl.recommend.repository.RecommendRepository;
 import com.samsam.bsl.recommend.service.RecommendService;
 import com.samsam.bsl.user.dto.ResponseDTO;

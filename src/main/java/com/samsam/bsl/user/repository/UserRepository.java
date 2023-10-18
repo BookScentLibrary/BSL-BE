@@ -1,14 +1,9 @@
 package com.samsam.bsl.user.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.samsam.bsl.user.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, String> {
-	Optional<UserEntity> findById(String userId);
-    Optional<UserEntity> findByNickname(String nickname);
     
     //userId로 user찾기
     public UserEntity findByUserId(String userId);

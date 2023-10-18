@@ -28,11 +28,7 @@ public class UserController {
 	// 회원가입 요청
 	@PostMapping("/signUp")
 	public ResponseDTO<?> signUp(@RequestBody SignUpDTO signUpDTO) {
-		System.out.println("[UserController] signup()");
-		// 회원가입 정보 확인
-		System.out.println(signUpDTO.toString());
 		ResponseDTO<?> result = userService.signUp(signUpDTO);
-		System.out.println("[UserController] signup() result" + result.getMessage());
 		return result;
 	}
 
@@ -63,10 +59,7 @@ public class UserController {
 	// 로그인 요청
 	@PostMapping("/signIn")
 	public ResponseDTO<SignInResponseDTO> signIn(@RequestBody SignInDTO SignInDTO){
-		System.out.println("[UserController] signIn()");
-		System.out.println(SignInDTO.toString());
 		ResponseDTO<SignInResponseDTO> result = userService.signIn(SignInDTO);
-		System.out.println("서비스 끝났다."+result);
 		return result;
 	}
 

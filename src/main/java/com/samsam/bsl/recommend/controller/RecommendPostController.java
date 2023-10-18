@@ -34,16 +34,13 @@ public class RecommendPostController {
     @PutMapping("/recommendUpdate/{recPostId}")
     public ResponseDTO<?> recommendUpdate(@PathVariable int recPostId,  @RequestBody RecommendUpdateRequestDTO recommendUpdateRequestDTO) {
     	ResponseDTO<?> result = recommendService.updateRecommend(recPostId, recommendUpdateRequestDTO);
-    	System.out.println("recommendUpdate : " + result);
         
         return result;
     }
     // 게시글 삭제
     @DeleteMapping("/recommendDelete/{recPostId}")
     public ResponseDTO<?> recommendDelete(@PathVariable int recPostId) {
-    	System.out.println("recommendDelete 시작");
         ResponseDTO<?> result = recommendService.deleteRecommend(recPostId);
-    	System.out.println("recommendDelete : " + result);
         
         return result;
     }
