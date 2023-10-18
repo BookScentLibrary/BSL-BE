@@ -20,7 +20,6 @@ public class BestController {
 	@GetMapping("")
 	public @ResponseBody List<Best> getBestSeller() {
 		try {
-			System.out.println(bestService.getBest());
 			List<Best> list = bestService.getBest();
 			return list;
 		}catch (Exception e) {
