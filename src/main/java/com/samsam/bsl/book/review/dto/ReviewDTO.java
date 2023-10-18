@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -39,37 +38,17 @@ public class ReviewDTO {
 	private String callNum;
 	private String shelfArea;
 
-	private List<CommentResponseDTO> comments;
-
-
-	//ReviewDTO ->  Review
+	// ReviewDTO -> Review
 	public Review toEntity() {
-		Review review = Review.builder()
-				.userId(userId)
-				.bookNo(bookNo)
-				.rev_postId(rev_postId)
-				.postTitle(postTitle)
-				.content(content)
-				.isbn(isbn)
-				.createdAt(createdAt)
-				.modifiedAt(modifiedAt)
-				.rate(rate)
-				//.nickname(nickname)
-				//.bookname(bookname)
-				//.author(author)
-				//.bookImageURL(bookImageURL)
-				//.publisher(publisher)
-				//.callNum(callNum)
-				//.shelfArea(shelfArea)
-				.build();
+		Review review = Review.builder().userId(userId).bookNo(bookNo).rev_postId(rev_postId).postTitle(postTitle)
+				.content(content).isbn(isbn).createdAt(createdAt).modifiedAt(modifiedAt).rate(rate).build();
 		return review;
 	}
 
 	@Builder
 	public ReviewDTO(String userId, int bookNo, int rev_postId, String postTitle, String content,
-					 LocalDateTime createdAt, LocalDateTime modifiedAt, String isbn, int rate, String nickname,
-					 String bookname, String bookImageURL, String author, String publisher, String callNum,
-					 String shelfArea, List<CommentResponseDTO> comments) {
+			LocalDateTime createdAt, LocalDateTime modifiedAt, String isbn, int rate, String nickname, String bookname,
+			String bookImageURL, String author, String publisher, String callNum, String shelfArea) {
 
 		this.userId = userId;
 		this.bookNo = bookNo;
@@ -87,13 +66,6 @@ public class ReviewDTO {
 		this.publisher = publisher;
 		this.callNum = callNum;
 		this.shelfArea = shelfArea;
-		this.comments = comments;
-		//this.comments = review.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 	}
-
-	;
-
-//	@Builder
-//	public ReviewDTO(Review review) {
 
 }

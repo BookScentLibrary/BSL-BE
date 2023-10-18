@@ -94,7 +94,7 @@ public class RecommendService {
 			recommendDetailResponseDTO.setBookNo(book.getBookNo());
 			recommendDetailResponseDTO.setRecPostId(recommend.getRecPostId());
 			recommendDetailResponseDTO.setUserId(recommend.getUserId());
-			recommendDetailResponseDTO.setShelfarea(book.getShelfArea());
+			recommendDetailResponseDTO.setShelfArea(book.getShelfArea());
 			recommendDetailResponseDTO.setCallNum(book.getCallNum());
 
 			return ResponseDTO.setSuccess("게시글 조회 성공", recommendDetailResponseDTO);

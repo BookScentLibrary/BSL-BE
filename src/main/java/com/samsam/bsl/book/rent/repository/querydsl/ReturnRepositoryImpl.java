@@ -45,6 +45,7 @@ public class ReturnRepositoryImpl implements ReturnRepositoryQueryDsl{
     List<RentHistory> list = queryFactory
       .selectFrom(rentHistory)
       .where(rentHistory.userId.eq(userId))
+      .orderBy(rentHistory.rentedDate.desc())
       .fetch();
     return list;
   }

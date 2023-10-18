@@ -1,6 +1,6 @@
 package com.samsam.bsl.mainpage.controller;
 
-import com.samsam.bsl.mainpage.domain.*;
+import com.samsam.bsl.mainpage.dto.*;
 import com.samsam.bsl.mainpage.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

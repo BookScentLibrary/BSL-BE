@@ -15,7 +15,6 @@ import com.samsam.bsl.book.review.domain.Review;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
 	@Query("SELECT r FROM Review r LEFT JOIN FETCH r.user u LEFT JOIN FETCH r.book b WHERE u.userId = r.userId AND b.bookNo = r.bookNo")
-		//@Query("SELECT r, u.nickname, b.bookname, b.author, b.publisher, b.callNum, b.shelfArea FROM Review r JOIN r.user u JOIN r.book b")
 	List<Review> getAllReviews();
 
 	List<Review> findByBook_booknameContainingOrPostTitleContainingOrBook_authorContainingOrBook_publisherContainingOrBook_callNumContainingOrBook_publicationYearContaining(
@@ -33,22 +32,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
 	List<Review> findByBook_publicationYearContaining(String publicationYear);
 
-//	@Query("SELECT r FROM Review r LEFT JOIN FETCH r.user u LEFT JOIN FETCH r.book b WHERE u.userId = r.userId AND b.bookNo = r.bookNo")
-//	Page<Review> getAllReviews(@Param("userId") Long userId, @Param("bookNo") Long bookNo, Pageable pageable);
-//
-//	Page<Review> findByBook_booknameContainingOrPostTitleContainingOrBook_authorContainingOrBook_publisherContainingOrBook_callNumContainingOrBook_publicationYearContaining(
-//	    String bookname, String postTitle, String author, String publisher, String callNum, String publicationYear, Pageable pageable);
-//
-//	Page<Review> findByBook_booknameContaining(String bookname, Pageable pageable);
-//
-//	Page<Review> findByPostTitleContaining(String postTitle, Pageable pageable);
-//
-//	Page<Review> findByBook_authorContaining(String author, Pageable pageable);
-//
-//	Page<Review> findByBook_publisherContaining(String publisher, Pageable pageable);
-//
-//	Page<Review> findByBook_callNumContaining(String callNum, Pageable pageable);
-//
-//	Page<Review> findByBook_publicationYearContaining(String publicationYear, Pageable pageable);
+
+	// mypage 내가 작성한 리뷰 수 조회
+	Long countByUserId(String userId);
 
 }

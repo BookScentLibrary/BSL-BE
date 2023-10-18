@@ -1,13 +1,11 @@
 package com.samsam.bsl.notice.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +15,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.samsam.bsl.notice.domain.Images;
-import com.samsam.bsl.notice.dto.ImagesDTO;
 import com.samsam.bsl.notice.dto.NoticeDTO;
-import com.samsam.bsl.notice.service.ImagesService;
+import com.samsam.bsl.notice.dto.NoticeRequestDTO;
 import com.samsam.bsl.notice.service.NoticeService;
-import com.samsam.bsl.notice.util.MD5Generator;
 
 @CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
@@ -36,12 +29,9 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 
-	@Autowired
-	private ImagesService imagesService;
 
-	public NoticeController(NoticeService noticeService, ImagesService imagesService) {
+	public NoticeController(NoticeService noticeService) {
 		this.noticeService = noticeService;
-		this.imagesService = imagesService;
 	}
 
 	@GetMapping("/noticeList")
@@ -70,81 +60,18 @@ public class NoticeController {
 		}
 	}
 
-	@Value("${image.upload.directory}")
-	private String imageUploadDirectory;
-
 	@PostMapping("/noticeWrite")
-	public ResponseEntity<Void> write(@RequestPart(name = "file", required = false) MultipartFile image,
-			@RequestParam("userId") String userId, @RequestParam("postTitle") String postTitle,
-			@RequestParam("content") String content) {
-		try {
-			if (image != null && !image.isEmpty()) {
-				String origImgName = image.getOriginalFilename();
-				String storedImgName = new MD5Generator(origImgName).toString();
-				String imgPath = imageUploadDirectory + File.separator + storedImgName;
+	public ResponseEntity<?> writeNtice(@RequestBody NoticeRequestDTO noticeRequestDTO) {
+		// 이제 ReviewRequestDTO를 사용하여 게시물 작성
+		int result = noticeService.savePost(noticeRequestDTO);
 
-				File dest = new File(imgPath);
-				image.transferTo(dest);
+		if (result == 1) {
+			return ResponseEntity.status(HttpStatus.CREATED).build();
 
-				ImagesDTO imagesDTO = new ImagesDTO();
-				imagesDTO.setOrigImgName(origImgName);
-				imagesDTO.setStoredImgName(storedImgName);
-				imagesDTO.setImgPath(imgPath);
-
-				Long imgId = imagesService.saveImage(imagesDTO);
-
-				NoticeDTO noticeDTO = new NoticeDTO();
-				noticeDTO.setUserId(userId);
-				noticeDTO.setPostTitle(postTitle);
-				noticeDTO.setContent(content);
-				noticeDTO.setImgId(imgId);
-				noticeService.savePost(noticeDTO);
-			} else {
-				NoticeDTO noticeDTO = new NoticeDTO();
-				noticeDTO.setUserId(userId);
-				noticeDTO.setPostTitle(postTitle);
-				noticeDTO.setContent(content);
-				noticeService.savePost(noticeDTO);
-			}
-
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
 		}
 	}
-
-//	@PostMapping("/noticeWrite")
-//	public ResponseEntity<Void> write(@RequestPart("file") MultipartFile images, @RequestBody NoticeDTO noticeDTO) {
-//		try {
-//			String origImgName = images.getOriginalFilename();
-//			String storedImgName = new MD5Generator(origImgName).toString();
-//			/* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
-//			String savePath = System.getProperty("user.dir") + "\\files";
-//			/* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
-//			if (!new File(savePath).exists()) {
-//				try {
-//					new File(savePath).mkdir();
-//				} catch (Exception e) {
-//					e.getStackTrace();
-//				}
-//			}
-//			String imgPath = savePath + "\\" + storedImgName;
-//			images.transferTo(new File(imgPath));
-//
-//			ImagesDTO imagesDTO = new ImagesDTO();
-//			imagesDTO.setOrigImgName(origImgName);
-//			imagesDTO.setStoredImgName(storedImgName);
-//			imagesDTO.setImgPath(imgPath);
-//
-//			Long imgId = imagesService.saveImage(imagesDTO);
-//			noticeDTO.setImgId(imgId);
-//			noticeService.savePost(noticeDTO);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//	}
 
 	// 공지사항 상세보기
 	@GetMapping("/noticeDetail/{not_postId}")
@@ -155,11 +82,10 @@ public class NoticeController {
 
 	// 공지사항 수정
 	@PutMapping("/noticeEdit/{not_postId}")
-	public ResponseEntity<Void> update(@PathVariable("not_postId") Integer not_postId,
+	public ResponseEntity<NoticeDTO> updateNotice(@PathVariable("not_postId") Integer not_postId,
 			@RequestBody NoticeDTO noticeDTO) {
-		// noticeDTO.setNot_postId(not_postId); // 공지사항 ID 설정
-		noticeService.savePost(noticeDTO); // 공지사항 수정 서비스 호출
-		return ResponseEntity.ok().build();
+		NoticeDTO updatedNotice = noticeService.updateNotice(not_postId, noticeDTO);
+		return ResponseEntity.ok(updatedNotice);
 	}
 
 	// 공지사항 삭제

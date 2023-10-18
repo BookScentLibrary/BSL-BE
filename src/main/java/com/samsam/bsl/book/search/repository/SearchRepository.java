@@ -15,15 +15,15 @@ import com.samsam.bsl.book.rent.domain.Book;
 @Repository
 public interface SearchRepository extends JpaRepository<Book, Integer>{
 	
-//	Page<Book> keywordAll(String searchValue, Pageable pageable);
+
 
 	Page<Book>findBybooknameContaining(String searchValue,Pageable pageable);
 
-	Page<Book> findByAuthorContaining(String searchValue, Pageable pageable);
+	Page<Book> findByauthorContaining(String searchValue, Pageable pageable);
 
-	Page<Book> findByPublisherContaining(String searchValue, Pageable pageable);
+	Page<Book> findBypublisherContaining(String searchValue, Pageable pageable);
 
-	//Page<Book> ErrorPage(Pageable pageable);
+
 }
 
 	

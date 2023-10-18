@@ -72,7 +72,6 @@ public class PostProgramController {
     // keyword 파라미터가 있을 경우 검색 동작을 수행
     if (keyword != null && !keyword.isEmpty()) {
       List<PostProgramDTO> programs = postProgramService.searchPrograms(keyword, searchType);
-      System.out.println(programs);
       if (programs.isEmpty()) {
         return ResponseEntity.noContent().build();
       } else {
@@ -81,7 +80,6 @@ public class PostProgramController {
     } else {
       // keyword 파라미터가 없을 경우 모든 리뷰를 불러오는 동작을 수행
       List<PostProgramDTO> allProgramDTOList = postProgramService.getProgramList();
-      System.out.println(allProgramDTOList);
       if (allProgramDTOList.isEmpty()) {
         return ResponseEntity.noContent().build();
       } else {
