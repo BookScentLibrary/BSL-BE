@@ -57,11 +57,8 @@ public class NoticeService {
 
 		List<NoticeDTO> noticeDtoList = new ArrayList<>();
 		for (Notice notice : notices) {
-			NoticeDTO noticeDTO = NoticeDTO.builder().not_postId(notice.getNot_postId())
-					.userId(notice.getUserId())
-					.postTitle(notice.getPostTitle())
-					.content(notice.getContent()).postImgURL(notice.getPostImgURL())
-					.imgId(notice.getImgId())
+			NoticeDTO noticeDTO = NoticeDTO.builder().not_postId(notice.getNot_postId()).userId(notice.getUserId())
+					.postTitle(notice.getPostTitle()).content(notice.getContent()).postImgURL(notice.getPostImgURL())
 					.createdAt(notice.getCreatedAt()).build();
 			noticeDtoList.add(noticeDTO);
 		}
@@ -72,6 +69,7 @@ public class NoticeService {
 	public int savePost(NoticeDTO noticeDTO) {
 		return noticeRepository.save(noticeDTO.toEntity()).getNot_postId();
 	}
+
 	@Transactional
 	public int savePost(NoticeRequestDTO noticeRequestDTO) {
 		Notice notice = new Notice();
@@ -82,84 +80,32 @@ public class NoticeService {
 
 		try {
 			noticeRepository.save(notice);
-			System.out.println("굿");
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
 	}
-//	@Transactional
-//	public int savePost(NoticeRequestDTO noticeRequestDTO) {
-//	    Notice notice = new Notice();
-//	    notice.setPostTitle(noticeRequestDTO.getPostTitle());
-//	    notice.setContent(noticeRequestDTO.getContent());
-//	    notice.setUserId(noticeRequestDTO.getUserId());
-//
-//	    try {
-//	        // Save the notice without the image information
-//	        noticeRepository.save(notice);
-//
-//	        // Process the uploaded file (postImgURL) and save it to the desired location.
-//	        String postImgURL = noticeRequestDTO.getPostImgURL();
-//	        if (postImgURL != null) {
-//	            // Create a File object for the source file (the uploaded image)
-//	            File sourceFile = new File(postImgURL);
-//
-//	            // Define the destination directory where you want to save the file
-//	            String destinationDirectory = "C:\\Temp\\images";
-//
-//	            // Create a File object for the destination directory
-//	            File destinationDir = new File(destinationDirectory);
-//
-//	            // Ensure the destination directory exists; if not, create it
-//	            if (!destinationDir.exists()) {
-//	                destinationDir.mkdirs();
-//	            }
-//
-//	            // Create a File object for the destination file
-//	            File destinationFile = new File(destinationDir, sourceFile.getName());
-//
-//	            // Copy the source file to the destination file
-//	            Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//	        }
-//
-//	        return 1;
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	        return 0;
-//	    }
-//	}
 
-
-	
-	
 	@Transactional
 	public NoticeDTO updateNotice(int not_postId, NoticeDTO updatedNoticeDTO) {
-	    Notice existingNotice = noticeRepository.findById(not_postId).get();
+		Notice existingNotice = noticeRepository.findById(not_postId).get();
 
-	    // 업데이트된 데이터로 업데이트
-	    existingNotice.setPostTitle(updatedNoticeDTO.getPostTitle());
-	    existingNotice.setContent(updatedNoticeDTO.getContent());
-	    existingNotice.setPostImgURL(updatedNoticeDTO.getPostImgURL());
-	    existingNotice.setModifiedAt(LocalDateTime.now()); // modifiedAt 업데이트
+		// 업데이트된 데이터로 업데이트
+		existingNotice.setPostTitle(updatedNoticeDTO.getPostTitle());
+		existingNotice.setContent(updatedNoticeDTO.getContent());
+		existingNotice.setPostImgURL(updatedNoticeDTO.getPostImgURL());
+		existingNotice.setModifiedAt(LocalDateTime.now()); // modifiedAt 업데이트
 
-	    // 저장
-	    noticeRepository.save(existingNotice);
+		// 저장
+		noticeRepository.save(existingNotice);
 
-	    // 업데이트된 공지사항 정보 반환
-	    return NoticeDTO.builder()
-	            .not_postId(existingNotice.getNot_postId())
-	            .userId(existingNotice.getUserId())
-	            .postTitle(existingNotice.getPostTitle())
-	            .content(existingNotice.getContent())
-	            .postImgURL(existingNotice.getPostImgURL())
-	            .imgId(existingNotice.getImgId())
-	            .createdAt(existingNotice.getCreatedAt())
-	            .modifiedAt(existingNotice.getModifiedAt())
-	            .build();
+		// 업데이트된 공지사항 정보 반환
+		return NoticeDTO.builder().not_postId(existingNotice.getNot_postId()).userId(existingNotice.getUserId())
+				.postTitle(existingNotice.getPostTitle()).content(existingNotice.getContent())
+				.postImgURL(existingNotice.getPostImgURL()).createdAt(existingNotice.getCreatedAt())
+				.modifiedAt(existingNotice.getModifiedAt()).build();
 	}
-
 
 	@Transactional
 	public List<NoticeDTO> getNoticeList() {
@@ -167,16 +113,9 @@ public class NoticeService {
 		List<NoticeDTO> noticeDtoList = new ArrayList<>();
 
 		for (Notice notice : noticeList) {
-			NoticeDTO noticeDTO = NoticeDTO.builder()
-					.not_postId(notice.getNot_postId())
-					.userId(notice.getUserId())
-					.postTitle(notice.getPostTitle())
-					.content(notice.getContent())
-					//.postImgURL(notice.getPostImgURL())
-					.imgId(notice.getImgId())
-					.createdAt(notice.getCreatedAt())
-					.nickname(notice.getUser().getNickname())
-					.build();
+			NoticeDTO noticeDTO = NoticeDTO.builder().not_postId(notice.getNot_postId()).userId(notice.getUserId())
+					.postTitle(notice.getPostTitle()).content(notice.getContent())
+					.createdAt(notice.getCreatedAt()).nickname(notice.getUser().getNickname()).build();
 			noticeDtoList.add(noticeDTO);
 		}
 		return noticeDtoList;
@@ -188,7 +127,7 @@ public class NoticeService {
 
 		NoticeDTO noticeDTO = NoticeDTO.builder().not_postId(notice.getNot_postId()).userId(notice.getUserId())
 				.postTitle(notice.getPostTitle()).content(notice.getContent()).postImgURL(notice.getPostImgURL())
-				.imgId(notice.getImgId()).createdAt(notice.getCreatedAt()).build();
+				.createdAt(notice.getCreatedAt()).build();
 		return noticeDTO;
 	}
 
