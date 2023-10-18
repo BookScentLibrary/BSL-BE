@@ -69,7 +69,6 @@ public class UserInfoValidator {
 	}
 	
 	  public ResponseDTO<?> getValidMessage(SignUpDTO dto) {
-		    System.out.println("[UserInfoValidator]getValidMessage()시작 :");
 		    String username = dto.getUsername();
 		    String password = dto.getPassword();
 		    String passwordAgain = dto.getPasswordAgain();
@@ -80,7 +79,6 @@ public class UserInfoValidator {
 			try {
 				// 아이디 중복 체크
 				if (checkUsernameDuplicate(username)) {
-					System.out.println("[UserInfoValidator]checkUsernameDuplicate()시작 :");
 					return ResponseDTO.setFailed("이미 사용중인 아이디입니다.");
 				}
 			}catch (Exception e) {
@@ -90,7 +88,6 @@ public class UserInfoValidator {
 			try {
 				// 닉네임 중복 체크
 				if (checkNicknameDuplicate(nickname)) {
-					System.out.println("[UserInfoValidator]checkNicknameDuplicate()시작 :");
 					return ResponseDTO.setFailed("이미 사용중인 닉네임입니다.");
 				}
 			}catch (Exception e) {
@@ -102,32 +99,26 @@ public class UserInfoValidator {
 		    }
 		    // 아이디 검증
 		    if (!isValidField(username, "^[a-zA-Z0-9]{8,20}$")) {
-		      System.out.println("[UserInfoValidator]getUsername()시작 :");
 		      return ResponseDTO.setFailed("아이디는 영문(대소문자)과 숫자로 8자에서 20자 사이여야 합니다.");
 		    }
 		    // 비밀번호 검증
 		    if (!isValidField(password, "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,20}$")) {
-		      System.out.println("[UserInfoValidator]getPassword()시작 :");
 		      return ResponseDTO.setFailed("비밀번호는 영문, 숫자, 특수문자(!, @, #, $, %, ^, &, *)로 8자에서 20자 사이여야 합니다.");
 		    }
 		    // 이메일 검증
 		    if (!isValidField(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
-		      System.out.println("[UserInfoValidator]getEmail()시작 :");
 		      return ResponseDTO.setFailed("이메일 형식이 올바르지 않습니다.");
 		    }
 		    // 닉네임 검증
 		    if (!isValidField(nickname, "^[가-힣]{3,8}$")) {
-		      System.out.println("[UserInfoValidator]getNickname()시작 :");
 		      return ResponseDTO.setFailed("닉네임은 한글 3자에서 8자 사이여야 합니다.");
 		    }
 		    // 연락처 검증
 		    if (!isValidField(phone, "^[0-9]{11}$")) {
-		      System.out.println("[UserInfoValidator]getPhone()시작 :");
 		      return ResponseDTO.setFailed("11자 숫자로('-'빼고) 연락처를 입력해주세요.");
 		    }
 		    // 생년월일 검증
 		    if (!isValidField(userBirth, "^(19|20)\\d\\d(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])$")) {
-		      System.out.println("[UserInfoValidator]getPhone()시작 :");
 		      return ResponseDTO.setFailed("8자 숫자로(yyyyMMdd) 생년월일을 입력해주세요.");
 		    }
 		      // 모든 검사를 통과한 경우 리턴 (빈 맵)
