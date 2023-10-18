@@ -8,7 +8,6 @@ import com.samsam.bsl.book.rent.repository.ReturnRepository;
 import com.samsam.bsl.book.review.domain.Review;
 import com.samsam.bsl.book.review.repository.ReviewRepository;
 import com.samsam.bsl.mypage.dto.CountDTO;
-import com.samsam.bsl.mypage.dto.ReviewDTO;
 import com.samsam.bsl.mypage.repository.MyPageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +49,7 @@ public class MyPageService {
 
     public List<Review> getReviews(String userId) {
         try {
-            return reviewRepository.findAllByUserId(userId);
+            return myPageRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -83,6 +82,5 @@ public class MyPageService {
         }
         return books;
     }
-
 }
 

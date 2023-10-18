@@ -2,8 +2,6 @@ package com.samsam.bsl.mypage.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samsam.bsl.book.review.domain.Review;
-import com.querydsl.core.types.Projections;
-import com.samsam.bsl.mypage.dto.ReviewDTO;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -24,6 +22,7 @@ public class MyPageRepositoryImpl implements MyPageRepositoryQueryDsl {
                 .selectFrom(review)
                 .where(review.userId.eq(userId))
                 .orderBy(review.createdAt.desc())
+                .limit(6)
                 .fetch();
 
         return reviews;

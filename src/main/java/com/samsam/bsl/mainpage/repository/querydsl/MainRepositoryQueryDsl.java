@@ -1,6 +1,6 @@
 package com.samsam.bsl.mainpage.repository.querydsl;
 
-import com.samsam.bsl.mainpage.domain.*;
+import com.samsam.bsl.mainpage.dto.*;
 
 import java.util.List;
 

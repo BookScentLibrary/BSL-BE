@@ -36,8 +36,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	// mypage 내가 작성한 리뷰 수 조회
 	Long countByUserId(String userId);
 
-	// mypage 내가 작성한 리뷰 목록 조회
-	List<Review> findAllByUserId(String userId);
 
 //	@Query("SELECT r FROM Review r LEFT JOIN FETCH r.user u LEFT JOIN FETCH r.book b WHERE u.userId = r.userId AND b.bookNo = r.bookNo")
 //	Page<Review> getAllReviews(@Param("userId") Long userId, @Param("bookNo") Long bookNo, Pageable pageable);

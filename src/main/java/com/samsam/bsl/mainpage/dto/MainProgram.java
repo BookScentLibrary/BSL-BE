@@ -1,4 +1,4 @@
-package com.samsam.bsl.mainpage.domain;
+package com.samsam.bsl.mainpage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
